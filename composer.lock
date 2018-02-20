@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "f237d5b6f5173573fd2d7959ff7b079d",
+    "hash": "5fcb93a2ddaeb1e4882b6e77f9871ac4",
     "content-hash": "0465b994f41ab328506ba557fad5cc0f",
     "packages": [
         {
@@ -1002,12 +1002,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jaroslavtyc/drd-plus-codes.git",
-                "reference": "bb67cbc3ccff74dd169e8f683b53c7e024c22b98"
+                "reference": "8e1cf68545f995e7b1b29499c8d5316211dd650a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-codes/zipball/bb67cbc3ccff74dd169e8f683b53c7e024c22b98",
-                "reference": "bb67cbc3ccff74dd169e8f683b53c7e024c22b98",
+                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-codes/zipball/8e1cf68545f995e7b1b29499c8d5316211dd650a",
+                "reference": "8e1cf68545f995e7b1b29499c8d5316211dd650a",
                 "shasum": ""
             },
             "require": {
@@ -1033,7 +1033,7 @@
                 "MIT"
             ],
             "description": "Codes of Drd+ races, properties",
-            "time": "2017-10-13 14:45:38"
+            "time": "2018-02-18 08:26:19"
         },
         {
             "name": "drd-plus/configurator-skeleton",
@@ -1077,12 +1077,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jaroslavtyc/drd-plus-destruction.git",
-                "reference": "d4ccf6b6d6877164c194bc86c0c3078c2e0fdcbc"
+                "reference": "2bd1194dbe34a25aabe8c64acbfcdb8a4e4c42a3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-destruction/zipball/d4ccf6b6d6877164c194bc86c0c3078c2e0fdcbc",
-                "reference": "d4ccf6b6d6877164c194bc86c0c3078c2e0fdcbc",
+                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-destruction/zipball/2bd1194dbe34a25aabe8c64acbfcdb8a4e4c42a3",
+                "reference": "2bd1194dbe34a25aabe8c64acbfcdb8a4e4c42a3",
                 "shasum": ""
             },
             "require": {
@@ -1110,7 +1110,7 @@
                 "MIT"
             ],
             "description": "Drd+ destruction according to material, time and other aspects",
-            "time": "2018-02-16 16:17:39"
+            "time": "2018-02-18 14:31:06"
         },
         {
             "name": "drd-plus/dice-rolls",
@@ -1118,12 +1118,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jaroslavtyc/drd-plus-dice-rolls.git",
-                "reference": "2dbcc20f7203d2daddd3868067b25826cb2db0ba"
+                "reference": "cf298d77455407baf6824c1b38a4f7757d1eddde"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-dice-rolls/zipball/2dbcc20f7203d2daddd3868067b25826cb2db0ba",
-                "reference": "2dbcc20f7203d2daddd3868067b25826cb2db0ba",
+                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-dice-rolls/zipball/cf298d77455407baf6824c1b38a4f7757d1eddde",
+                "reference": "cf298d77455407baf6824c1b38a4f7757d1eddde",
                 "shasum": ""
             },
             "require": {
@@ -1168,7 +1168,7 @@
                 "php",
                 "roll"
             ],
-            "time": "2017-11-20 17:51:24"
+            "time": "2018-02-18 15:47:38"
         },
         {
             "name": "drd-plus/hunting-and-fishing",
@@ -1465,12 +1465,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jaroslavtyc/drd-plus-tables.git",
-                "reference": "8ec412d2a119162a33b34d51241649bc6de4dad3"
+                "reference": "a1d8b557bb6d7867033bcb133e934227dfa4f2b5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-tables/zipball/8ec412d2a119162a33b34d51241649bc6de4dad3",
-                "reference": "8ec412d2a119162a33b34d51241649bc6de4dad3",
+                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-tables/zipball/a1d8b557bb6d7867033bcb133e934227dfa4f2b5",
+                "reference": "a1d8b557bb6d7867033bcb133e934227dfa4f2b5",
                 "shasum": ""
             },
             "require": {
@@ -1502,7 +1502,7 @@
                 "MIT"
             ],
             "description": "Drd+ tables and their units conversion",
-            "time": "2017-11-29 07:14:20"
+            "time": "2018-02-18 14:21:18"
         },
         {
             "name": "granam/boolean",

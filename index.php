@@ -1,12 +1,14 @@
 <?php
 namespace DrdPlus\Calculators\Destruction;
 
+use DrdPlus\Tables\Tables;
+
 include_once __DIR__ . '/vendor/autoload.php';
 
 error_reporting(-1);
 ini_set('display_errors', '1');
 
-$controller = new Controller();
+$controller = new Controller(Tables::getIt());
 ?>
 <!DOCTYPE html>
 <html>
@@ -15,7 +17,7 @@ $controller = new Controller();
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="css/generic/graphics.css" rel="stylesheet" type="text/css">
     <link href="css/generic/main.css" rel="stylesheet" type="text/css">
-    <link href="css/generic/socials.css" rel="stylesheet" type="text/css">
+    <link href="css/generic/issues.css" rel="stylesheet" type="text/css">
     <link href="css/destruction.css" rel="stylesheet" type="text/css">
     <noscript>
         <link rel="stylesheet" type="text/css" href="css/generic/no_script.css">
@@ -37,9 +39,7 @@ $controller = new Controller();
             Pamatovat <span class="hint">(i při zavření prohlížeče)</span></label>
     </div>
     <div class="block">
-        <div class="panel"><?php include __DIR__ . '/parts/falling.php'; ?></div>
-        <div class="panel"><?php include __DIR__ . '/parts/reaction.php'; ?></div>
-        <div class="panel"><?php include __DIR__ . '/parts/armor.php'; ?></div>
+        <div class="panel"><?php include __DIR__ . '/parts/destruction.php'; ?></div>
     </div>
     <div class="block"><?php include __DIR__ . '/parts/result.php'; ?></div>
 </form>
@@ -47,10 +47,10 @@ $controller = new Controller();
     <a href="https://rpgforum.cz/forum/viewtopic.php?f=238&t=14870"><img src="images/generic/rpgforum-ico.png">
         Máš nápad 😀? Vidíš chybu 😱?️ Sem s tím!
     </a>
-    <a class="float-right" href="https://github.com/jaroslavtyc/drd-plus-destruction/"
+    <a class="float-right" href="https://github.com/jaroslavtyc/drd-plus-calculators-destruction/"
        title="Fork me on GitHub"><img class="github" src="/images/generic/GitHub-Mark-64px.png"></a>
 </div>
-<script type="text/javascript" src="js/main.js"></script>
 <script type="text/javascript" src="js/generic/main.js"></script>
+<script type="text/javascript" src="js/destruction.js"></script>
 </body>
 </html>
