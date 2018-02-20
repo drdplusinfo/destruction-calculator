@@ -44,3 +44,5 @@ namespace DrdPlus\Calculators\Destruction;
         <?php } ?>
     </select>
 </label>
+<?php $realTimeOfVoluminousItemDestruction = $controller->getRealTimeOfVoluminousItemDestruction(); ?>
+<div>Únava <?= $realTimeOfVoluminousItemDestruction->getFatigue()->getValue() ?></div>

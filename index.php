@@ -41,7 +41,6 @@ $controller = new Controller(Tables::getIt());
     <div class="block">
         <div class="panel"><?php include __DIR__ . '/parts/destruction.php'; ?></div>
     </div>
-    <div class="block"><?php include __DIR__ . '/parts/result.php'; ?></div>
 </form>
 <div class="block issues">
     <a href="https://rpgforum.cz/forum/viewtopic.php?f=238&t=14870"><img src="images/generic/rpgforum-ico.png">
