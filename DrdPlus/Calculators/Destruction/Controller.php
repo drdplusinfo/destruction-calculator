@@ -97,7 +97,7 @@ class Controller extends \DrdPlus\Configurator\Skeleton\Controller
 
     public function getSelectedVolumeValue(): float
     {
-        return $this->getHistory()->getValue(self::VOLUME_VALUE) ?? 0.0;
+        return \max(10.0/** minimal value for @see VolumeTable */, $this->getHistory()->getValue(self::VOLUME_VALUE) ?? 10.0);
     }
 
     public function getSelectedMaterial(): MaterialCode
