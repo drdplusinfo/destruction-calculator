@@ -1,6 +1,9 @@
 <?php
 namespace DrdPlus\Calculators\Destruction;
 
+use DrdPlus\Codes\Armaments\MeleeWeaponCode;
+use DrdPlus\Codes\Armaments\MeleeWeaponlikeCode;
+use DrdPlus\Codes\Armaments\ShieldCode;
 use DrdPlus\Codes\Environment\MaterialCode;
 use DrdPlus\Codes\ItemHoldingCode;
 use DrdPlus\Codes\Units\VolumeUnitCode;
@@ -15,10 +18,23 @@ use DrdPlus\Properties\Body\Size;
 use DrdPlus\RollsOn\QualityAndSuccess\RollOnQuality;
 use DrdPlus\Tables\Measurements\Volume\Volume;
 use DrdPlus\Tables\Tables;
+use Granam\Integer\IntegerInterface;
 use Granam\Integer\IntegerObject;
 
 class Controller extends \DrdPlus\Configurator\Skeleton\Controller
 {
+
+    public const VOLUME_UNIT = 'volume_unit';
+    public const VOLUME_VALUE = 'volume_value';
+    public const MATERIAL = 'material';
+    public const ROLL_ON_DESTRUCTING = 'roll_on_destructing';
+    public const SELECTED_MELEE_WEAPONLIKE = 'selected_melee_weaponlike';
+    public const WEAPON_IS_INAPPROPRIATE = 'weapon_is_inappropriate';
+    public const STRENGTH = 'strength';
+    public const WEAPON_HOLDING_VALUE = 'weapon_holding_value';
+    public const ITEM_SIZE = 'item_size';
+    public const BODY_SIZE = 'body_size';
+
     /** @var Destruction */
     private $destruction;
     /** @var Tables */
@@ -67,112 +83,132 @@ class Controller extends \DrdPlus\Configurator\Skeleton\Controller
         );
     }
 
-    public function destructItem(
-        string $materialValue,
-        int $rollOnDestructingValue,
-        string $meleeWeaponlikeValue,
-        bool $weaponIsInappropriate,
-        int $strengthValue,
-        string $weaponHoldingValue,
-        int $itemSizeValue
-    ): RealTimeOfDestruction
+    public function getSelectedVolumeUnit(): VolumeUnitCode
     {
-        $rollOnDestruction = $this->getRollOnDestruction(
-            $materialValue,
-            $rollOnDestructingValue,
-            $meleeWeaponlikeValue,
-            $weaponIsInappropriate,
-            $strengthValue,
-            $weaponHoldingValue
-        );
-        $itemSize = new IntegerObject($itemSizeValue);
+        $volumeUnitValue = $this->getHistory()->getValue(self::VOLUME_UNIT);
+        if ($volumeUnitValue) {
+            return VolumeUnitCode::getIt($volumeUnitValue);
+        }
+        $possibleValues = VolumeUnitCode::getPossibleValues();
+        $defaultUnitValue = \reset($possibleValues);
+
+        return VolumeUnitCode::getIt($defaultUnitValue);
+    }
+
+    public function getSelectedVolumeValue(): float
+    {
+        return $this->getHistory()->getValue(self::VOLUME_VALUE) ?? 0.0;
+    }
+
+    public function getSelectedMaterial(): MaterialCode
+    {
+        $materialValue = $this->getHistory()->getValue(self::MATERIAL);
+        if ($materialValue) {
+            return MaterialCode::getIt($materialValue);
+        }
+        $possibleValues = MaterialCode::getPossibleValues();
+        $defaultMaterialValue = \reset($possibleValues);
+
+        return MaterialCode::getIt($defaultMaterialValue);
+    }
+
+    public function getSelectedMeleeWeaponlike(): MeleeWeaponlikeCode
+    {
+        $meleeWeaponlikeValue = $this->getHistory()->getValue(self::SELECTED_MELEE_WEAPONLIKE);
+        if ($meleeWeaponlikeValue) {
+            return $this->tables->getArmourer()->getMeleeWeaponlikeCode($meleeWeaponlikeValue);
+        }
+        $possibleValues = MeleeWeaponCode::getPossibleValues();
+        $possibleValues = \array_unique(\array_merge($possibleValues, ShieldCode::getPossibleValues()));
+        $defaultMeleeWeaponlikeValue = \reset($possibleValues);
+
+        return $this->tables->getArmourer()->getMeleeWeaponlikeCode($defaultMeleeWeaponlikeValue);
+    }
+
+    public function getSelectedRollOnDestructing(): IntegerInterface
+    {
+        return new IntegerObject($this->getHistory()->getValue(self::ROLL_ON_DESTRUCTING) ?? 6);
+    }
+
+    public function getSelectedWeaponIsInappropriate(): bool
+    {
+        // false by default
+        return (bool)$this->getHistory()->getValue(self::WEAPON_IS_INAPPROPRIATE);
+    }
+
+    public function getSelectedStrength(): Strength
+    {
+        return Strength::getIt($this->getHistory()->getValue(self::STRENGTH) ?? 0);
+    }
+
+    public function getSelectedItemSize(): IntegerInterface
+    {
+        return new IntegerObject($this->getHistory()->getValue(self::ITEM_SIZE) ?? 0);
+    }
+
+    public function getSelectedBodySize(): Size
+    {
+        return Size::getIt($this->getHistory()->getValue(self::BODY_SIZE) ?? 0);
+    }
+
+    public function getSelectedWeaponHolding(): ItemHoldingCode
+    {
+        $weaponHoldingValue = $this->getHistory()->getValue(self::WEAPON_HOLDING_VALUE);
+        if ($weaponHoldingValue) {
+            return ItemHoldingCode::getIt($weaponHoldingValue);
+        }
+        $possibleValues = ItemHoldingCode::getPossibleValues();
+        $defaultItemHoldingValue = \reset($possibleValues);
+
+        return ItemHoldingCode::getIt($defaultItemHoldingValue);
+    }
+
+    public function getRealTimeOfVoluminousItemDestruction(): RealTimeOfDestruction
+    {
+        $volume = new Volume($this->getSelectedVolumeValue(), $this->getSelectedVolumeUnit(), $this->tables->getVolumeTable());
 
         return new RealTimeOfDestruction(
-            BaseTimeOfDestruction::createForItemSize($itemSize, $this->tables->getTimeTable()),
-            $rollOnDestruction,
+            BaseTimeOfDestruction::createForItemOfVolume($volume->getBonus(), $this->tables->getTimeTable()),
+            $this->getRollOnDestruction(),
             $this->tables
         );
     }
 
-    private function getRollOnDestruction(
-        string $materialValue,
-        int $rollOnDestructingValue,
-        string $meleeWeaponlikeValue,
-        bool $weaponIsInappropriate,
-        int $strengthValue,
-        string $weaponHoldingValue
-    ): RollOnDestruction
+    public function getRealTimeOfBasicItemDestruction(): RealTimeOfDestruction
     {
-        $materialCode = MaterialCode::getIt($materialValue);
-        $meleeWeaponlikeCode = $this->tables->getArmourer()->getMeleeWeaponlikeCode($meleeWeaponlikeValue);
-        $strength = Strength::getIt($strengthValue);
-        $itemHoldingCode = ItemHoldingCode::getIt($weaponHoldingValue);
-        $powerOfDestruction = $this->destruction->getPowerOfDestruction(
-            $meleeWeaponlikeCode,
-            $strength,
-            $itemHoldingCode,
-            $weaponIsInappropriate
+
+        return new RealTimeOfDestruction(
+            BaseTimeOfDestruction::createForItemSize($this->getSelectedItemSize(), $this->tables->getTimeTable()),
+            $this->getRollOnDestruction(),
+            $this->tables
         );
-        $rollOnDestructing = new RollOnQuality(0, Roller2d6DrdPlus::getIt()->generateRoll($rollOnDestructingValue));
+    }
+
+    private function getRollOnDestruction(): RollOnDestruction
+    {
+        $powerOfDestruction = $this->destruction->getPowerOfDestruction(
+            $this->getSelectedMeleeWeaponlike(),
+            $this->getSelectedStrength(),
+            $this->getSelectedWeaponHolding(),
+            $this->getSelectedWeaponIsInappropriate()
+        );
+        $rollOnDestructing = new RollOnQuality(
+            0 /* no preconditions */,
+            Roller2d6DrdPlus::getIt()->generateRoll($this->getSelectedRollOnDestructing())
+        );
 
         return $this->destruction->getRollOnDestruction(
             $powerOfDestruction,
-            $this->getMaterialResistance($materialCode),
+            $this->getMaterialResistance($this->getSelectedMaterial()),
             $rollOnDestructing
         );
     }
 
-    public function destructStatueLike(
-        string $materialValue,
-        int $rollOnDestructingValue,
-        string $meleeWeaponlikeValue,
-        bool $weaponIsInappropriate,
-        int $strengthValue,
-        string $weaponHoldingValue,
-        int $bodySizeValue
-    ): RealTimeOfDestruction
+    public function getRealTimeOfStatueLikeDestruction(): RealTimeOfDestruction
     {
-        $rollOnDestruction = $this->getRollOnDestruction(
-            $materialValue,
-            $rollOnDestructingValue,
-            $meleeWeaponlikeValue,
-            $weaponIsInappropriate,
-            $strengthValue,
-            $weaponHoldingValue
-        );
-        $bodySize = Size::getIt($bodySizeValue);
-
         return new RealTimeOfDestruction(
-            BaseTimeOfDestruction::createForBodySize($bodySize, $this->tables->getTimeTable()),
-            $rollOnDestruction,
-            $this->tables
-        );
-    }
-
-    public function destructVoluminousItem(
-        string $materialValue,
-        int $rollOnDestructingValue,
-        string $meleeWeaponlikeValue,
-        bool $weaponIsInappropriate,
-        int $strengthValue,
-        string $weaponHoldingValue,
-        float $volumeValue,
-        string $volumeUnitValue
-    ): RealTimeOfDestruction
-    {
-        $rollOnDestruction = $this->getRollOnDestruction(
-            $materialValue,
-            $rollOnDestructingValue,
-            $meleeWeaponlikeValue,
-            $weaponIsInappropriate,
-            $strengthValue,
-            $weaponHoldingValue
-        );
-        $volume = new Volume($volumeValue, $volumeUnitValue, $this->tables->getVolumeTable());
-
-        return new RealTimeOfDestruction(
-            BaseTimeOfDestruction::createForItemOfVolume($volume->getBonus(), $this->tables->getTimeTable()),
-            $rollOnDestruction,
+            BaseTimeOfDestruction::createForBodySize($this->getSelectedBodySize(), $this->tables->getTimeTable()),
+            $this->getRollOnDestruction(),
             $this->tables
         );
     }

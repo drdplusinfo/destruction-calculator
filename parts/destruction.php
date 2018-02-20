@@ -13,25 +13,34 @@ namespace DrdPlus\Calculators\Destruction;
     </select>
 </label>
 
-<label>Předmět
-    <select name="item-type" id="itemType">
-        <option value="generic">Něco obyčejného (třeba stůl)</option>
-        <option value="statue">S tělesnými proporcemi (třeba socha)</option>
-        <option value="volume">Něco objemného (třeba zeď, tlustší dveře)</option>
+<h4>Něco obyčejného</h4>
+<div class="example">
+    běžný stůl, dlaždice, meč, lopata...
+</div>
+
+<h4>Tvarem připomínajícím tělo</h4>
+<div class="example">
+    socha, krápník, rampouch, sloup...
+</div>
+
+<h4>Něco tlustšího</h4>
+<div class="example">
+    zeď, bytelné dveře, led..
+</div>
+<label>
+    Objem ničeného předmětu či jeho části
+    <input type="number" value="<?= number_format($controller->getSelectedVolumeValue(), 2); ?>"
+           name="<?= $controller::VOLUME_VALUE ?>">
+</label>
+<div class="example">
+    díra 30 cm x 30 cm v ledu tlustém 25 cm = 30x30x25 = 22500 cm<span class="upper-index">3</span> = 22.5 litru
+</div>
+<label>
+    Jednotka objemu
+    <select name="<?= $controller::VOLUME_UNIT ?>">
+        <?php foreach ($controller->getVolumeUnits() as $volumeUnit) { ?>
+            <option value="<?= $volumeUnit->getValue() ?>"
+                    <?php if ($controller->getSelectedVolumeUnit()->getValue() === $volumeUnit->getValue()) { ?>selected="selected"<?php } ?>><?= $volumeUnit->getValue() ?></option>
+        <?php } ?>
     </select>
 </label>
-
-<div id="volumeRelated" class="hidden">
-    <label>
-        Objem ničeného předmětu
-        <input type="number" value="0.00" name="volume-value">
-    </label>
-    <label>
-        Jednotka objemu
-        <select name="volume-unit">
-            <?php foreach ($controller->getVolumeUnits() as $volumeUnit) { ?>
-                <option value="<?= $volumeUnit->getValue() ?>"><?= $volumeUnit->getValue() ?></option>
-            <?php } ?>
-        </select>
-    </label>
-</div>

@@ -38,3 +38,8 @@ h2 a {
 input:not(.manual)[type=submit] {
     display: none;
 }
+
+.example {
+    font-style: italic;
+    font-size: smaller;
+}
