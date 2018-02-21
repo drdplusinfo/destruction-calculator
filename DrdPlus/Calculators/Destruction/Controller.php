@@ -97,7 +97,23 @@ class Controller extends \DrdPlus\Configurator\Skeleton\Controller
 
     public function getSelectedVolumeValue(): float
     {
-        return \max(10.0/** minimal value for @see VolumeTable */, $this->getHistory()->getValue(self::VOLUME_VALUE) ?? 10.0);
+        $selectedVolumeUnit = $this->getSelectedVolumeUnit();
+        switch ($selectedVolumeUnit->getValue()) {
+            case VolumeUnitCode::LITER :
+                $minimal = \max(10.0/** minimal liters for @see VolumeTable */, $this->getHistory()->getValue(self::VOLUME_VALUE) ?? 0.0);
+
+                return \min(1000/** maximal liters for @see VolumeTable */, $minimal);
+            case VolumeUnitCode::CUBIC_METER :
+                $minimal = \max(0.01/** minimal cubic meters for @see VolumeTable */, $this->getHistory()->getValue(self::VOLUME_VALUE) ?? 0.0);
+
+                return \min(1000/** maximal cubic meters for @see VolumeTable */, $minimal);
+            case VolumeUnitCode::CUBIC_KILOMETER :
+                $minimal = \max(0.001/** minimal cubic kilometers for @see VolumeTable */, $this->getHistory()->getValue(self::VOLUME_VALUE) ?? 0.0);
+
+                return \min(0.9/** maximal cubic meters for @see VolumeTable */, $minimal);
+            default :
+                throw new \LogicException('Unknown volume unit ' . $selectedVolumeUnit);
+        }
     }
 
     public function getSelectedMaterial(): MaterialCode

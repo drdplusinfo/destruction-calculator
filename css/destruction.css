@@ -43,3 +43,10 @@ input:not(.manual)[type=submit] {
     font-style: italic;
     font-size: smaller;
 }
+
+.error {
+    color: darkred;
+    background-color: rgba(250, 152, 145, 0.55);
+    padding: 2px;
+    margin: 2px;
+}
