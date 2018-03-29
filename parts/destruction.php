@@ -30,13 +30,13 @@ try {
     <label>Velikost věci <input type="number" value="<?= $controller->getSelectedItemSize() ?>"
                                 name="<?= $controller::ITEM_SIZE ?>"></label>
     <div>
-        Únava <?= $fatigueFromBasicItemDestruction->getValue() ?>
+        Únava <strong><?= $fatigueFromBasicItemDestruction->getValue() ?></strong>
     </div>
     <?php
 } catch (CanNotConvertThatBonusToTime $canNotConvertThatBonusToTime) {
     ?>
     <div class="error">
-        Únava mimo rozsah
+        Únava <strong>mimo rozsah</strong>
     </div>
 <?php } ?>
     <hr>
@@ -53,13 +53,13 @@ try {
     $fatigueFromStatueLikeDestruction = $realTimeOfStatueLikeDestruction->getFatigue();
     ?>
     <div>
-        Únava <?= $fatigueFromStatueLikeDestruction->getValue() ?>
+        Únava <strong><?= $fatigueFromStatueLikeDestruction->getValue() ?></strong>
     </div>
     <?php
 } catch (CanNotConvertThatBonusToTime $canNotConvertThatBonusToTime) {
     ?>
     <div class="error">
-        Únava mimo rozsah
+        Únava <strong>mimo rozsah</strong>
     </div>
 <?php } ?>
     <hr>
@@ -74,14 +74,14 @@ try {
                name="<?= $controller::VOLUME_VALUE ?>">
     </label>
     <div class="example">
-        díra 30 cm x 30 cm v ledu tlustém 25 cm = 30x30x25 = 22500 cm<span class="upper-index">3</span> = 22.5 litru
+        například díra 30 cm x 30 cm v ledu tlustém 25 cm = 30x30x25 = 22500 cm<span class="upper-index">3</span> = 22.5 litru
     </div>
     <label>
         Jednotka objemu
         <select name="<?= $controller::VOLUME_UNIT ?>">
             <?php foreach ($controller->getVolumeUnits() as $volumeUnit) { ?>
                 <option value="<?= $volumeUnit->getValue() ?>"
-                        <?php if ($controller->getSelectedVolumeUnit()->getValue() === $volumeUnit->getValue()) { ?>selected="selected"<?php } ?>><?= $volumeUnit->getValue() ?></option>
+                        <?php if ($controller->getSelectedVolumeUnit()->getValue() === $volumeUnit->getValue()) { ?>selected="selected"<?php } ?>><?= $volumeUnit->translateTo('cs') ?></option>
             <?php } ?>
         </select>
     </label>
@@ -91,13 +91,13 @@ try {
     $fatigueFromVoluminousItemDestruction = $realTimeOfVoluminousItemDestruction->getFatigue();
     ?>
     <div>
-        Únava <?= $fatigueFromVoluminousItemDestruction->getValue() ?>
+        Únava <strong><?= $fatigueFromVoluminousItemDestruction->getValue() ?></strong>
     </div>
     <?php
 } catch (CanNotConvertThatBonusToTime $canNotConvertThatBonusToTime) {
     ?>
     <div class="error">
-        Únava mimo rozsah
+        Únava <strong>mimo rozsah</strong>
     </div>
     <?php
 }
