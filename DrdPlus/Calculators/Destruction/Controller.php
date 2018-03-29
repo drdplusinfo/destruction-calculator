@@ -95,6 +95,10 @@ class Controller extends \DrdPlus\Configurator\Skeleton\Controller
         return VolumeUnitCode::getIt($defaultUnitValue);
     }
 
+    /**
+     * @return float
+     * @throws \DrdPlus\Calculators\Destruction\Exceptions\UnknownVolumeUnit
+     */
     public function getSelectedVolumeValue(): float
     {
         $selectedVolumeUnit = $this->getSelectedVolumeUnit();
@@ -112,7 +116,7 @@ class Controller extends \DrdPlus\Configurator\Skeleton\Controller
 
                 return \min(0.9/** maximal cubic meters for @see VolumeTable */, $minimal);
             default :
-                throw new \LogicException('Unknown volume unit ' . $selectedVolumeUnit);
+                throw new Exceptions\UnknownVolumeUnit('Unknown volume unit ' . $selectedVolumeUnit);
         }
     }
 
@@ -128,6 +132,10 @@ class Controller extends \DrdPlus\Configurator\Skeleton\Controller
         return MaterialCode::getIt($defaultMaterialValue);
     }
 
+    /**
+     * @return MeleeWeaponlikeCode
+     * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownMeleeWeaponlike
+     */
     public function getSelectedMeleeWeaponlike(): MeleeWeaponlikeCode
     {
         $meleeWeaponlikeValue = $this->getHistory()->getValue(self::SELECTED_MELEE_WEAPONLIKE);
@@ -141,6 +149,11 @@ class Controller extends \DrdPlus\Configurator\Skeleton\Controller
         return $this->tables->getArmourer()->getMeleeWeaponlikeCode($defaultMeleeWeaponlikeValue);
     }
 
+    /**
+     * @return IntegerInterface
+     * @throws \Granam\Integer\Tools\Exceptions\WrongParameterType
+     * @throws \Granam\Integer\Tools\Exceptions\ValueLostOnCast
+     */
     public function getSelectedRollOnDestructing(): IntegerInterface
     {
         return new IntegerObject($this->getHistory()->getValue(self::ROLL_ON_DESTRUCTING) ?? 6);
@@ -152,11 +165,21 @@ class Controller extends \DrdPlus\Configurator\Skeleton\Controller
         return (bool)$this->getHistory()->getValue(self::WEAPON_IS_INAPPROPRIATE);
     }
 
+    /**
+     * @return Strength
+     * @throws \Granam\Integer\Tools\Exceptions\WrongParameterType
+     * @throws \Granam\Integer\Tools\Exceptions\ValueLostOnCast
+     */
     public function getSelectedStrength(): Strength
     {
         return Strength::getIt($this->getHistory()->getValue(self::STRENGTH) ?? 0);
     }
 
+    /**
+     * @return IntegerInterface
+     * @throws \Granam\Integer\Tools\Exceptions\WrongParameterType
+     * @throws \Granam\Integer\Tools\Exceptions\ValueLostOnCast
+     */
     public function getSelectedItemSize(): IntegerInterface
     {
         return new IntegerObject($this->getHistory()->getValue(self::ITEM_SIZE) ?? 0);
@@ -179,6 +202,19 @@ class Controller extends \DrdPlus\Configurator\Skeleton\Controller
         return ItemHoldingCode::getIt($defaultItemHoldingValue);
     }
 
+    /**
+     * @return RealTimeOfDestruction
+     * @throws \DrdPlus\Calculators\Destruction\Exceptions\UnknownVolumeUnit
+     * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotUseMeleeWeaponlikeBecauseOfMissingStrength
+     * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownArmament
+     * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownWeaponlike
+     * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownMeleeWeaponlike
+     * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByTwoHands
+     * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByOneHand
+     * @throws \Granam\Integer\Tools\Exceptions\WrongParameterType
+     * @throws \Granam\Integer\Tools\Exceptions\ValueLostOnCast
+     * @throws \DrdPlus\Tables\Environments\Exceptions\UnknownMaterialToGetResistanceFor
+     */
     public function getRealTimeOfVoluminousItemDestruction(): RealTimeOfDestruction
     {
         $volume = new Volume($this->getSelectedVolumeValue(), $this->getSelectedVolumeUnit(), $this->tables->getVolumeTable());
@@ -190,9 +226,21 @@ class Controller extends \DrdPlus\Configurator\Skeleton\Controller
         );
     }
 
+    /**
+     * @return RealTimeOfDestruction
+     * @throws \DrdPlus\Calculators\Destruction\Exceptions\UnknownVolumeUnit
+     * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotUseMeleeWeaponlikeBecauseOfMissingStrength
+     * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownArmament
+     * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownWeaponlike
+     * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownMeleeWeaponlike
+     * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByTwoHands
+     * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByOneHand
+     * @throws \Granam\Integer\Tools\Exceptions\WrongParameterType
+     * @throws \Granam\Integer\Tools\Exceptions\ValueLostOnCast
+     * @throws \DrdPlus\Tables\Environments\Exceptions\UnknownMaterialToGetResistanceFor
+     */
     public function getRealTimeOfBasicItemDestruction(): RealTimeOfDestruction
     {
-
         return new RealTimeOfDestruction(
             BaseTimeOfDestruction::createForItemSize($this->getSelectedItemSize(), $this->tables->getTimeTable()),
             $this->getRollOnDestruction(),
@@ -200,6 +248,19 @@ class Controller extends \DrdPlus\Configurator\Skeleton\Controller
         );
     }
 
+    /**
+     * @return RollOnDestruction
+     * @throws \DrdPlus\Calculators\Destruction\Exceptions\UnknownVolumeUnit
+     * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotUseMeleeWeaponlikeBecauseOfMissingStrength
+     * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownArmament
+     * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownWeaponlike
+     * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownMeleeWeaponlike
+     * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByTwoHands
+     * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByOneHand
+     * @throws \Granam\Integer\Tools\Exceptions\WrongParameterType
+     * @throws \Granam\Integer\Tools\Exceptions\ValueLostOnCast
+     * @throws \DrdPlus\Tables\Environments\Exceptions\UnknownMaterialToGetResistanceFor
+     */
     private function getRollOnDestruction(): RollOnDestruction
     {
         $powerOfDestruction = $this->destruction->getPowerOfDestruction(
@@ -220,6 +281,19 @@ class Controller extends \DrdPlus\Configurator\Skeleton\Controller
         );
     }
 
+    /**
+     * @return RealTimeOfDestruction
+     * @throws \DrdPlus\Calculators\Destruction\Exceptions\UnknownVolumeUnit
+     * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotUseMeleeWeaponlikeBecauseOfMissingStrength
+     * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownArmament
+     * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownWeaponlike
+     * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownMeleeWeaponlike
+     * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByTwoHands
+     * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByOneHand
+     * @throws \Granam\Integer\Tools\Exceptions\WrongParameterType
+     * @throws \Granam\Integer\Tools\Exceptions\ValueLostOnCast
+     * @throws \DrdPlus\Tables\Environments\Exceptions\UnknownMaterialToGetResistanceFor
+     */
     public function getRealTimeOfStatueLikeDestruction(): RealTimeOfDestruction
     {
         return new RealTimeOfDestruction(

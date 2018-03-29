@@ -34,7 +34,7 @@ $controller = new Controller(Tables::getIt());
 </form>
 <form class="block" action="" method="get" id="configurator">
     <div class="block remember">
-        <label><input type="checkbox" name="<?= $controller::REMEMBER_HISTORY ?>" value="1"
+        <label><input type="checkbox" name="<?= $controller::REMEMBER_CURRENT ?>" value="1"
                       <?php if ($controller->shouldRemember()) { ?>checked="checked"<?php } ?>>
             Pamatovat <span class="hint">(i při zavření prohlížeče)</span></label>
     </div>

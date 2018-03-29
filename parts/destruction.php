@@ -11,7 +11,7 @@ use \DrdPlus\Tables\Measurements\Time\Exceptions\CanNotConvertThatBonusToTime;
             <?php foreach ($controller->getMaterialCodes() as $materialCode) { ?>
                 <option value="<?= $materialCode ?>"
                         <?php if ($controller->getSelectedMaterial()->getValue() === $materialCode->getValue()) { ?>selected="selected"
-                    <?php } ?>><?= $materialCode->getValue() ?>
+                    <?php } ?>><?= $materialCode->translateTo('cs') ?>
                     (pevnost <?= $controller->getMaterialResistance($materialCode) ?>)
                 </option>
             <?php } ?>
