@@ -55,6 +55,10 @@ h4 {
     margin: 0.5em 0 0.3em;
 }
 
+h5 {
+    margin: 0.5em 0 0.3em;
+}
+
 .upper-index {
     position: relative;
     top: -0.5em;

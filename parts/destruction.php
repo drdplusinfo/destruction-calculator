@@ -1,7 +1,9 @@
 <?php
 namespace DrdPlus\Calculators\Destruction;
 
+use DrdPlus\Codes\Units\TimeUnitCode;
 use \DrdPlus\Tables\Measurements\Time\Exceptions\CanNotConvertThatBonusToTime;
+use DrdPlus\Tables\Measurements\Time\Time;
 
 /** @var Controller $controller */
 ?>
@@ -42,6 +44,9 @@ use \DrdPlus\Tables\Measurements\Time\Exceptions\CanNotConvertThatBonusToTime;
         </div>
     </div>
 </div>
+<?php if (!$controller->getRollOnDestruction()->isSuccess()) {
+    return;
+} ?>
 <div class="block">
     <div class="panel">
         <h4>Něco obyčejného</h4>
@@ -65,6 +70,11 @@ use \DrdPlus\Tables\Measurements\Time\Exceptions\CanNotConvertThatBonusToTime;
                 Únava <strong>mimo rozsah</strong>
             </div>
         <?php } ?>
+        <div class="panel">
+            <h5>Doba ničení něčeho obyčejného</h5>
+            <?php $realTimeOfBasicItemDestruction = $controller->getRealTimeOfBasicItemDestruction()->findTime(Time::HOUR);
+            echo $realTimeOfBasicItemDestruction->getValue() . ' ' . TimeUnitCode::getIt($realTimeOfBasicItemDestruction->getUnit())->translateTo('cs', $realTimeOfBasicItemDestruction->getValue()) ?>
+        </div>
     </div>
 
     <div class="panel">
@@ -89,6 +99,11 @@ use \DrdPlus\Tables\Measurements\Time\Exceptions\CanNotConvertThatBonusToTime;
                 Únava <strong>mimo rozsah</strong>
             </div>
         <?php } ?>
+        <div class="panel">
+            <h5>Doba ničení "sochy"</h5>
+            <?php $realTimeOfStatueLikeDestruction = $controller->getRealTimeOfStatueLikeDestruction()->findTime(Time::HOUR);
+            echo $realTimeOfStatueLikeDestruction->getValue() . ' ' . TimeUnitCode::getIt($realTimeOfStatueLikeDestruction->getUnit())->translateTo('cs', $realTimeOfStatueLikeDestruction->getValue()) ?>
+        </div>
     </div>
 
     <div class="panel">
@@ -103,8 +118,7 @@ use \DrdPlus\Tables\Measurements\Time\Exceptions\CanNotConvertThatBonusToTime;
         </label>
         <div class="example">
             například díra 30 cm x 30 cm v ledu tlustém 25 cm = 30x30x25 = 22500 cm<span class="upper-index">3</span> =
-            22.5
-            litru
+            22.5 litru
         </div>
         <label>
             Jednotka objemu
@@ -131,5 +145,10 @@ use \DrdPlus\Tables\Measurements\Time\Exceptions\CanNotConvertThatBonusToTime;
             </div>
             <?php
         } ?>
+        <div class="panel">
+            <h5>Doba ničení něčeho tlustšího</h5>
+            <?php $realTimeOfVoluminousItemDestruction = $controller->getRealTimeOfVoluminousItemDestruction()->findTime(Time::HOUR);
+            echo $realTimeOfVoluminousItemDestruction->getValue() . ' ' . TimeUnitCode::getIt($realTimeOfVoluminousItemDestruction->getUnit())->translateTo('cs', $realTimeOfVoluminousItemDestruction->getValue()) ?>
+        </div>
     </div>
 </div>
