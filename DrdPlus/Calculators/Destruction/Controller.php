@@ -196,6 +196,11 @@ class Controller extends \DrdPlus\Calculators\AttackSkeleton\Controller
         return Size::getIt($this->getHistory()->getValue(self::BODY_SIZE) ?? 0);
     }
 
+    public function getTimeOfVoluminousItemDestruction(): ?Time
+    {
+        return $this->getTimeOfDestruction($this->getRealTimeOfVoluminousItemDestruction());
+    }
+
     /**
      * @return RealTimeOfDestruction
      * @throws \DrdPlus\Calculators\Destruction\Exceptions\UnknownVolumeUnit
@@ -209,7 +214,7 @@ class Controller extends \DrdPlus\Calculators\AttackSkeleton\Controller
      * @throws \Granam\Integer\Tools\Exceptions\ValueLostOnCast
      * @throws \DrdPlus\Tables\Environments\Exceptions\UnknownMaterialToGetResistanceFor
      */
-    public function getRealTimeOfVoluminousItemDestruction(): RealTimeOfDestruction
+    private function getRealTimeOfVoluminousItemDestruction(): RealTimeOfDestruction
     {
         $volume = new Volume($this->getSelectedVolumeValue(), $this->getSelectedVolumeUnit(), $this->tables->getVolumeTable());
 
@@ -220,15 +225,28 @@ class Controller extends \DrdPlus\Calculators\AttackSkeleton\Controller
         );
     }
 
+    public function getFatigueFromVoluminousItemDestruction(): ?Fatigue
+    {
+        try {
+            return $this->getRealTimeOfVoluminousItemDestruction()->getFatigue();
+        } catch (CanNotConvertThatBonusToTime $canNotConvertThatBonusToTime) {
+            return null;
+        }
+    }
+
     public function getTimeOfBasicItemDestruction(): ?Time
     {
-        $realTimeOfBasicItemDestruction = $this->getRealTimeOfBasicItemDestruction();
-        $inHours = $realTimeOfBasicItemDestruction->findTime(TimeUnitCode::HOUR);
+        return $this->getTimeOfDestruction($this->getRealTimeOfBasicItemDestruction());
+    }
+
+    private function getTimeOfDestruction(RealTimeOfDestruction $realTimeOfDestruction): ?Time
+    {
+        $inHours = $realTimeOfDestruction->findTime(TimeUnitCode::HOUR);
         if ($inHours) {
             return $inHours;
         }
 
-        return $realTimeOfBasicItemDestruction->findTime();
+        return $realTimeOfDestruction->findTime();
     }
 
     /**
@@ -316,6 +334,11 @@ class Controller extends \DrdPlus\Calculators\AttackSkeleton\Controller
         );
     }
 
+    public function getTimeOfStatueLikeDestruction(): ?Time
+    {
+        return $this->getTimeOfDestruction($this->getRealTimeOfStatueLikeDestruction());
+    }
+
     /**
      * @return RealTimeOfDestruction
      * @throws \DrdPlus\Calculators\Destruction\Exceptions\UnknownVolumeUnit
@@ -329,12 +352,21 @@ class Controller extends \DrdPlus\Calculators\AttackSkeleton\Controller
      * @throws \Granam\Integer\Tools\Exceptions\ValueLostOnCast
      * @throws \DrdPlus\Tables\Environments\Exceptions\UnknownMaterialToGetResistanceFor
      */
-    public function getRealTimeOfStatueLikeDestruction(): RealTimeOfDestruction
+    private function getRealTimeOfStatueLikeDestruction(): RealTimeOfDestruction
     {
         return new RealTimeOfDestruction(
             BaseTimeOfDestruction::createForBodySize($this->getSelectedBodySize(), $this->tables->getTimeTable()),
             $this->getRollOnDestruction(),
             $this->tables
         );
+    }
+
+    public function getFatigueFromStatueLikeDestruction(): ?Fatigue
+    {
+        try {
+            return $this->getRealTimeOfStatueLikeDestruction()->getFatigue();
+        } catch (CanNotConvertThatBonusToTime $canNotConvertThatBonusToTime) {
+            return null;
+        }
     }
 }

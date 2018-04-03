@@ -2,8 +2,6 @@
 namespace DrdPlus\Calculators\Destruction;
 
 use DrdPlus\Codes\Units\TimeUnitCode;
-use \DrdPlus\Tables\Measurements\Time\Exceptions\CanNotConvertThatBonusToTime;
-use DrdPlus\Tables\Measurements\Time\Time;
 
 /** @var Controller $controller */
 ?>
@@ -67,7 +65,7 @@ use DrdPlus\Tables\Measurements\Time\Time;
             </div>
         <?php } ?>
         <div class="panel">
-            Doba ničení něčeho obyčejného
+            Doba ničení <span class="keyword">něčeho obyčejného</span>
             <?php $realTimeOfBasicItemDestruction = $controller->getTimeOfBasicItemDestruction();
             if (!$realTimeOfBasicItemDestruction) { ?>
                 <div class="error">
@@ -86,28 +84,20 @@ use DrdPlus\Tables\Measurements\Time\Time;
         </div>
         <label>Velikost "těla" <input type="number" value="<?= $controller->getSelectedBodySize() ?>"
                                       name="<?= $controller::BODY_SIZE ?>"></label>
-        <?php $realTimeOfStatueLikeDestruction = $controller->getRealTimeOfStatueLikeDestruction();
-        $fatigueFromStatueLikeDestruction = null;
-        try {
-            $fatigueFromStatueLikeDestruction = $realTimeOfStatueLikeDestruction->getFatigue();
-            ?>
-            <div>
-                Únava <strong><?= $fatigueFromStatueLikeDestruction->getValue() ?></strong>
-            </div>
-            <?php
-        } catch (CanNotConvertThatBonusToTime $canNotConvertThatBonusToTime) {
-            ?>
-            <div class="error">
-                Únava <strong>mimo rozsah</strong>
-            </div>
+        <?php $fatigueFromStatueLikeDestruction = $controller->getFatigueFromStatueLikeDestruction();
+        if (!$fatigueFromStatueLikeDestruction) { ?>
+            <div class="error">Únava <strong>mimo rozsah</strong></div>
+        <?php } else { ?>
+            <div>Únava <strong><?= $fatigueFromStatueLikeDestruction->getValue() ?></strong></div>
         <?php } ?>
         <div class="panel">
             Doba ničení <span class="keyword">sochy</span>
-            <?php $realTimeOfStatueLikeDestruction = $controller->getRealTimeOfStatueLikeDestruction()->findTime(Time::HOUR);
-            if (!$realTimeOfStatueLikeDestruction) {
-                $realTimeOfStatueLikeDestruction = $controller->getRealTimeOfStatueLikeDestruction()->getTime();
-            } ?>
-            <strong><?= $realTimeOfStatueLikeDestruction->getValue() . ' ' . TimeUnitCode::getIt($realTimeOfStatueLikeDestruction->getUnit())->translateTo('cs', $realTimeOfStatueLikeDestruction->getValue()) ?></strong>
+            <?php $timeOfStatueLikeDestruction = $controller->getTimeOfStatueLikeDestruction();
+            if (!$timeOfStatueLikeDestruction) { ?>
+                <div class="error">Doba ničení <strong>mimo rozsah</strong></div>
+            <?php } else { ?>
+                <strong><?= $timeOfStatueLikeDestruction->getValue() . ' ' . TimeUnitCode::getIt($timeOfStatueLikeDestruction->getUnit())->translateTo('cs', $timeOfStatueLikeDestruction->getValue()) ?></strong>
+            <?php } ?>
         </div>
     </div>
 
@@ -134,29 +124,20 @@ use DrdPlus\Tables\Measurements\Time\Time;
                 <?php } ?>
             </select>
         </label>
-        <?php $realTimeOfVoluminousItemDestruction = $controller->getRealTimeOfVoluminousItemDestruction();
-        $fatigueFromVoluminousItemDestruction = null;
-        try {
-            $fatigueFromVoluminousItemDestruction = $realTimeOfVoluminousItemDestruction->getFatigue();
-            ?>
-            <div>
-                Únava <strong><?= $fatigueFromVoluminousItemDestruction->getValue() ?></strong>
-            </div>
-            <?php
-        } catch (CanNotConvertThatBonusToTime $canNotConvertThatBonusToTime) {
-            ?>
-            <div class="error">
-                Únava <strong>mimo rozsah</strong>
-            </div>
-            <?php
-        } ?>
+        <?php $fatigueFromVoluminousItemDestruction = $controller->getFatigueFromVoluminousItemDestruction();
+        if (!$fatigueFromVoluminousItemDestruction) { ?>
+            <div class="error">Únava <strong>mimo rozsah</strong></div>
+        <?php } else { ?>
+            <div>Únava <strong><?= $fatigueFromVoluminousItemDestruction->getValue() ?></strong></div>
+        <?php } ?>
         <div class="panel">
             Doba ničení <span class="keyword">něčeho plošného</span>
-            <?php $realTimeOfVoluminousItemDestruction = $controller->getRealTimeOfVoluminousItemDestruction()->findTime(Time::HOUR);
-            if (!$realTimeOfVoluminousItemDestruction) {
-                $realTimeOfVoluminousItemDestruction = $controller->getRealTimeOfVoluminousItemDestruction()->getTime();
-            } ?>
-            <strong><?= $realTimeOfVoluminousItemDestruction->getValue() . ' ' . TimeUnitCode::getIt($realTimeOfVoluminousItemDestruction->getUnit())->translateTo('cs', $realTimeOfVoluminousItemDestruction->getValue()) ?></strong>
+            <?php $realTimeOfVoluminousItemDestruction = $controller->getTimeOfVoluminousItemDestruction();
+            if (!$realTimeOfVoluminousItemDestruction) { ?>
+                <div class="error">Doba ničení mimo rozsah</div>
+            <?php } else { ?>
+                <strong><?= $realTimeOfVoluminousItemDestruction->getValue() . ' ' . TimeUnitCode::getIt($realTimeOfVoluminousItemDestruction->getUnit())->translateTo('cs', $realTimeOfVoluminousItemDestruction->getValue()) ?></strong>
+            <?php } ?>
         </div>
     </div>
 
@@ -183,29 +164,20 @@ use DrdPlus\Tables\Measurements\Time\Time;
                 <?php } ?>
             </select>
         </label>
-        <?php $realTimeOfVoluminousItemDestruction = $controller->getRealTimeOfVoluminousItemDestruction();
-        $fatigueFromVoluminousItemDestruction = null;
-        try {
-            $fatigueFromVoluminousItemDestruction = $realTimeOfVoluminousItemDestruction->getFatigue();
-            ?>
-            <div>
-                Únava <strong><?= $fatigueFromVoluminousItemDestruction->getValue() ?></strong>
-            </div>
-            <?php
-        } catch (CanNotConvertThatBonusToTime $canNotConvertThatBonusToTime) {
-            ?>
-            <div class="error">
-                Únava <strong>mimo rozsah</strong>
-            </div>
-            <?php
-        } ?>
+        <?php $fatigueFromVoluminousItemDestruction = $controller->getFatigueFromVoluminousItemDestruction();
+        if (!$fatigueFromVoluminousItemDestruction) { ?>
+            <div class="error">Únava <strong>mimo rozsah</strong></div>
+        <?php } else { ?>
+            <div>Únava <strong><?= $fatigueFromVoluminousItemDestruction->getValue() ?></strong></div>
+        <?php } ?>
         <div class="panel">
             Doba ničení <span class="keyword">něčeho tlustšího</span>
-            <?php $realTimeOfVoluminousItemDestruction = $controller->getRealTimeOfVoluminousItemDestruction()->findTime(Time::HOUR);
-            if (!$realTimeOfVoluminousItemDestruction) {
-                $realTimeOfVoluminousItemDestruction = $controller->getRealTimeOfVoluminousItemDestruction()->getTime();
-            } ?>
-            <strong><?= $realTimeOfVoluminousItemDestruction->getValue() . ' ' . TimeUnitCode::getIt($realTimeOfVoluminousItemDestruction->getUnit())->translateTo('cs', $realTimeOfVoluminousItemDestruction->getValue()) ?></strong>
+            <?php $realTimeOfVoluminousItemDestruction = $controller->getTimeOfVoluminousItemDestruction();
+            if (!$realTimeOfVoluminousItemDestruction) { ?>
+                <div class="error">Doba ničení mimo rozsah</div>
+            <?php } else { ?>
+                <strong><?= $realTimeOfVoluminousItemDestruction->getValue() . ' ' . TimeUnitCode::getIt($realTimeOfVoluminousItemDestruction->getUnit())->translateTo('cs', $realTimeOfVoluminousItemDestruction->getValue()) ?></strong>
+            <?php } ?>
         </div>
     </div>
 </div>
