@@ -44,8 +44,9 @@ use DrdPlus\Tables\Measurements\Time\Time;
         </div>
     </div>
 </div>
-<?php if (!$controller->getRollOnDestruction()->isSuccess()) {
-    return;
+<?php if (!$controller->getRollOnDestruction()->isSuccess()) { ?>
+    <div class="block note">Zatím žádný čas ani únava z ničení</div>
+    <?php return;
 } ?>
 <div class="block">
     <div class="panel">
