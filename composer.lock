@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e99dc504145aa1b13c43df9985cf9f2c",
-    "content-hash": "bde5fe8b3901d2f50c81aeb540d88e3c",
+    "hash": "630ff3645d0fc8ca83cf1476a7a0f5de",
+    "content-hash": "a813b1e2dfb7772f4b823097a52f23ce",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -666,6 +666,53 @@
             "time": "2017-09-24 14:55:40"
         },
         {
+            "name": "doctrineum/date-interval",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jaroslavtyc/doctrineum-date-interval.git",
+                "reference": "5b5554a2c683e775053bacb113c00bbf13411e53"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jaroslavtyc/doctrineum-date-interval/zipball/5b5554a2c683e775053bacb113c00bbf13411e53",
+                "reference": "5b5554a2c683e775053bacb113c00bbf13411e53",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/dbal": "~2,>=2.2.3",
+                "doctrineum/self-registering-type": "dev-master",
+                "ext-bcmath": "*",
+                "granam/date-interval": "dev-master",
+                "php": ">=7.1"
+            },
+            "require-dev": {
+                "doctrine/orm": "~2,>=2.2.3",
+                "ext-pdo_sqlite": "*",
+                "mockery/mockery": "~0.9",
+                "phpunit/phpunit": "~6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Doctrineum\\": "Doctrineum"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Adds DateInterval to Doctrine DBAL and ORM",
+            "homepage": "https://github.com/jaroslavtyc/doctrineum-date-interval",
+            "keywords": [
+                "date",
+                "dateinterval",
+                "doctrine",
+                "interval"
+            ],
+            "time": "2017-09-24 14:54:47"
+        },
+        {
             "name": "doctrineum/entity",
             "version": "dev-master",
             "source": {
@@ -914,6 +961,108 @@
             "time": "2017-09-13 06:56:42"
         },
         {
+            "name": "doctrineum/string",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jaroslavtyc/doctrineum-string.git",
+                "reference": "173d8905527c91e331d3d03f93831218ab672dcf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jaroslavtyc/doctrineum-string/zipball/173d8905527c91e331d3d03f93831218ab672dcf",
+                "reference": "173d8905527c91e331d3d03f93831218ab672dcf",
+                "shasum": ""
+            },
+            "require": {
+                "doctrineum/scalar": "dev-master",
+                "granam/string": "dev-master",
+                "php": ">=7.1"
+            },
+            "require-dev": {
+                "granam/exceptions-hierarchy": "~4.0",
+                "mockery/mockery": "~0.9",
+                "phpunit/phpunit": "~6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Doctrineum\\": "Doctrineum/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jaroslav Týc",
+                    "email": "mail@jaroslavtyc.com",
+                    "homepage": "http://jaroslavtyc.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "String-only enumeration type and value dependent sub-type for Doctrine",
+            "keywords": [
+                "doctrine",
+                "enum",
+                "self-typed enum",
+                "string",
+                "sub-type",
+                "value-dependent enum"
+            ],
+            "time": "2017-09-24 14:52:11"
+        },
+        {
+            "name": "drd-plus/attack-skeleton",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jaroslavtyc/drd-plus-attack-skeleton.git",
+                "reference": "82e30697566e253b708356eb9e67fd01067678ea"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-attack-skeleton/zipball/82e30697566e253b708356eb9e67fd01067678ea",
+                "reference": "82e30697566e253b708356eb9e67fd01067678ea",
+                "shasum": ""
+            },
+            "require": {
+                "drd-plus/calculator-skeleton": "dev-master",
+                "drd-plus/fight-properties": "dev-master",
+                "drd-plus/tables": "dev-master",
+                "granam/strict-object": "dev-master",
+                "php": ">=7.1"
+            },
+            "require-dev": {
+                "granam/exceptions-hierarchy": "~4.0",
+                "mockery/mockery": "~1.0",
+                "phpgt/dom": "^1.0",
+                "phpunit/phpunit": "~6.0",
+                "roave/security-advisories": "dev-master"
+            },
+            "type": "project",
+            "autoload": {
+                "psr-4": {
+                    "DrdPlus\\": "DrdPlus/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Configurator skeleton for those using weapons for DrD+",
+            "keywords": [
+                "Skeleton",
+                "attack",
+                "calculator",
+                "drd",
+                "drd plus",
+                "weapons"
+            ],
+            "time": "2018-04-02 14:04:35"
+        },
+        {
             "name": "drd-plus/background",
             "version": "dev-master",
             "source": {
@@ -1072,6 +1221,44 @@
             "time": "2018-03-29 13:45:31"
         },
         {
+            "name": "drd-plus/combat-actions",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jaroslavtyc/drd-plus-combat-actions.git",
+                "reference": "c6eae8d2eddf4ce74f4388ba783b62a424b52630"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-combat-actions/zipball/c6eae8d2eddf4ce74f4388ba783b62a424b52630",
+                "reference": "c6eae8d2eddf4ce74f4388ba783b62a424b52630",
+                "shasum": ""
+            },
+            "require": {
+                "drd-plus/codes": "dev-master",
+                "drd-plus/properties": "dev-master",
+                "drd-plus/skills": "dev-master",
+                "php": ">=7.0"
+            },
+            "require-dev": {
+                "granam/exceptions-hierarchy": "~4.0",
+                "mockery/mockery": "~0.9",
+                "phpunit/phpunit": "~6.0"
+            },
+            "type": "project",
+            "autoload": {
+                "psr-4": {
+                    "DrdPlus\\": "DrdPlus/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Combat actions usable in Drd+",
+            "time": "2017-05-30 05:50:42"
+        },
+        {
             "name": "drd-plus/destruction",
             "version": "dev-master",
             "source": {
@@ -1169,6 +1356,92 @@
                 "roll"
             ],
             "time": "2018-02-21 07:14:03"
+        },
+        {
+            "name": "drd-plus/fight-properties",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jaroslavtyc/drd-plus-fight-properties.git",
+                "reference": "f0072c5939a649ec24b3192ec781957052459ad7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-fight-properties/zipball/f0072c5939a649ec24b3192ec781957052459ad7",
+                "reference": "f0072c5939a649ec24b3192ec781957052459ad7",
+                "shasum": ""
+            },
+            "require": {
+                "drd-plus/combat-actions": "dev-master",
+                "drd-plus/health": "dev-master",
+                "drd-plus/properties-by-levels": "dev-master",
+                "drd-plus/skills": "dev-master",
+                "php": ">=7.0"
+            },
+            "require-dev": {
+                "granam/exceptions-hierarchy": "~4.0",
+                "mockery/mockery": "1.0.x-dev",
+                "phpunit/phpunit": "~6.0"
+            },
+            "type": "project",
+            "autoload": {
+                "psr-4": {
+                    "DrdPlus\\": "DrdPlus/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Final properties including battle statistics, current afflictions and boosts and by first and next levels of them for Drd+",
+            "time": "2017-10-07 14:42:06"
+        },
+        {
+            "name": "drd-plus/health",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jaroslavtyc/drd-plus-health.git",
+                "reference": "02699edbf25bf6b270a901924bf7fd055d4ce858"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-health/zipball/02699edbf25bf6b270a901924bf7fd055d4ce858",
+                "reference": "02699edbf25bf6b270a901924bf7fd055d4ce858",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/orm": "2.*",
+                "doctrineum/date-interval": "dev-master",
+                "doctrineum/entity": "dev-master",
+                "doctrineum/integer": "dev-master",
+                "doctrineum/string": "dev-master",
+                "drd-plus/calculations": "dev-master",
+                "drd-plus/lighting": "dev-master",
+                "drd-plus/properties": "dev-master",
+                "drd-plus/rolls-on": "dev-master",
+                "drd-plus/skills": "dev-master",
+                "drd-plus/tables": "dev-master",
+                "php": ">=7.1",
+                "roave/security-advisories": "dev-master"
+            },
+            "require-dev": {
+                "granam/exceptions-hierarchy": "~4.0",
+                "mockery/mockery": "~1.0",
+                "phpunit/phpunit": "~6.0"
+            },
+            "type": "project",
+            "autoload": {
+                "psr-4": {
+                    "DrdPlus\\": "DrdPlus/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Body and soul harms, afflictions and their treatment of a being for Drd+",
+            "time": "2018-01-07 08:30:56"
         },
         {
             "name": "drd-plus/hunting-and-fishing",
@@ -1296,12 +1569,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jaroslavtyc/drd-plus-professions.git",
-                "reference": "fbcde6e9317ce475e82269431b375005131a583b"
+                "reference": "bdba46b1121e68ba08c01ef9cfab45bcfd89b5de"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-professions/zipball/fbcde6e9317ce475e82269431b375005131a583b",
-                "reference": "fbcde6e9317ce475e82269431b375005131a583b",
+                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-professions/zipball/bdba46b1121e68ba08c01ef9cfab45bcfd89b5de",
+                "reference": "bdba46b1121e68ba08c01ef9cfab45bcfd89b5de",
                 "shasum": ""
             },
             "require": {
@@ -1327,7 +1600,7 @@
                 "MIT"
             ],
             "description": "Professions of Drd+",
-            "time": "2017-09-24 14:13:20"
+            "time": "2018-04-01 13:39:37"
         },
         {
             "name": "drd-plus/properties",
@@ -1372,6 +1645,140 @@
             ],
             "description": "Drd+ properties",
             "time": "2017-10-05 14:24:54"
+        },
+        {
+            "name": "drd-plus/properties-by-fate",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jaroslavtyc/drd-plus-properties-by-fate.git",
+                "reference": "04179110d2af7675f75a416d16de1cb079fb6b06"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-properties-by-fate/zipball/04179110d2af7675f75a416d16de1cb079fb6b06",
+                "reference": "04179110d2af7675f75a416d16de1cb079fb6b06",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/annotations": "~1.2",
+                "doctrineum/entity": "dev-master",
+                "drd-plus/dice-rolls": "dev-master",
+                "drd-plus/professions": "dev-master",
+                "drd-plus/properties": "dev-master",
+                "granam/scalar": "dev-master",
+                "granam/strict-object": "dev-master",
+                "granam/string": "dev-master",
+                "php": ">=7.1",
+                "roave/security-advisories": "dev-master"
+            },
+            "require-dev": {
+                "granam/exceptions-hierarchy": "~4.0",
+                "mockery/mockery": "~1.0",
+                "phpunit/phpunit": "~6.0"
+            },
+            "type": "project",
+            "autoload": {
+                "psr-4": {
+                    "DrdPlus\\": "DrdPlus/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jaroslav Týc",
+                    "homepage": "https://www.jaroslavtyc.com",
+                    "role": "Original author"
+                }
+            ],
+            "description": "Exceptional properties by choose or fortune for DrD+",
+            "time": "2017-11-29 07:55:20"
+        },
+        {
+            "name": "drd-plus/properties-by-levels",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jaroslavtyc/drd-plus-properties-by-levels.git",
+                "reference": "e35a03e79e95c2d7d65cd6f17151096a8199d85a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-properties-by-levels/zipball/e35a03e79e95c2d7d65cd6f17151096a8199d85a",
+                "reference": "e35a03e79e95c2d7d65cd6f17151096a8199d85a",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/annotations": "~1.2",
+                "drd-plus/profession-levels": "dev-master",
+                "drd-plus/properties": "dev-master",
+                "drd-plus/properties-by-fate": "dev-master",
+                "drd-plus/properties-by-levels": "dev-master",
+                "drd-plus/races": "dev-master",
+                "drd-plus/tables": "dev-master",
+                "php": ">=7.1",
+                "roave/security-advisories": "dev-master"
+            },
+            "require-dev": {
+                "granam/exceptions-hierarchy": "~4.0",
+                "mockery/mockery": "~0.9",
+                "phpunit/phpunit": "~6.0"
+            },
+            "type": "project",
+            "autoload": {
+                "psr-4": {
+                    "DrdPlus\\": "DrdPlus/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Total properties and by first and next levels of them for Drd+",
+            "time": "2017-10-03 13:31:16"
+        },
+        {
+            "name": "drd-plus/races",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jaroslavtyc/drd-plus-races.git",
+                "reference": "cf7fc1b24c28e969a1fc68dee774be944ddce6dc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-races/zipball/cf7fc1b24c28e969a1fc68dee774be944ddce6dc",
+                "reference": "cf7fc1b24c28e969a1fc68dee774be944ddce6dc",
+                "shasum": ""
+            },
+            "require": {
+                "doctrineum/scalar": "dev-master",
+                "drd-plus/tables": "dev-master",
+                "granam/strict-object": "dev-master",
+                "granam/tools": "dev-master",
+                "php": ">=7.1",
+                "roave/security-advisories": "dev-master"
+            },
+            "require-dev": {
+                "granam/exceptions-hierarchy": "~4.0",
+                "mockery/mockery": "~0.9",
+                "phpunit/phpunit": "~6.0"
+            },
+            "type": "project",
+            "autoload": {
+                "psr-4": {
+                    "DrdPlus\\": "DrdPlus/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Drd+ races",
+            "time": "2017-09-25 06:52:04"
         },
         {
             "name": "drd-plus/rolls-on",
@@ -1465,12 +1872,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jaroslavtyc/drd-plus-tables.git",
-                "reference": "a1d8b557bb6d7867033bcb133e934227dfa4f2b5"
+                "reference": "0c586a017567083da7af3ab4b8f0c5a08e352fb6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-tables/zipball/a1d8b557bb6d7867033bcb133e934227dfa4f2b5",
-                "reference": "a1d8b557bb6d7867033bcb133e934227dfa4f2b5",
+                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-tables/zipball/0c586a017567083da7af3ab4b8f0c5a08e352fb6",
+                "reference": "0c586a017567083da7af3ab4b8f0c5a08e352fb6",
                 "shasum": ""
             },
             "require": {
@@ -1502,7 +1909,7 @@
                 "MIT"
             ],
             "description": "Drd+ tables and their units conversion",
-            "time": "2018-02-18 14:21:18"
+            "time": "2018-03-31 12:13:39"
         },
         {
             "name": "granam/boolean",
@@ -1552,6 +1959,55 @@
                 "php"
             ],
             "time": "2017-02-19 12:08:54"
+        },
+        {
+            "name": "granam/date-interval",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jaroslavtyc/granam-date-interval.git",
+                "reference": "e6f6b5655084184fe7b6d334f7f70cfa469f5953"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jaroslavtyc/granam-date-interval/zipball/e6f6b5655084184fe7b6d334f7f70cfa469f5953",
+                "reference": "e6f6b5655084184fe7b6d334f7f70cfa469f5953",
+                "shasum": ""
+            },
+            "require": {
+                "ext-bcmath": "*",
+                "php": ">=7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Granam\\": "Granam"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kevin Herrera",
+                    "email": "kevin@herrera.io",
+                    "homepage": "http://kevin.herrera.io/"
+                }
+            ],
+            "description": "Provides additional functionality to the DateInterval class",
+            "homepage": "https://github.com/jaroslavtyc/granam-date-interval",
+            "keywords": [
+                "date",
+                "interval",
+                "seconds",
+                "spec",
+                "time"
+            ],
+            "time": "2017-02-19 12:11:03"
         },
         {
             "name": "granam/float",
@@ -1948,12 +2404,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "4a272b63452f4d8ff0d48a759e59db9359a9b5b7"
+                "reference": "c83f6aa0ed08f680c012656d411d1b7c94003012"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/4a272b63452f4d8ff0d48a759e59db9359a9b5b7",
-                "reference": "4a272b63452f4d8ff0d48a759e59db9359a9b5b7",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/c83f6aa0ed08f680c012656d411d1b7c94003012",
+                "reference": "c83f6aa0ed08f680c012656d411d1b7c94003012",
                 "shasum": ""
             },
             "conflict": {
@@ -1984,8 +2440,8 @@
                 "doctrine/mongodb-odm-bundle": ">=2,<3.0.1",
                 "doctrine/orm": ">=2,<2.4.8|>=2.5,<2.5.1",
                 "dompdf/dompdf": ">=0.6,<0.6.2",
-                "drupal/core": ">=8,<8.4.5",
-                "drupal/drupal": ">=8,<8.4.5",
+                "drupal/core": ">=7,<7.58|>=8,<8.4.6|>=8.5,<8.5.1",
+                "drupal/drupal": ">=7,<7.58|>=8,<8.4.6|>=8.5,<8.5.1",
                 "erusev/parsedown": "<1.7",
                 "ezsystems/ezpublish-legacy": ">=5.3,<5.3.12.3|>=5.4,<5.4.11.3|>=2017.8,<2017.8.1.1|>=2017.12,<2017.12.2.1",
                 "firebase/php-jwt": "<2",
@@ -1994,10 +2450,11 @@
                 "gree/jose": "<=2.2",
                 "gregwar/rst": "<1.0.3",
                 "guzzlehttp/guzzle": ">=6,<6.2.1|>=4.0.0-rc2,<4.2.4|>=5,<5.3.1",
-                "illuminate/auth": ">=4,<4.0.99|>=4.1,<4.1.26",
+                "illuminate/auth": ">=4,<4.0.99|>=4.1,<=4.1.31|>=4.2,<=4.2.22|>=5,<=5.0.35|>=5.1,<=5.1.46|>=5.2,<=5.2.45|>=5.3,<=5.3.31|>=5.4,<=5.4.36|>=5.5,<5.5.10",
                 "illuminate/database": ">=4,<4.0.99|>=4.1,<4.1.29",
+                "illuminate/encryption": ">=4,<=4.0.11|>=4.1,<=4.1.31|>=4.2,<=4.2.22|>=5,<=5.0.35|>=5.1,<=5.1.46|>=5.2,<=5.2.45|>=5.3,<=5.3.31|>=5.4,<=5.4.36|>=5.5,<5.5.40|>=5.6,<5.6.15",
                 "joomla/session": "<1.3.1",
-                "laravel/framework": ">=4,<4.0.99|>=4.1,<4.1.29",
+                "laravel/framework": ">=4,<4.0.99|>=4.1,<=4.1.31|>=4.2,<=4.2.22|>=5,<=5.0.35|>=5.1,<=5.1.46|>=5.2,<=5.2.45|>=5.3,<=5.3.31|>=5.4,<=5.4.36|>=5.5,<5.5.40|>=5.6,<5.6.15",
                 "laravel/socialite": ">=1,<1.0.99|>=2,<2.0.10",
                 "magento/magento1ce": ">=1.5.0.1,<1.9.3.2",
                 "magento/magento1ee": ">=1.9,<1.14.3.2",
@@ -2099,7 +2556,7 @@
                 }
             ],
             "description": "Prevents installation of composer packages with known security vulnerabilities: no API, simply require it",
-            "time": "2018-03-22 21:16:54"
+            "time": "2018-04-02 06:47:13"
         },
         {
             "name": "symfony/console",
@@ -3796,6 +4253,7 @@
         "drd-plus/calculator-skeleton": 20,
         "drd-plus/skills": 20,
         "drd-plus/destruction": 20,
+        "drd-plus/attack-skeleton": 20,
         "roave/security-advisories": 20
     },
     "prefer-stable": true,

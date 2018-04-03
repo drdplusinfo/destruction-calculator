@@ -18,6 +18,7 @@ $controller = new Controller(Tables::getIt());
     <link href="css/generic/graphics.css" rel="stylesheet" type="text/css">
     <link href="css/generic/main.css" rel="stylesheet" type="text/css">
     <link href="css/generic/issues.css" rel="stylesheet" type="text/css">
+    <link href="css/attack-skeleton/attack-skeleton.css" rel="stylesheet" type="text/css">
     <link href="css/destruction.css" rel="stylesheet" type="text/css">
     <noscript>
         <link rel="stylesheet" type="text/css" href="css/generic/no_script.css">
@@ -43,8 +44,7 @@ $controller = new Controller(Tables::getIt());
     </div>
 </form>
 <div class="block">
-    <hr>
-    <a href="https://pph.drdplus.info/#niceni">Pravidla pro ničení v PPH</a>
+    <a target="_blank" href="https://pph.drdplus.info/#niceni">Pravidla pro ničení v PPH</a>
 </div>
 <div class="block issues">
     <hr>

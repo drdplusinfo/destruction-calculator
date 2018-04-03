@@ -1,15 +1,12 @@
 <?php
 namespace DrdPlus\Calculators\Destruction;
 
-use DrdPlus\Codes\Armaments\MeleeWeaponCode;
-use DrdPlus\Codes\Armaments\MeleeWeaponlikeCode;
-use DrdPlus\Codes\Armaments\ShieldCode;
 use DrdPlus\Codes\Environment\MaterialCode;
-use DrdPlus\Codes\ItemHoldingCode;
 use DrdPlus\Codes\Units\VolumeUnitCode;
 use DrdPlus\Destruction\BaseTimeOfDestruction;
 use DrdPlus\Destruction\Destruction;
 use DrdPlus\Destruction\MaterialResistance;
+use DrdPlus\Destruction\PowerOfDestruction;
 use DrdPlus\Destruction\RealTimeOfDestruction;
 use DrdPlus\Destruction\RollOnDestruction;
 use DrdPlus\DiceRolls\Templates\Rollers\Roller2d6DrdPlus;
@@ -21,13 +18,14 @@ use DrdPlus\Tables\Tables;
 use Granam\Integer\IntegerInterface;
 use Granam\Integer\IntegerObject;
 
-class Controller extends \DrdPlus\Configurator\Skeleton\Controller
+class Controller extends \DrdPlus\Calculators\AttackSkeleton\Controller
 {
 
     public const VOLUME_UNIT = 'volume_unit';
     public const VOLUME_VALUE = 'volume_value';
     public const MATERIAL = 'material';
     public const ROLL_ON_DESTRUCTING = 'roll_on_destructing';
+    public const SHOULD_ROLL_ON_DESTRUCTING = 'new_roll_on_destructing';
     public const SELECTED_MELEE_WEAPONLIKE = 'selected_melee_weaponlike';
     public const WEAPON_IS_INAPPROPRIATE = 'weapon_is_inappropriate';
     public const STRENGTH = 'strength';
@@ -40,6 +38,10 @@ class Controller extends \DrdPlus\Configurator\Skeleton\Controller
     /** @var Tables */
     private $tables;
 
+    /**
+     * @param Tables $tables
+     * @throws \DrdPlus\Calculators\AttackSkeleton\Exceptions\BrokenNewArmamentValues
+     */
     public function __construct(Tables $tables)
     {
         parent::__construct('destruction' /* cookies postfix */);
@@ -133,30 +135,30 @@ class Controller extends \DrdPlus\Configurator\Skeleton\Controller
     }
 
     /**
-     * @return MeleeWeaponlikeCode
-     * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownMeleeWeaponlike
-     */
-    public function getSelectedMeleeWeaponlike(): MeleeWeaponlikeCode
-    {
-        $meleeWeaponlikeValue = $this->getHistory()->getValue(self::SELECTED_MELEE_WEAPONLIKE);
-        if ($meleeWeaponlikeValue) {
-            return $this->tables->getArmourer()->getMeleeWeaponlikeCode($meleeWeaponlikeValue);
-        }
-        $possibleValues = MeleeWeaponCode::getPossibleValues();
-        $possibleValues = \array_unique(\array_merge($possibleValues, ShieldCode::getPossibleValues()));
-        $defaultMeleeWeaponlikeValue = \reset($possibleValues);
-
-        return $this->tables->getArmourer()->getMeleeWeaponlikeCode($defaultMeleeWeaponlikeValue);
-    }
-
-    /**
      * @return IntegerInterface
      * @throws \Granam\Integer\Tools\Exceptions\WrongParameterType
      * @throws \Granam\Integer\Tools\Exceptions\ValueLostOnCast
      */
     public function getSelectedRollOnDestructing(): IntegerInterface
     {
-        return new IntegerObject($this->getHistory()->getValue(self::ROLL_ON_DESTRUCTING) ?? 6);
+        static $newRollOnDestructing = null;
+        if ($newRollOnDestructing === null && $this->shouldRollOnDestructing()) {
+            $newRollOnDestructing = Roller2d6DrdPlus::getIt()->roll()->getValue();
+        }
+
+        return new IntegerObject(
+            $newRollOnDestructing ?? $this->getHistory()->getValue(self::ROLL_ON_DESTRUCTING) ?? 6
+        );
+    }
+
+    /**
+     * @return bool
+     * @throws \Granam\Integer\Tools\Exceptions\WrongParameterType
+     * @throws \Granam\Integer\Tools\Exceptions\ValueLostOnCast
+     */
+    public function shouldRollOnDestructing(): bool
+    {
+        return (bool)$this->getHistory()->getValue(self::SHOULD_ROLL_ON_DESTRUCTING);
     }
 
     public function getSelectedWeaponIsInappropriate(): bool
@@ -188,18 +190,6 @@ class Controller extends \DrdPlus\Configurator\Skeleton\Controller
     public function getSelectedBodySize(): Size
     {
         return Size::getIt($this->getHistory()->getValue(self::BODY_SIZE) ?? 0);
-    }
-
-    public function getSelectedWeaponHolding(): ItemHoldingCode
-    {
-        $weaponHoldingValue = $this->getHistory()->getValue(self::WEAPON_HOLDING_VALUE);
-        if ($weaponHoldingValue) {
-            return ItemHoldingCode::getIt($weaponHoldingValue);
-        }
-        $possibleValues = ItemHoldingCode::getPossibleValues();
-        $defaultItemHoldingValue = \reset($possibleValues);
-
-        return ItemHoldingCode::getIt($defaultItemHoldingValue);
     }
 
     /**
@@ -261,23 +251,44 @@ class Controller extends \DrdPlus\Configurator\Skeleton\Controller
      * @throws \Granam\Integer\Tools\Exceptions\ValueLostOnCast
      * @throws \DrdPlus\Tables\Environments\Exceptions\UnknownMaterialToGetResistanceFor
      */
-    private function getRollOnDestruction(): RollOnDestruction
+    public function getRollOnDestruction(): RollOnDestruction
     {
-        $powerOfDestruction = $this->destruction->getPowerOfDestruction(
-            $this->getSelectedMeleeWeaponlike(),
-            $this->getSelectedStrength(),
-            $this->getSelectedWeaponHolding(),
+        return $this->destruction->getRollOnDestruction(
+            $this->getPowerOfDestruction(),
+            $this->getMaterialResistance($this->getSelectedMaterial()),
+            $this->getRollOnDestructing()
+        );
+    }
+
+    /**
+     * @return PowerOfDestruction
+     * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotUseMeleeWeaponlikeBecauseOfMissingStrength
+     * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownArmament
+     * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownWeaponlike
+     * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownMeleeWeaponlike
+     * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByTwoHands
+     * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByOneHand
+     */
+    public function getPowerOfDestruction(): PowerOfDestruction
+    {
+        return $this->destruction->getPowerOfDestruction(
+            $this->getAttack()->getCurrentMeleeWeapon(),
+            $this->getCurrentProperties()->getCurrentStrength(),
+            $this->getAttack()->getCurrentMeleeWeaponHolding(),
             $this->getSelectedWeaponIsInappropriate()
         );
-        $rollOnDestructing = new RollOnQuality(
+    }
+
+    /**
+     * @return RollOnQuality
+     * @throws \Granam\Integer\Tools\Exceptions\WrongParameterType
+     * @throws \Granam\Integer\Tools\Exceptions\ValueLostOnCast
+     */
+    public function getRollOnDestructing(): RollOnQuality
+    {
+        return new RollOnQuality(
             0 /* no preconditions */,
             Roller2d6DrdPlus::getIt()->generateRoll($this->getSelectedRollOnDestructing())
-        );
-
-        return $this->destruction->getRollOnDestruction(
-            $powerOfDestruction,
-            $this->getMaterialResistance($this->getSelectedMaterial()),
-            $rollOnDestructing
         );
     }
 
