@@ -53,27 +53,28 @@ use DrdPlus\Tables\Measurements\Time\Time;
         <div class="example">
             běžný stůl, dlaždice, meč, lopata...
         </div>
-        <?php $realTimeOfBasicItemDestruction = $controller->getRealTimeOfBasicItemDestruction();
-        $fatigueFromBasicItemDestruction = null;
-        try {
-            $fatigueFromBasicItemDestruction = $realTimeOfBasicItemDestruction->getFatigue();
-            ?>
+        <?php $fatigueFromBasicItemDestruction = $controller->getBasicItemDestructionFatigue();
+        if (!$fatigueFromBasicItemDestruction) { ?>
+            <div class="error">
+                Únava <strong>mimo rozsah</strong>
+            </div>
+        <?php } else { ?>
             <label>Velikost věci <input type="number" value="<?= $controller->getSelectedItemSize() ?>"
                                         name="<?= $controller::ITEM_SIZE ?>"></label>
             <div>
                 Únava <strong><?= $fatigueFromBasicItemDestruction->getValue() ?></strong>
             </div>
-            <?php
-        } catch (CanNotConvertThatBonusToTime $canNotConvertThatBonusToTime) {
-            ?>
-            <div class="error">
-                Únava <strong>mimo rozsah</strong>
-            </div>
         <?php } ?>
         <div class="panel">
-            <h5>Doba ničení něčeho obyčejného</h5>
-            <?php $realTimeOfBasicItemDestruction = $controller->getRealTimeOfBasicItemDestruction()->findTime(Time::HOUR);
-            echo $realTimeOfBasicItemDestruction->getValue() . ' ' . TimeUnitCode::getIt($realTimeOfBasicItemDestruction->getUnit())->translateTo('cs', $realTimeOfBasicItemDestruction->getValue()) ?>
+            Doba ničení něčeho obyčejného
+            <?php $realTimeOfBasicItemDestruction = $controller->getTimeOfBasicItemDestruction();
+            if (!$realTimeOfBasicItemDestruction) { ?>
+                <div class="error">
+                    Doba <strong>mimo rozsah</strong>
+                </div>
+            <?php } else { ?>
+                <strong><?= $realTimeOfBasicItemDestruction->getValue() . ' ' . TimeUnitCode::getIt($realTimeOfBasicItemDestruction->getUnit())->translateTo('cs', $realTimeOfBasicItemDestruction->getValue()) ?></strong>
+            <?php } ?>
         </div>
     </div>
 
@@ -100,16 +101,19 @@ use DrdPlus\Tables\Measurements\Time\Time;
             </div>
         <?php } ?>
         <div class="panel">
-            <h5>Doba ničení "sochy"</h5>
+            Doba ničení <span class="keyword">sochy</span>
             <?php $realTimeOfStatueLikeDestruction = $controller->getRealTimeOfStatueLikeDestruction()->findTime(Time::HOUR);
-            echo $realTimeOfStatueLikeDestruction->getValue() . ' ' . TimeUnitCode::getIt($realTimeOfStatueLikeDestruction->getUnit())->translateTo('cs', $realTimeOfStatueLikeDestruction->getValue()) ?>
+            if (!$realTimeOfStatueLikeDestruction) {
+                $realTimeOfStatueLikeDestruction = $controller->getRealTimeOfStatueLikeDestruction()->getTime();
+            } ?>
+            <strong><?= $realTimeOfStatueLikeDestruction->getValue() . ' ' . TimeUnitCode::getIt($realTimeOfStatueLikeDestruction->getUnit())->translateTo('cs', $realTimeOfStatueLikeDestruction->getValue()) ?></strong>
         </div>
     </div>
 
     <div class="panel">
-        <h4>Něco tlustšího</h4>
+        <h4>Něco plošného</h4>
         <div class="example">
-            zeď, bytelné dveře, led..
+            lehké dveře, tenký led..
         </div>
         <label>
             Objem ničeného předmětu či jeho části
@@ -146,9 +150,61 @@ use DrdPlus\Tables\Measurements\Time\Time;
             <?php
         } ?>
         <div class="panel">
-            <h5>Doba ničení něčeho tlustšího</h5>
+            Doba ničení <span class="keyword">něčeho plošného</span>
             <?php $realTimeOfVoluminousItemDestruction = $controller->getRealTimeOfVoluminousItemDestruction()->findTime(Time::HOUR);
-            echo $realTimeOfVoluminousItemDestruction->getValue() . ' ' . TimeUnitCode::getIt($realTimeOfVoluminousItemDestruction->getUnit())->translateTo('cs', $realTimeOfVoluminousItemDestruction->getValue()) ?>
+            if (!$realTimeOfVoluminousItemDestruction) {
+                $realTimeOfVoluminousItemDestruction = $controller->getRealTimeOfVoluminousItemDestruction()->getTime();
+            } ?>
+            <strong><?= $realTimeOfVoluminousItemDestruction->getValue() . ' ' . TimeUnitCode::getIt($realTimeOfVoluminousItemDestruction->getUnit())->translateTo('cs', $realTimeOfVoluminousItemDestruction->getValue()) ?></strong>
+        </div>
+    </div>
+
+    <div class="panel">
+        <h4>Něco tlustšího</h4>
+        <div class="example">
+            tlustá zeď, bytelné dveře, pořádný led..
+        </div>
+        <label>
+            Objem ničeného předmětu či jeho části
+            <input type="number" value="<?= number_format($controller->getSelectedVolumeValue(), 2); ?>"
+                   name="<?= $controller::VOLUME_VALUE ?>">
+        </label>
+        <div class="example">
+            například díra 30 cm x 30 cm v ledu tlustém 25 cm = 30x30x25 = 22500 cm<span class="upper-index">3</span> =
+            22.5 litru
+        </div>
+        <label>
+            Jednotka objemu
+            <select name="<?= $controller::VOLUME_UNIT ?>">
+                <?php foreach ($controller->getVolumeUnits() as $volumeUnit) { ?>
+                    <option value="<?= $volumeUnit->getValue() ?>"
+                            <?php if ($controller->getSelectedVolumeUnit()->getValue() === $volumeUnit->getValue()) { ?>selected="selected"<?php } ?>><?= $volumeUnit->translateTo('cs') ?></option>
+                <?php } ?>
+            </select>
+        </label>
+        <?php $realTimeOfVoluminousItemDestruction = $controller->getRealTimeOfVoluminousItemDestruction();
+        $fatigueFromVoluminousItemDestruction = null;
+        try {
+            $fatigueFromVoluminousItemDestruction = $realTimeOfVoluminousItemDestruction->getFatigue();
+            ?>
+            <div>
+                Únava <strong><?= $fatigueFromVoluminousItemDestruction->getValue() ?></strong>
+            </div>
+            <?php
+        } catch (CanNotConvertThatBonusToTime $canNotConvertThatBonusToTime) {
+            ?>
+            <div class="error">
+                Únava <strong>mimo rozsah</strong>
+            </div>
+            <?php
+        } ?>
+        <div class="panel">
+            Doba ničení <span class="keyword">něčeho tlustšího</span>
+            <?php $realTimeOfVoluminousItemDestruction = $controller->getRealTimeOfVoluminousItemDestruction()->findTime(Time::HOUR);
+            if (!$realTimeOfVoluminousItemDestruction) {
+                $realTimeOfVoluminousItemDestruction = $controller->getRealTimeOfVoluminousItemDestruction()->getTime();
+            } ?>
+            <strong><?= $realTimeOfVoluminousItemDestruction->getValue() . ' ' . TimeUnitCode::getIt($realTimeOfVoluminousItemDestruction->getUnit())->translateTo('cs', $realTimeOfVoluminousItemDestruction->getValue()) ?></strong>
         </div>
     </div>
 </div>

@@ -64,3 +64,7 @@ h5 {
     top: -0.5em;
     font-size: 80%;
 }
+
+.keyword {
+    font-style: italic;
+}

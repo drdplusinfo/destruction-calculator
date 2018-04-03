@@ -16,7 +16,7 @@ $controller = new Controller(Tables::getIt());
     <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="css/generic/graphics.css" rel="stylesheet" type="text/css">
-    <link href="css/generic/main.css" rel="stylesheet" type="text/css">
+    <link href="css/generic/skeleton.css" rel="stylesheet" type="text/css">
     <link href="css/generic/issues.css" rel="stylesheet" type="text/css">
     <link href="css/attack-skeleton/attack-skeleton.css" rel="stylesheet" type="text/css">
     <link href="css/destruction.css" rel="stylesheet" type="text/css">
@@ -44,6 +44,7 @@ $controller = new Controller(Tables::getIt());
     </div>
 </form>
 <div class="block">
+    <hr>
     <a target="_blank" href="https://pph.drdplus.info/#niceni">Pravidla pro ničení v PPH</a>
 </div>
 <div class="block issues">

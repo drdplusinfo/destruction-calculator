@@ -2,6 +2,7 @@
 namespace DrdPlus\Calculators\Destruction;
 
 use DrdPlus\Codes\Environment\MaterialCode;
+use DrdPlus\Codes\Units\TimeUnitCode;
 use DrdPlus\Codes\Units\VolumeUnitCode;
 use DrdPlus\Destruction\BaseTimeOfDestruction;
 use DrdPlus\Destruction\Destruction;
@@ -13,6 +14,9 @@ use DrdPlus\DiceRolls\Templates\Rollers\Roller2d6DrdPlus;
 use DrdPlus\Properties\Base\Strength;
 use DrdPlus\Properties\Body\Size;
 use DrdPlus\RollsOn\QualityAndSuccess\RollOnQuality;
+use DrdPlus\Tables\Measurements\Fatigue\Fatigue;
+use DrdPlus\Tables\Measurements\Time\Exceptions\CanNotConvertThatBonusToTime;
+use DrdPlus\Tables\Measurements\Time\Time;
 use DrdPlus\Tables\Measurements\Volume\Volume;
 use DrdPlus\Tables\Tables;
 use Granam\Integer\IntegerInterface;
@@ -216,6 +220,17 @@ class Controller extends \DrdPlus\Calculators\AttackSkeleton\Controller
         );
     }
 
+    public function getTimeOfBasicItemDestruction(): ?Time
+    {
+        $realTimeOfBasicItemDestruction = $this->getRealTimeOfBasicItemDestruction();
+        $inHours = $realTimeOfBasicItemDestruction->findTime(TimeUnitCode::HOUR);
+        if ($inHours) {
+            return $inHours;
+        }
+
+        return $realTimeOfBasicItemDestruction->findTime();
+    }
+
     /**
      * @return RealTimeOfDestruction
      * @throws \DrdPlus\Calculators\Destruction\Exceptions\UnknownVolumeUnit
@@ -229,13 +244,22 @@ class Controller extends \DrdPlus\Calculators\AttackSkeleton\Controller
      * @throws \Granam\Integer\Tools\Exceptions\ValueLostOnCast
      * @throws \DrdPlus\Tables\Environments\Exceptions\UnknownMaterialToGetResistanceFor
      */
-    public function getRealTimeOfBasicItemDestruction(): RealTimeOfDestruction
+    private function getRealTimeOfBasicItemDestruction(): RealTimeOfDestruction
     {
         return new RealTimeOfDestruction(
             BaseTimeOfDestruction::createForItemSize($this->getSelectedItemSize(), $this->tables->getTimeTable()),
             $this->getRollOnDestruction(),
             $this->tables
         );
+    }
+
+    public function getBasicItemDestructionFatigue(): ?Fatigue
+    {
+        try {
+            return $this->getRealTimeOfBasicItemDestruction()->getFatigue();
+        } catch (CanNotConvertThatBonusToTime $canNotConvertThatBonusToTime) {
+            return null;
+        }
     }
 
     /**
