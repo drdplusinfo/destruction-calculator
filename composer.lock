@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "630ff3645d0fc8ca83cf1476a7a0f5de",
-    "content-hash": "a813b1e2dfb7772f4b823097a52f23ce",
+    "hash": "172fe32be327604936afdfb5b2c29a4e",
+    "content-hash": "25e5e07e47749ba161b63abe12151097",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -291,16 +291,16 @@
         },
         {
             "name": "doctrine/dbal",
-            "version": "v2.6.3",
+            "version": "v2.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "e3eed9b1facbb0ced3a0995244843a189e7d1b13"
+                "reference": "f76bf5ef631cec551a86c2291fc749534febebf1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/e3eed9b1facbb0ced3a0995244843a189e7d1b13",
-                "reference": "e3eed9b1facbb0ced3a0995244843a189e7d1b13",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/f76bf5ef631cec551a86c2291fc749534febebf1",
+                "reference": "f76bf5ef631cec551a86c2291fc749534febebf1",
                 "shasum": ""
             },
             "require": {
@@ -309,9 +309,11 @@
                 "php": "^7.1"
             },
             "require-dev": {
-                "phpunit/phpunit": "^5.4.6",
+                "doctrine/coding-standard": "^4.0",
+                "phpunit/phpunit": "^7.0",
                 "phpunit/phpunit-mock-objects": "!=3.2.4,!=3.2.5",
-                "symfony/console": "2.*||^3.0"
+                "symfony/console": "^2.0.5||^3.0",
+                "symfony/phpunit-bridge": "^3.4.5|^4.0.5"
             },
             "suggest": {
                 "symfony/console": "For helpful console commands such as SQL execution and import of files."
@@ -322,7 +324,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.6.x-dev"
+                    "dev-master": "2.7.x-dev"
                 }
             },
             "autoload": {
@@ -360,7 +362,7 @@
                 "persistence",
                 "queryobject"
             ],
-            "time": "2017-11-19 13:38:54"
+            "time": "2018-04-01 23:33:17"
         },
         {
             "name": "doctrine/inflector",
@@ -1187,12 +1189,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jaroslavtyc/drd-plus-codes.git",
-                "reference": "80029ec10a9819ba0b9772d2717123ef42fd9223"
+                "reference": "83e8fffbe472e67b1a2898c8ee87b56a433ee80d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-codes/zipball/80029ec10a9819ba0b9772d2717123ef42fd9223",
-                "reference": "80029ec10a9819ba0b9772d2717123ef42fd9223",
+                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-codes/zipball/83e8fffbe472e67b1a2898c8ee87b56a433ee80d",
+                "reference": "83e8fffbe472e67b1a2898c8ee87b56a433ee80d",
                 "shasum": ""
             },
             "require": {
@@ -1218,7 +1220,7 @@
                 "MIT"
             ],
             "description": "Codes of Drd+ races, properties",
-            "time": "2018-03-29 13:45:31"
+            "time": "2018-04-04 04:44:53"
         },
         {
             "name": "drd-plus/combat-actions",
@@ -1872,12 +1874,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jaroslavtyc/drd-plus-tables.git",
-                "reference": "0c586a017567083da7af3ab4b8f0c5a08e352fb6"
+                "reference": "3341993c0627bcf325e2ca333012753c2e8bc9c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-tables/zipball/0c586a017567083da7af3ab4b8f0c5a08e352fb6",
-                "reference": "0c586a017567083da7af3ab4b8f0c5a08e352fb6",
+                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-tables/zipball/3341993c0627bcf325e2ca333012753c2e8bc9c1",
+                "reference": "3341993c0627bcf325e2ca333012753c2e8bc9c1",
                 "shasum": ""
             },
             "require": {
@@ -1909,7 +1911,7 @@
                 "MIT"
             ],
             "description": "Drd+ tables and their units conversion",
-            "time": "2018-03-31 12:13:39"
+            "time": "2018-04-04 10:58:08"
         },
         {
             "name": "granam/boolean",
@@ -4254,6 +4256,7 @@
         "drd-plus/skills": 20,
         "drd-plus/destruction": 20,
         "drd-plus/attack-skeleton": 20,
+        "drd-plus/codes": 20,
         "roave/security-advisories": 20
     },
     "prefer-stable": true,
