@@ -20,7 +20,6 @@
     "php": ">=7.1",
     "granam/strict-object": "dev-master",
     "drd-plus/tables": "dev-master",
-    "drd-plus/calculator-skeleton": "dev-master",
     "drd-plus/skills": "dev-master",
     "drd-plus/destruction": "dev-master",
     "drd-plus/attack-skeleton": "dev-master",
