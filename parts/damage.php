@@ -5,7 +5,8 @@ namespace DrdPlus\Calculators\Destruction;
 ?>
 <div class="block">
     <h4>Poškození</h4>
-    <label>Síla<input type="number" value="<?= $controller->getSelectedStrength() ?>" step="1"></label>
+    <label>Síla<input type="number" value="<?= $controller->getSelectedStrength() ?>" step="1"
+                      name="<?= $controller::STRENGTH ?>"></label>
     <?php include __DIR__ . '/../vendor/drd-plus/attack-skeleton/parts/melee_weapon.php' ?>
     <div class="block">
         <div>
@@ -20,6 +21,8 @@ namespace DrdPlus\Calculators\Destruction;
             <button type="submit" name="<?= $controller::SHOULD_ROLL_ON_DESTRUCTING ?>" value="1" class="manual">Hodit
                 2k6<span class="upper-index">+</span>
             </button>
+            + <?= $controller->getPowerOfDestruction()->getValue() ?> - <?= $controller->getMaterialResistance($controller->getSelectedMaterial())->getValue() ?> =
+            <strong><?= $controller->getRollOnDestruction()->getValue() ?></strong>
         </div>
         <div>
             Předmět poškozen <strong><?= $controller->getRollOnDestruction()->isSuccess() ? 'ano' : 'ne' ?></strong>
