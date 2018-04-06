@@ -16,6 +16,7 @@ use DrdPlus\Properties\Base\Strength;
 use DrdPlus\Properties\Body\Size;
 use DrdPlus\RollsOn\QualityAndSuccess\RollOnQuality;
 use DrdPlus\Tables\Measurements\Fatigue\Fatigue;
+use DrdPlus\Tables\Measurements\Partials\Exceptions\RequestedDataOutOfTableRange;
 use DrdPlus\Tables\Measurements\Square\Square;
 use DrdPlus\Tables\Measurements\Time\Exceptions\CanNotConvertThatBonusToTime;
 use DrdPlus\Tables\Measurements\Time\Time;
@@ -23,6 +24,7 @@ use DrdPlus\Tables\Measurements\Volume\Volume;
 use DrdPlus\Tables\Tables;
 use Granam\Integer\IntegerInterface;
 use Granam\Integer\IntegerObject;
+use DrdPlus\Tables\Measurements\Partials\Exceptions\UnknownBonus;
 
 class Controller extends \DrdPlus\Calculators\AttackSkeleton\Controller
 {
@@ -264,7 +266,11 @@ class Controller extends \DrdPlus\Calculators\AttackSkeleton\Controller
      */
     public function getTimeOfVoluminousItemDestruction(): ?Time
     {
-        return $this->getTimeOfDestruction($this->getRealTimeOfVoluminousItemDestruction());
+        try {
+            return $this->getTimeOfDestruction($this->getRealTimeOfVoluminousItemDestruction());
+        } catch (UnknownBonus $unknownBonus) {
+            return null;
+        }
     }
 
     /**
@@ -281,7 +287,7 @@ class Controller extends \DrdPlus\Calculators\AttackSkeleton\Controller
      */
     private function getRealTimeOfVoluminousItemDestruction(): RealTimeOfDestruction
     {
-        $volume = new Volume($this->getSelectedVolumeValue(), $this->getSelectedVolumeUnit(), $this->tables->getVolumeTable());
+        $volume = new Volume($this->getSelectedVolumeValue(), $this->getSelectedVolumeUnit(), $this->tables->getDistanceTable());
 
         return new RealTimeOfDestruction(
             BaseTimeOfDestruction::createForItemOfVolume($volume->getBonus(), $this->tables->getTimeTable()),
@@ -296,6 +302,8 @@ class Controller extends \DrdPlus\Calculators\AttackSkeleton\Controller
             return $this->getRealTimeOfVoluminousItemDestruction()->getFatigue();
         } catch (CanNotConvertThatBonusToTime $canNotConvertThatBonusToTime) {
             return null;
+        } catch (RequestedDataOutOfTableRange $canNotConvertThatBonusToTime) {
+            return null;
         }
     }
 
@@ -304,6 +312,8 @@ class Controller extends \DrdPlus\Calculators\AttackSkeleton\Controller
         try {
             return $this->getRealTimeOfSquareItemDestruction()->getFatigue();
         } catch (CanNotConvertThatBonusToTime $canNotConvertThatBonusToTime) {
+            return null;
+        } catch (RequestedDataOutOfTableRange $canNotConvertThatBonusToTime) {
             return null;
         }
     }
@@ -322,7 +332,7 @@ class Controller extends \DrdPlus\Calculators\AttackSkeleton\Controller
      */
     private function getRealTimeOfSquareItemDestruction(): RealTimeOfDestruction
     {
-        $square = new Square($this->getSelectedSquareValue(), $this->getSelectedSquareUnit(), $this->tables->getSquareTable());
+        $square = new Square($this->getSelectedSquareValue(), $this->getSelectedSquareUnit(), $this->tables->getDistanceTable());
 
         return new RealTimeOfDestruction(
             BaseTimeOfDestruction::createForItemOfSquare($square->getBonus(), $this->tables->getTimeTable()),
@@ -345,9 +355,28 @@ class Controller extends \DrdPlus\Calculators\AttackSkeleton\Controller
      */
     public function getTimeOfSquareItemDestruction(): ?Time
     {
-        return $this->getTimeOfDestruction($this->getRealTimeOfSquareItemDestruction());
+        try {
+            return $this->getTimeOfDestruction($this->getRealTimeOfSquareItemDestruction());
+        } catch (CanNotConvertThatBonusToTime $canNotConvertThatBonusToTime) {
+            return null;
+        } catch (RequestedDataOutOfTableRange $canNotConvertThatBonusToTime) {
+            return null;
+        }
     }
 
+    /**
+     * @return Time|null
+     * @throws \DrdPlus\Calculators\Destruction\Exceptions\UnknownVolumeUnit
+     * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotUseMeleeWeaponlikeBecauseOfMissingStrength
+     * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownArmament
+     * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownWeaponlike
+     * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownMeleeWeaponlike
+     * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByTwoHands
+     * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByOneHand
+     * @throws \Granam\Integer\Tools\Exceptions\WrongParameterType
+     * @throws \Granam\Integer\Tools\Exceptions\ValueLostOnCast
+     * @throws \DrdPlus\Tables\Environments\Exceptions\UnknownMaterialToGetResistanceFor
+     */
     public function getTimeOfBasicItemDestruction(): ?Time
     {
         return $this->getTimeOfDestruction($this->getRealTimeOfBasicItemDestruction());
@@ -355,12 +384,22 @@ class Controller extends \DrdPlus\Calculators\AttackSkeleton\Controller
 
     private function getTimeOfDestruction(RealTimeOfDestruction $realTimeOfDestruction): ?Time
     {
-        $inHours = $realTimeOfDestruction->findTime(TimeUnitCode::HOUR);
-        if ($inHours) {
-            return $inHours;
+        $time = $realTimeOfDestruction->findTime(TimeUnitCode::HOUR);
+        if (!$time) {
+            $time = $realTimeOfDestruction->findTime();
+        }
+        if (!$time) {
+            return null;
+        }
+        if ($time->getValue() > 1) {
+            return $time;
+        }
+        $timeWithLesserUnit = $time->findInLesserUnit();
+        while ($timeWithLesserUnit !== null && $timeWithLesserUnit->getValue() < 1) {
+            $timeWithLesserUnit = $timeWithLesserUnit->findInLesserUnit();
         }
 
-        return $realTimeOfDestruction->findTime();
+        return $timeWithLesserUnit ?? $time;
     }
 
     /**
@@ -391,12 +430,13 @@ class Controller extends \DrdPlus\Calculators\AttackSkeleton\Controller
             return $this->getRealTimeOfBasicItemDestruction()->getFatigue();
         } catch (CanNotConvertThatBonusToTime $canNotConvertThatBonusToTime) {
             return null;
+        } catch (RequestedDataOutOfTableRange $canNotConvertThatBonusToTime) {
+            return null;
         }
     }
 
     /**
      * @return RollOnDestruction
-     * @throws \DrdPlus\Calculators\Destruction\Exceptions\UnknownVolumeUnit
      * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotUseMeleeWeaponlikeBecauseOfMissingStrength
      * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownArmament
      * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownWeaponlike
@@ -480,6 +520,8 @@ class Controller extends \DrdPlus\Calculators\AttackSkeleton\Controller
         try {
             return $this->getRealTimeOfStatueLikeDestruction()->getFatigue();
         } catch (CanNotConvertThatBonusToTime $canNotConvertThatBonusToTime) {
+            return null;
+        } catch (RequestedDataOutOfTableRange $canNotConvertThatBonusToTime) {
             return null;
         }
     }

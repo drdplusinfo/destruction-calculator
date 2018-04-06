@@ -37,7 +37,7 @@ use DrdPlus\Codes\Units\TimeUnitCode;
         Doba ničení <span class="keyword">něčeho plošného</span>
         <?php $timeOfSquareItemDestruction = $controller->getTimeOfSquareItemDestruction();
         if (!$timeOfSquareItemDestruction) { ?>
-            <div class="error">Doba ničení mimo rozsah</div>
+            <div class="error">Doba ničení <strong>mimo rozsah</strong></div>
         <?php } else { ?>
             <strong><?= $timeOfSquareItemDestruction->getValue() . ' ' . TimeUnitCode::getIt($timeOfSquareItemDestruction->getUnit())->translateTo('cs', $timeOfSquareItemDestruction->getValue()) ?></strong>
         <?php } ?>

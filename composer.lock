@@ -1266,12 +1266,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jaroslavtyc/drd-plus-destruction.git",
-                "reference": "50cc0411df7bb1c75a09056599d74dda9d244c52"
+                "reference": "1cec91d4bed9e8ff7ac308f03887273e6bcf06b4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-destruction/zipball/50cc0411df7bb1c75a09056599d74dda9d244c52",
-                "reference": "50cc0411df7bb1c75a09056599d74dda9d244c52",
+                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-destruction/zipball/1cec91d4bed9e8ff7ac308f03887273e6bcf06b4",
+                "reference": "1cec91d4bed9e8ff7ac308f03887273e6bcf06b4",
                 "shasum": ""
             },
             "require": {
@@ -1299,7 +1299,7 @@
                 "MIT"
             ],
             "description": "Drd+ destruction according to material, time and other aspects",
-            "time": "2018-02-20 16:09:25"
+            "time": "2018-04-06 13:31:06"
         },
         {
             "name": "drd-plus/dice-rolls",
@@ -1874,12 +1874,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jaroslavtyc/drd-plus-tables.git",
-                "reference": "3341993c0627bcf325e2ca333012753c2e8bc9c1"
+                "reference": "ce3dbdea84d828a1614e0c5f0449667c41444b13"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-tables/zipball/3341993c0627bcf325e2ca333012753c2e8bc9c1",
-                "reference": "3341993c0627bcf325e2ca333012753c2e8bc9c1",
+                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-tables/zipball/ce3dbdea84d828a1614e0c5f0449667c41444b13",
+                "reference": "ce3dbdea84d828a1614e0c5f0449667c41444b13",
                 "shasum": ""
             },
             "require": {
@@ -1892,13 +1892,13 @@
                 "granam/integer": "dev-master",
                 "granam/number": "dev-master",
                 "granam/strict-object": "dev-master",
-                "php": ">=7.1",
-                "roave/security-advisories": "dev-master"
+                "php": ">=7.1"
             },
             "require-dev": {
                 "granam/exceptions-hierarchy": "~4.0",
                 "mockery/mockery": "1.0.x-dev",
-                "phpunit/phpunit": "~6.0"
+                "phpunit/phpunit": "~6.0",
+                "roave/security-advisories": "dev-master"
             },
             "type": "project",
             "autoload": {
@@ -1911,7 +1911,7 @@
                 "MIT"
             ],
             "description": "Drd+ tables and their units conversion",
-            "time": "2018-04-04 10:58:08"
+            "time": "2018-04-06 15:25:38"
         },
         {
             "name": "granam/boolean",
@@ -3207,16 +3207,16 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "5.3.0",
+            "version": "5.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "661f34d0bd3f1a7225ef491a70a020ad23a057a1"
+                "reference": "340d86b2c417f6966b8fa0aee339ba3f671ebab7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/661f34d0bd3f1a7225ef491a70a020ad23a057a1",
-                "reference": "661f34d0bd3f1a7225ef491a70a020ad23a057a1",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/340d86b2c417f6966b8fa0aee339ba3f671ebab7",
+                "reference": "340d86b2c417f6966b8fa0aee339ba3f671ebab7",
                 "shasum": ""
             },
             "require": {
@@ -3266,7 +3266,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-12-06 09:29:45"
+            "time": "2018-04-06 14:09:56"
         },
         {
             "name": "phpunit/php-file-iterator",

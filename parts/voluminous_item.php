@@ -38,7 +38,7 @@ use DrdPlus\Codes\Units\TimeUnitCode;
         Doba ničení <span class="keyword">něčeho tlustšího</span>
         <?php $realTimeOfVoluminousItemDestruction = $controller->getTimeOfVoluminousItemDestruction();
         if (!$realTimeOfVoluminousItemDestruction) { ?>
-            <div class="error">Doba ničení mimo rozsah</div>
+            <div class="error">Doba ničení <strong>mimo rozsah</strong></div>
         <?php } else { ?>
             <strong><?= $realTimeOfVoluminousItemDestruction->getValue() . ' ' . TimeUnitCode::getIt($realTimeOfVoluminousItemDestruction->getUnit())->translateTo('cs', $realTimeOfVoluminousItemDestruction->getValue()) ?></strong>
         <?php } ?>
