@@ -37,7 +37,7 @@ class Controller extends \DrdPlus\Calculators\AttackSkeleton\Controller
     public const ROLL_ON_DESTRUCTING = 'roll_on_destructing';
     public const SHOULD_ROLL_ON_DESTRUCTING = 'new_roll_on_destructing';
     public const SELECTED_MELEE_WEAPONLIKE = 'selected_melee_weaponlike';
-    public const WEAPON_IS_INAPPROPRIATE = 'weapon_is_inappropriate';
+    public const INAPPROPRIATE_TOOL = 'inappropriate_tool';
     public const STRENGTH = 'strength';
     public const WEAPON_HOLDING_VALUE = 'weapon_holding_value';
     public const ITEM_SIZE = 'item_size';
@@ -221,10 +221,10 @@ class Controller extends \DrdPlus\Calculators\AttackSkeleton\Controller
         return (bool)$this->getHistory()->getValue(self::SHOULD_ROLL_ON_DESTRUCTING);
     }
 
-    public function getSelectedWeaponIsInappropriate(): bool
+    public function getSelectedInappropriateTool(): bool
     {
         // false by default
-        return (bool)$this->getHistory()->getValue(self::WEAPON_IS_INAPPROPRIATE);
+        return (bool)$this->getHistory()->getValue(self::INAPPROPRIATE_TOOL);
     }
 
     /**
@@ -471,7 +471,7 @@ class Controller extends \DrdPlus\Calculators\AttackSkeleton\Controller
             $this->getAttack()->getCurrentMeleeWeapon(),
             $this->getCurrentProperties()->getCurrentStrength(),
             $this->getAttack()->getCurrentMeleeWeaponHolding(),
-            $this->getSelectedWeaponIsInappropriate()
+            $this->getSelectedInappropriateTool()
         );
     }
 
