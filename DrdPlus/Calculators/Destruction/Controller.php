@@ -1,6 +1,7 @@
 <?php
 namespace DrdPlus\Calculators\Destruction;
 
+use DrdPlus\Codes\Armaments\MeleeWeaponCode;
 use DrdPlus\Codes\Environment\MaterialCode;
 use DrdPlus\Codes\Units\SquareUnitCode;
 use DrdPlus\Codes\Units\TimeUnitCode;
@@ -36,9 +37,7 @@ class Controller extends \DrdPlus\Calculators\AttackSkeleton\Controller
     public const MATERIAL = 'material';
     public const ROLL_ON_DESTRUCTING = 'roll_on_destructing';
     public const SHOULD_ROLL_ON_DESTRUCTING = 'new_roll_on_destructing';
-    public const SELECTED_MELEE_WEAPONLIKE = 'selected_melee_weaponlike';
     public const INAPPROPRIATE_TOOL = 'inappropriate_tool';
-    public const STRENGTH = 'strength';
     public const WEAPON_HOLDING_VALUE = 'weapon_holding_value';
     public const ITEM_SIZE = 'item_size';
     public const BODY_SIZE = 'body_size';
@@ -221,8 +220,18 @@ class Controller extends \DrdPlus\Calculators\AttackSkeleton\Controller
         return (bool)$this->getHistory()->getValue(self::SHOULD_ROLL_ON_DESTRUCTING);
     }
 
+    /**
+     * @return bool
+     * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownWeaponlike
+     * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByOneHand
+     * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByTwoHands
+     */
     public function getSelectedInappropriateTool(): bool
     {
+        if ($this->getAttack()->getCurrentMeleeWeapon()->getValue() === MeleeWeaponCode::HAND) {
+            return true;
+        }
+
         // false by default
         return (bool)$this->getHistory()->getValue(self::INAPPROPRIATE_TOOL);
     }
