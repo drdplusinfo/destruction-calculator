@@ -13,7 +13,6 @@ if (!$controller->getRollOnDestruction()->isSuccess()) { ?>
 <div class="block">
     <?php include __DIR__ . '/basic_item.php';
     include __DIR__ . '/body_like.php';
-    include __DIR__ . '/square_item.php';
     include __DIR__ . '/voluminous_item.php';
     ?>
 </div>

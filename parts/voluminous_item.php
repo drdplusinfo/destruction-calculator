@@ -6,10 +6,8 @@ use DrdPlus\Codes\Units\TimeUnitCode;
 /** @var Controller $controller */
 ?>
 <div class="panel">
-    <h4>Něco tlustšího</h4>
-    <div class="example">
-        tlustá zeď, bytelné dveře, pořádný led..
-    </div>
+    <h4>Chce to díru</h4>
+    <div class="example">zeď, dveře, led...</div>
     <label>
         Objem ničeného předmětu či jeho části
         <input type="number" value="<?= number_format($controller->getSelectedVolumeValue(), 2); ?>"
@@ -35,7 +33,7 @@ use DrdPlus\Codes\Units\TimeUnitCode;
         <div>Únava <strong><?= $fatigueFromVoluminousItemDestruction->getValue() ?></strong></div>
     <?php } ?>
     <div class="panel">
-        Doba ničení <span class="keyword">něčeho tlustšího</span>
+        Doba ničení
         <?php $realTimeOfVoluminousItemDestruction = $controller->getTimeOfVoluminousItemDestruction();
         if (!$realTimeOfVoluminousItemDestruction) { ?>
             <div class="error">Doba ničení <strong>mimo rozsah</strong></div>

@@ -6,20 +6,25 @@ use DrdPlus\Codes\Units\TimeUnitCode;
 /** @var Controller $controller */
 ?>
 <div class="panel">
-    <h4>Tvarem připomínajícím tělo</h4>
+    <h4>Musí se to rozmlátit</h4>
     <div class="example">
         socha, krápník, rampouch, sloup...
     </div>
-    <label>Velikost "těla" <input type="number" value="<?= $controller->getSelectedBodySize() ?>"
-                                  name="<?= $controller::BODY_SIZE ?>"></label>
+    <div class="note">
+        Toto je pro kompletní zníčení předmětu. Moná ti bude stačit to jen <span class="keyword">zlomit</span>?
+    </div>
+    <label><a target="_blank" href="https://pph.drdplus.info/#tabulka_velikosti_a_hmotnosti_ras">Velikost "těla"</a>
+        <input type="number" value="<?= $controller->getSelectedBodySize() ?>"
+               name="<?= $controller::BODY_SIZE ?>"></label>
+    <span class="note">přibližně <a href="https://pph.drdplus.info/#tabulka_vzdalenosti">(β(šířka) + β(výška))</a> / 2</span>
     <?php $fatigueFromStatueLikeDestruction = $controller->getFatigueFromStatueLikeDestruction();
     if (!$fatigueFromStatueLikeDestruction) { ?>
         <div class="error">Únava <strong>mimo rozsah</strong></div>
     <?php } else { ?>
-        <div>Únava <strong><?= $fatigueFromStatueLikeDestruction->getValue() ?></strong></div>
+        <div>Únava z celkového ničení <strong><?= $fatigueFromStatueLikeDestruction->getValue() ?></strong></div>
     <?php } ?>
     <div class="panel">
-        Doba ničení <span class="keyword">sochy</span>
+        Doba celkového ničení
         <?php $timeOfStatueLikeDestruction = $controller->getTimeOfStatueLikeDestruction();
         if (!$timeOfStatueLikeDestruction) { ?>
             <div class="error">Doba ničení <strong>mimo rozsah</strong></div>

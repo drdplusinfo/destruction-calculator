@@ -6,10 +6,8 @@ use DrdPlus\Codes\Units\TimeUnitCode;
 /** @var Controller $controller */
 ?>
 <div class="panel">
-    <h4>Něco obyčejného</h4>
-    <div class="example">
-        běžný stůl, dlaždice, meč, lopata...
-    </div>
+    <h4>Stačí to zlomit</h4>
+    <div class="example">hlava sochy, dlaždice, meč, lopata...</div>
     <?php $fatigueFromBasicItemDestruction = $controller->getBasicItemDestructionFatigue();
     if (!$fatigueFromBasicItemDestruction) { ?>
         <div class="error">
@@ -23,7 +21,7 @@ use DrdPlus\Codes\Units\TimeUnitCode;
         </div>
     <?php } ?>
     <div class="panel">
-        Doba ničení <span class="keyword">něčeho obyčejného</span>
+        Doba ničení
         <?php $realTimeOfBasicItemDestruction = $controller->getTimeOfBasicItemDestruction();
         if (!$realTimeOfBasicItemDestruction) { ?>
             <div class="error">
