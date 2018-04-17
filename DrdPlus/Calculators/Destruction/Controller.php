@@ -113,10 +113,8 @@ class Controller extends \DrdPlus\Calculators\AttackSkeleton\Controller
         if ($volumeUnitValue) {
             return VolumeUnitCode::getIt($volumeUnitValue);
         }
-        $possibleValues = VolumeUnitCode::getPossibleValues();
-        $defaultUnitValue = \reset($possibleValues);
 
-        return VolumeUnitCode::getIt($defaultUnitValue);
+        return VolumeUnitCode::getIt(VolumeUnitCode::CUBIC_METER);
     }
 
     /**
@@ -128,15 +126,15 @@ class Controller extends \DrdPlus\Calculators\AttackSkeleton\Controller
         $selectedVolumeUnit = $this->getSelectedVolumeUnit();
         switch ($selectedVolumeUnit->getValue()) {
             case VolumeUnitCode::LITER :
-                $minimal = \max(10.0/** minimal liters for @see VolumeTable */, $this->getHistory()->getValue(self::VOLUME_VALUE) ?? 0.0);
+                $minimal = \max(10.0/** minimal liters for @see VolumeTable */, $this->getHistory()->getValue(self::VOLUME_VALUE) ?? 10.0);
 
                 return \min(1000/** maximal liters for @see VolumeTable */, $minimal);
             case VolumeUnitCode::CUBIC_METER :
-                $minimal = \max(0.01/** minimal cubic meters for @see VolumeTable */, $this->getHistory()->getValue(self::VOLUME_VALUE) ?? 0.0);
+                $minimal = \max(0.01/** minimal cubic meters for @see VolumeTable */, $this->getHistory()->getValue(self::VOLUME_VALUE) ?? 1.0);
 
                 return \min(1000/** maximal cubic meters for @see VolumeTable */, $minimal);
             case VolumeUnitCode::CUBIC_KILOMETER :
-                $minimal = \max(0.001/** minimal cubic kilometers for @see VolumeTable */, $this->getHistory()->getValue(self::VOLUME_VALUE) ?? 0.0);
+                $minimal = \max(0.001/** minimal cubic kilometers for @see VolumeTable */, $this->getHistory()->getValue(self::VOLUME_VALUE) ?? 0.1);
 
                 return \min(0.9/** maximal cubic meters for @see VolumeTable */, $minimal);
             default :
