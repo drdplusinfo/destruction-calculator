@@ -46,6 +46,8 @@ class Controller extends \DrdPlus\Calculators\AttackSkeleton\Controller
     private $destruction;
     /** @var Tables */
     private $tables;
+    /** @var int|null */
+    private $newRollOnDestructing;
 
     /**
      * @param Tables $tables
@@ -198,13 +200,12 @@ class Controller extends \DrdPlus\Calculators\AttackSkeleton\Controller
      */
     public function getSelectedRollOnDestructing(): IntegerInterface
     {
-        static $newRollOnDestructing = null;
-        if ($newRollOnDestructing === null && $this->shouldRollOnDestructing()) {
-            $newRollOnDestructing = Roller2d6DrdPlus::getIt()->roll()->getValue();
+        if ($this->newRollOnDestructing === null && $this->shouldRollOnDestructing()) {
+            $this->newRollOnDestructing = Roller2d6DrdPlus::getIt()->roll()->getValue();
         }
 
         return new IntegerObject(
-            $newRollOnDestructing ?? $this->getHistory()->getValue(self::ROLL_ON_DESTRUCTING) ?? 6
+            $this->newRollOnDestructing ?? $this->getHistory()->getValue(self::ROLL_ON_DESTRUCTING) ?? 6
         );
     }
 
