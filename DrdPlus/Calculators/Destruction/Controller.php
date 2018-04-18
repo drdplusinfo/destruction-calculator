@@ -111,7 +111,7 @@ class Controller extends \DrdPlus\Calculators\AttackSkeleton\Controller
 
     public function getSelectedVolumeUnit(): VolumeUnitCode
     {
-        $volumeUnitValue = $this->getHistory()->getValue(self::VOLUME_UNIT);
+        $volumeUnitValue = $this->getValueFromRequest(self::VOLUME_UNIT);
         if ($volumeUnitValue) {
             return VolumeUnitCode::getIt($volumeUnitValue);
         }
@@ -128,15 +128,15 @@ class Controller extends \DrdPlus\Calculators\AttackSkeleton\Controller
         $selectedVolumeUnit = $this->getSelectedVolumeUnit();
         switch ($selectedVolumeUnit->getValue()) {
             case VolumeUnitCode::LITER :
-                $minimal = \max(10.0/** minimal liters for @see VolumeTable */, $this->getHistory()->getValue(self::VOLUME_VALUE) ?? 10.0);
+                $minimal = \max(10.0/** minimal liters for @see VolumeTable */, $this->getValueFromRequest(self::VOLUME_VALUE) ?? 10.0);
 
                 return \min(1000/** maximal liters for @see VolumeTable */, $minimal);
             case VolumeUnitCode::CUBIC_METER :
-                $minimal = \max(0.01/** minimal cubic meters for @see VolumeTable */, $this->getHistory()->getValue(self::VOLUME_VALUE) ?? 1.0);
+                $minimal = \max(0.01/** minimal cubic meters for @see VolumeTable */, $this->getValueFromRequest(self::VOLUME_VALUE) ?? 1.0);
 
                 return \min(1000/** maximal cubic meters for @see VolumeTable */, $minimal);
             case VolumeUnitCode::CUBIC_KILOMETER :
-                $minimal = \max(0.001/** minimal cubic kilometers for @see VolumeTable */, $this->getHistory()->getValue(self::VOLUME_VALUE) ?? 0.1);
+                $minimal = \max(0.001/** minimal cubic kilometers for @see VolumeTable */, $this->getValueFromRequest(self::VOLUME_VALUE) ?? 0.1);
 
                 return \min(0.9/** maximal cubic meters for @see VolumeTable */, $minimal);
             default :
@@ -146,7 +146,7 @@ class Controller extends \DrdPlus\Calculators\AttackSkeleton\Controller
 
     public function getSelectedSquareUnit(): SquareUnitCode
     {
-        $squareUnitValue = $this->getHistory()->getValue(self::SQUARE_UNIT);
+        $squareUnitValue = $this->getValueFromRequest(self::SQUARE_UNIT);
         if ($squareUnitValue) {
             return SquareUnitCode::getIt($squareUnitValue);
         }
@@ -165,15 +165,15 @@ class Controller extends \DrdPlus\Calculators\AttackSkeleton\Controller
         $selectedSquareUnit = $this->getSelectedSquareUnit();
         switch ($selectedSquareUnit->getValue()) {
             case SquareUnitCode::SQUARE_DECIMETER :
-                $minimal = \max(10.0/** minimal liters for @see SquareTable */, $this->getHistory()->getValue(self::SQUARE_VALUE) ?? 0.0);
+                $minimal = \max(10.0/** minimal liters for @see SquareTable */, $this->getValueFromRequest(self::SQUARE_VALUE) ?? 0.0);
 
                 return \min(1000/** maximal liters for @see SquareTable */, $minimal);
             case SquareUnitCode::SQUARE_METER :
-                $minimal = \max(0.01/** minimal cubic meters for @see SquareTable */, $this->getHistory()->getValue(self::SQUARE_VALUE) ?? 0.0);
+                $minimal = \max(0.01/** minimal cubic meters for @see SquareTable */, $this->getValueFromRequest(self::SQUARE_VALUE) ?? 0.0);
 
                 return \min(1000/** maximal cubic meters for @see SquareTable */, $minimal);
             case SquareUnitCode::SQUARE_KILOMETER :
-                $minimal = \max(0.001/** minimal cubic kilometers for @see SquareTable */, $this->getHistory()->getValue(self::SQUARE_VALUE) ?? 0.0);
+                $minimal = \max(0.001/** minimal cubic kilometers for @see SquareTable */, $this->getValueFromRequest(self::SQUARE_VALUE) ?? 0.0);
 
                 return \min(0.9/** maximal cubic meters for @see SquareTable */, $minimal);
             default :
@@ -183,7 +183,7 @@ class Controller extends \DrdPlus\Calculators\AttackSkeleton\Controller
 
     public function getSelectedMaterial(): MaterialCode
     {
-        $materialValue = $this->getHistory()->getValue(self::MATERIAL);
+        $materialValue = $this->getValueFromRequest(self::MATERIAL);
         if ($materialValue) {
             return MaterialCode::getIt($materialValue);
         }
@@ -205,7 +205,7 @@ class Controller extends \DrdPlus\Calculators\AttackSkeleton\Controller
         }
 
         return new IntegerObject(
-            $this->newRollOnDestructing ?? $this->getHistory()->getValue(self::ROLL_ON_DESTRUCTING) ?? 6
+            $this->newRollOnDestructing ?? $this->getValueFromRequest(self::ROLL_ON_DESTRUCTING) ?? 6
         );
     }
 
@@ -216,7 +216,7 @@ class Controller extends \DrdPlus\Calculators\AttackSkeleton\Controller
      */
     public function shouldRollOnDestructing(): bool
     {
-        return (bool)$this->getHistory()->getValue(self::SHOULD_ROLL_ON_DESTRUCTING);
+        return (bool)$this->getValueFromRequest(self::SHOULD_ROLL_ON_DESTRUCTING);
     }
 
     /**
@@ -232,7 +232,7 @@ class Controller extends \DrdPlus\Calculators\AttackSkeleton\Controller
         }
 
         // false by default
-        return (bool)$this->getHistory()->getValue(self::INAPPROPRIATE_TOOL);
+        return (bool)$this->getValueFromRequest(self::INAPPROPRIATE_TOOL);
     }
 
     /**
@@ -242,7 +242,7 @@ class Controller extends \DrdPlus\Calculators\AttackSkeleton\Controller
      */
     public function getSelectedStrength(): Strength
     {
-        return Strength::getIt($this->getHistory()->getValue(self::STRENGTH) ?? 0);
+        return Strength::getIt($this->getValueFromRequest(self::STRENGTH) ?? 0);
     }
 
     /**
@@ -252,12 +252,12 @@ class Controller extends \DrdPlus\Calculators\AttackSkeleton\Controller
      */
     public function getSelectedItemSize(): IntegerInterface
     {
-        return new IntegerObject($this->getHistory()->getValue(self::ITEM_SIZE) ?? 0);
+        return new IntegerObject($this->getValueFromRequest(self::ITEM_SIZE) ?? 0);
     }
 
     public function getSelectedBodySize(): Size
     {
-        return Size::getIt($this->getHistory()->getValue(self::BODY_SIZE) ?? 0);
+        return Size::getIt($this->getValueFromRequest(self::BODY_SIZE) ?? 0);
     }
 
     /**
