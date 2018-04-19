@@ -55,7 +55,7 @@ $controller = new Controller(Tables::getIt());
     <a class="float-right" href="https://github.com/jaroslavtyc/drd-plus-calculators-destruction/"
        title="Fork me on GitHub"><img class="github" src="/images/generic/GitHub-Mark-64px.png"></a>
 </div>
-<script type="text/javascript" src="js/generic/main.js"></script>
+<script type="text/javascript" src="js/generic/skeleton.js"></script>
 <script type="text/javascript" src="js/destruction.js"></script>
 </body>
 </html>
