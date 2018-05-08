@@ -14,7 +14,7 @@ use DrdPlus\Codes\Units\TimeUnitCode;
         Toto je pro kompletní zníčení předmětu. Moná ti bude stačit to jen <span class="keyword">zlomit</span>?
     </div>
     <label><a target="_blank" href="https://pph.drdplus.info/#tabulka_velikosti_a_hmotnosti_ras">Velikost "těla"</a>
-        <input type="number" value="<?= $controller->getSelectedBodySize() ?>"
+        <input type="number" value="<?= $controller->getCurrentBodySize() ?>"
                name="<?= $controller::BODY_SIZE ?>"></label>
     <span class="note">přibližně <a href="https://pph.drdplus.info/#tabulka_vzdalenosti">(β(šířka) + β(výška))</a> / 2</span>
     <?php $fatigueFromStatueLikeDestruction = $controller->getFatigueFromStatueLikeDestruction();
@@ -29,7 +29,10 @@ use DrdPlus\Codes\Units\TimeUnitCode;
         if (!$timeOfStatueLikeDestruction) { ?>
             <div class="error">Doba ničení <strong>mimo rozsah</strong></div>
         <?php } else { ?>
-            <strong><?= $timeOfStatueLikeDestruction->getValue() . ' ' . TimeUnitCode::getIt($timeOfStatueLikeDestruction->getUnit())->translateTo('cs', $timeOfStatueLikeDestruction->getValue()) ?></strong>
+            <strong>
+                <?= $timeOfStatueLikeDestruction->getValue()
+                . ' ' . TimeUnitCode::getIt($timeOfStatueLikeDestruction->getUnit())->translateTo('cs', $timeOfStatueLikeDestruction->getValue()) ?>
+            </strong>
         <?php } ?>
     </div>
 </div>

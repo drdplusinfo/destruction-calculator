@@ -14,7 +14,7 @@ use DrdPlus\Codes\Units\TimeUnitCode;
         Únava <strong>mimo rozsah</strong>
       </div>
     <?php } else { ?>
-      <label>Velikost věci <input type="number" value="<?= $controller->getSelectedItemSize() ?>"
+      <label>Velikost věci <input type="number" value="<?= $controller->getCurrentItemSize() ?>"
                                   name="<?= $controller::ITEM_SIZE ?>"></label>
       <div>
         Únava <strong><?= $fatigueFromBasicItemDestruction->getValue() ?></strong>
@@ -28,7 +28,10 @@ use DrdPlus\Codes\Units\TimeUnitCode;
           Doba <strong>mimo rozsah</strong>
         </div>
       <?php } else { ?>
-        <strong><?= $realTimeOfBasicItemDestruction->getValue() . ' ' . TimeUnitCode::getIt($realTimeOfBasicItemDestruction->getUnit())->translateTo('cs', $realTimeOfBasicItemDestruction->getValue()) ?></strong>
+        <strong>
+            <?= $realTimeOfBasicItemDestruction->getValue()
+            . ' ' . TimeUnitCode::getIt($realTimeOfBasicItemDestruction->getUnit())->translateTo('cs', $realTimeOfBasicItemDestruction->getValue()) ?>
+        </strong>
       <?php } ?>
   </div>
 </div>

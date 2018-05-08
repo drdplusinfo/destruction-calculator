@@ -27,7 +27,7 @@ use Granam\Integer\IntegerInterface;
 use Granam\Integer\IntegerObject;
 use DrdPlus\Tables\Measurements\Partials\Exceptions\UnknownBonus;
 
-class Controller extends \DrdPlus\Calculators\AttackSkeleton\Controller
+class Controller extends \DrdPlus\Calculator\AttackSkeleton\Controller
 {
 
     public const VOLUME_UNIT = 'volume_unit';
@@ -51,7 +51,7 @@ class Controller extends \DrdPlus\Calculators\AttackSkeleton\Controller
 
     /**
      * @param Tables $tables
-     * @throws \DrdPlus\Calculators\AttackSkeleton\Exceptions\BrokenNewArmamentValues
+     * @throws \DrdPlus\Calculator\AttackSkeleton\Exceptions\BrokenNewArmamentValues
      */
     public function __construct(Tables $tables)
     {
@@ -109,9 +109,9 @@ class Controller extends \DrdPlus\Calculators\AttackSkeleton\Controller
         );
     }
 
-    public function getSelectedVolumeUnit(): VolumeUnitCode
+    public function getCurrentVolumeUnit(): VolumeUnitCode
     {
-        $volumeUnitValue = $this->getValueFromRequest(self::VOLUME_UNIT);
+        $volumeUnitValue = $this->getCurrentValues()->getCurrentValue(self::VOLUME_UNIT);
         if ($volumeUnitValue) {
             return VolumeUnitCode::getIt($volumeUnitValue);
         }
@@ -123,20 +123,20 @@ class Controller extends \DrdPlus\Calculators\AttackSkeleton\Controller
      * @return float
      * @throws \DrdPlus\Calculators\Destruction\Exceptions\UnknownVolumeUnit
      */
-    public function getSelectedVolumeValue(): float
+    public function getCurrentVolumeValue(): float
     {
-        $selectedVolumeUnit = $this->getSelectedVolumeUnit();
+        $selectedVolumeUnit = $this->getCurrentVolumeUnit();
         switch ($selectedVolumeUnit->getValue()) {
             case VolumeUnitCode::LITER :
-                $minimal = \max(10.0/** minimal liters for @see VolumeTable */, $this->getValueFromRequest(self::VOLUME_VALUE) ?? 10.0);
+                $minimal = \max(10.0/** minimal liters for @see VolumeTable */, $this->getCurrentValues()->getCurrentValue(self::VOLUME_VALUE) ?? 10.0);
 
                 return \min(1000/** maximal liters for @see VolumeTable */, $minimal);
             case VolumeUnitCode::CUBIC_METER :
-                $minimal = \max(0.01/** minimal cubic meters for @see VolumeTable */, $this->getValueFromRequest(self::VOLUME_VALUE) ?? 1.0);
+                $minimal = \max(0.01/** minimal cubic meters for @see VolumeTable */, $this->getCurrentValues()->getCurrentValue(self::VOLUME_VALUE) ?? 1.0);
 
                 return \min(1000/** maximal cubic meters for @see VolumeTable */, $minimal);
             case VolumeUnitCode::CUBIC_KILOMETER :
-                $minimal = \max(0.001/** minimal cubic kilometers for @see VolumeTable */, $this->getValueFromRequest(self::VOLUME_VALUE) ?? 0.1);
+                $minimal = \max(0.001/** minimal cubic kilometers for @see VolumeTable */, $this->getCurrentValues()->getCurrentValue(self::VOLUME_VALUE) ?? 0.1);
 
                 return \min(0.9/** maximal cubic meters for @see VolumeTable */, $minimal);
             default :
@@ -144,9 +144,9 @@ class Controller extends \DrdPlus\Calculators\AttackSkeleton\Controller
         }
     }
 
-    public function getSelectedSquareUnit(): SquareUnitCode
+    public function getCurrentSquareUnit(): SquareUnitCode
     {
-        $squareUnitValue = $this->getValueFromRequest(self::SQUARE_UNIT);
+        $squareUnitValue = $this->getCurrentValues()->getCurrentValue(self::SQUARE_UNIT);
         if ($squareUnitValue) {
             return SquareUnitCode::getIt($squareUnitValue);
         }
@@ -160,20 +160,20 @@ class Controller extends \DrdPlus\Calculators\AttackSkeleton\Controller
      * @return float
      * @throws \DrdPlus\Calculators\Destruction\Exceptions\UnknownSquareUnit
      */
-    public function getSelectedSquareValue(): float
+    public function getCurrentSquareValue(): float
     {
-        $selectedSquareUnit = $this->getSelectedSquareUnit();
+        $selectedSquareUnit = $this->getCurrentSquareUnit();
         switch ($selectedSquareUnit->getValue()) {
             case SquareUnitCode::SQUARE_DECIMETER :
-                $minimal = \max(10.0/** minimal liters for @see SquareTable */, $this->getValueFromRequest(self::SQUARE_VALUE) ?? 0.0);
+                $minimal = \max(10.0/** minimal liters for @see SquareTable */, $this->getCurrentValues()->getCurrentValue(self::SQUARE_VALUE) ?? 0.0);
 
                 return \min(1000/** maximal liters for @see SquareTable */, $minimal);
             case SquareUnitCode::SQUARE_METER :
-                $minimal = \max(0.01/** minimal cubic meters for @see SquareTable */, $this->getValueFromRequest(self::SQUARE_VALUE) ?? 0.0);
+                $minimal = \max(0.01/** minimal cubic meters for @see SquareTable */, $this->getCurrentValues()->getCurrentValue(self::SQUARE_VALUE) ?? 0.0);
 
                 return \min(1000/** maximal cubic meters for @see SquareTable */, $minimal);
             case SquareUnitCode::SQUARE_KILOMETER :
-                $minimal = \max(0.001/** minimal cubic kilometers for @see SquareTable */, $this->getValueFromRequest(self::SQUARE_VALUE) ?? 0.0);
+                $minimal = \max(0.001/** minimal cubic kilometers for @see SquareTable */, $this->getCurrentValues()->getCurrentValue(self::SQUARE_VALUE) ?? 0.0);
 
                 return \min(0.9/** maximal cubic meters for @see SquareTable */, $minimal);
             default :
@@ -181,9 +181,9 @@ class Controller extends \DrdPlus\Calculators\AttackSkeleton\Controller
         }
     }
 
-    public function getSelectedMaterial(): MaterialCode
+    public function getCurrentMaterial(): MaterialCode
     {
-        $materialValue = $this->getValueFromRequest(self::MATERIAL);
+        $materialValue = $this->getCurrentValues()->getCurrentValue(self::MATERIAL);
         if ($materialValue) {
             return MaterialCode::getIt($materialValue);
         }
@@ -198,14 +198,14 @@ class Controller extends \DrdPlus\Calculators\AttackSkeleton\Controller
      * @throws \Granam\Integer\Tools\Exceptions\WrongParameterType
      * @throws \Granam\Integer\Tools\Exceptions\ValueLostOnCast
      */
-    public function getSelectedRollOnDestructing(): IntegerInterface
+    public function getCurrentRollOnDestructing(): IntegerInterface
     {
         if ($this->newRollOnDestructing === null && $this->shouldRollOnDestructing()) {
             $this->newRollOnDestructing = Roller2d6DrdPlus::getIt()->roll()->getValue();
         }
 
         return new IntegerObject(
-            $this->newRollOnDestructing ?? $this->getValueFromRequest(self::ROLL_ON_DESTRUCTING) ?? 6
+            $this->newRollOnDestructing ?? $this->getCurrentValues()->getCurrentValue(self::ROLL_ON_DESTRUCTING) ?? 6
         );
     }
 
@@ -216,7 +216,7 @@ class Controller extends \DrdPlus\Calculators\AttackSkeleton\Controller
      */
     public function shouldRollOnDestructing(): bool
     {
-        return (bool)$this->getValueFromRequest(self::SHOULD_ROLL_ON_DESTRUCTING);
+        return (bool)$this->getCurrentValues()->getCurrentValue(self::SHOULD_ROLL_ON_DESTRUCTING);
     }
 
     /**
@@ -225,14 +225,14 @@ class Controller extends \DrdPlus\Calculators\AttackSkeleton\Controller
      * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByOneHand
      * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByTwoHands
      */
-    public function getSelectedInappropriateTool(): bool
+    public function getCurrentInappropriateTool(): bool
     {
         if ($this->getAttack()->getCurrentMeleeWeapon()->getValue() === MeleeWeaponCode::HAND) {
             return true;
         }
 
         // false by default
-        return (bool)$this->getValueFromRequest(self::INAPPROPRIATE_TOOL);
+        return (bool)$this->getCurrentValues()->getCurrentValue(self::INAPPROPRIATE_TOOL);
     }
 
     /**
@@ -240,9 +240,9 @@ class Controller extends \DrdPlus\Calculators\AttackSkeleton\Controller
      * @throws \Granam\Integer\Tools\Exceptions\WrongParameterType
      * @throws \Granam\Integer\Tools\Exceptions\ValueLostOnCast
      */
-    public function getSelectedStrength(): Strength
+    public function getCurrentStrength(): Strength
     {
-        return Strength::getIt($this->getValueFromRequest(self::STRENGTH) ?? 0);
+        return Strength::getIt($this->getCurrentValues()->getCurrentValue(self::STRENGTH) ?? 0);
     }
 
     /**
@@ -250,14 +250,14 @@ class Controller extends \DrdPlus\Calculators\AttackSkeleton\Controller
      * @throws \Granam\Integer\Tools\Exceptions\WrongParameterType
      * @throws \Granam\Integer\Tools\Exceptions\ValueLostOnCast
      */
-    public function getSelectedItemSize(): IntegerInterface
+    public function getCurrentItemSize(): IntegerInterface
     {
-        return new IntegerObject($this->getValueFromRequest(self::ITEM_SIZE) ?? 0);
+        return new IntegerObject($this->getCurrentValues()->getCurrentValue(self::ITEM_SIZE) ?? 0);
     }
 
-    public function getSelectedBodySize(): Size
+    public function getCurrentBodySize(): Size
     {
-        return Size::getIt($this->getValueFromRequest(self::BODY_SIZE) ?? 0);
+        return Size::getIt($this->getCurrentValues()->getCurrentValue(self::BODY_SIZE) ?? 0);
     }
 
     /**
@@ -295,7 +295,7 @@ class Controller extends \DrdPlus\Calculators\AttackSkeleton\Controller
      */
     private function getRealTimeOfVoluminousItemDestruction(): RealTimeOfDestruction
     {
-        $volume = new Volume($this->getSelectedVolumeValue(), $this->getSelectedVolumeUnit(), $this->tables->getDistanceTable());
+        $volume = new Volume($this->getCurrentVolumeValue(), $this->getCurrentVolumeUnit(), $this->tables->getDistanceTable());
 
         return new RealTimeOfDestruction(
             BaseTimeOfDestruction::createForItemOfVolume($volume->getBonus(), $this->tables->getTimeTable()),
@@ -340,7 +340,7 @@ class Controller extends \DrdPlus\Calculators\AttackSkeleton\Controller
      */
     private function getRealTimeOfSquareItemDestruction(): RealTimeOfDestruction
     {
-        $square = new Square($this->getSelectedSquareValue(), $this->getSelectedSquareUnit(), $this->tables->getDistanceTable());
+        $square = new Square($this->getCurrentSquareValue(), $this->getCurrentSquareUnit(), $this->tables->getDistanceTable());
 
         return new RealTimeOfDestruction(
             BaseTimeOfDestruction::createForItemOfSquare($square->getBonus(), $this->tables->getTimeTable()),
@@ -426,7 +426,7 @@ class Controller extends \DrdPlus\Calculators\AttackSkeleton\Controller
     private function getRealTimeOfBasicItemDestruction(): RealTimeOfDestruction
     {
         return new RealTimeOfDestruction(
-            BaseTimeOfDestruction::createForItemSize($this->getSelectedItemSize(), $this->tables->getTimeTable()),
+            BaseTimeOfDestruction::createForItemSize($this->getCurrentItemSize(), $this->tables->getTimeTable()),
             $this->getRollOnDestruction(),
             $this->tables
         );
@@ -459,7 +459,7 @@ class Controller extends \DrdPlus\Calculators\AttackSkeleton\Controller
     {
         return $this->destruction->getRollOnDestruction(
             $this->getPowerOfDestruction(),
-            $this->getMaterialResistance($this->getSelectedMaterial()),
+            $this->getMaterialResistance($this->getCurrentMaterial()),
             $this->getRollOnDestructing()
         );
     }
@@ -479,7 +479,7 @@ class Controller extends \DrdPlus\Calculators\AttackSkeleton\Controller
             $this->getAttack()->getCurrentMeleeWeapon(),
             $this->getCurrentProperties()->getCurrentStrength(),
             $this->getAttack()->getCurrentMeleeWeaponHolding(),
-            $this->getSelectedInappropriateTool()
+            $this->getCurrentInappropriateTool()
         );
     }
 
@@ -492,7 +492,7 @@ class Controller extends \DrdPlus\Calculators\AttackSkeleton\Controller
     {
         return new RollOnQuality(
             0 /* no preconditions */,
-            Roller2d6DrdPlus::getIt()->generateRoll($this->getSelectedRollOnDestructing())
+            Roller2d6DrdPlus::getIt()->generateRoll($this->getCurrentRollOnDestructing())
         );
     }
 
@@ -517,7 +517,7 @@ class Controller extends \DrdPlus\Calculators\AttackSkeleton\Controller
     private function getRealTimeOfStatueLikeDestruction(): RealTimeOfDestruction
     {
         return new RealTimeOfDestruction(
-            BaseTimeOfDestruction::createForBodySize($this->getSelectedBodySize(), $this->tables->getTimeTable()),
+            BaseTimeOfDestruction::createForBodySize($this->getCurrentBodySize(), $this->tables->getTimeTable()),
             $this->getRollOnDestruction(),
             $this->tables
         );
