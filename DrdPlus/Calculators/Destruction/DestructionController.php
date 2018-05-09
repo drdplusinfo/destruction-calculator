@@ -27,7 +27,7 @@ use Granam\Integer\IntegerInterface;
 use Granam\Integer\IntegerObject;
 use DrdPlus\Tables\Measurements\Partials\Exceptions\UnknownBonus;
 
-class Controller extends \DrdPlus\Calculator\AttackSkeleton\Controller
+class DestructionController extends \DrdPlus\Calculator\AttackSkeleton\Controller
 {
 
     public const VOLUME_UNIT = 'volume_unit';

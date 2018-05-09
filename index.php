@@ -9,7 +9,7 @@ error_reporting(-1);
 ini_set('display_errors', '1');
 
 /** @noinspection PhpUnusedLocalVariableInspection */
-$controller = new Controller(Tables::getIt());
+$controller = new DestructionController(Tables::getIt());
 ?>
 <!DOCTYPE html>
 <html>
@@ -29,19 +29,19 @@ $controller = new Controller(Tables::getIt());
     </noscript>
   </head>
   <body class="container">
-    <div id="fb-root"></div>
     <div class="background"></div>
       <?php include __DIR__ . '/vendor/drd-plus/calculator-skeleton/history_deletion.php' ?>
     <div class="row">
-      <form action="" method="get" id="configurator">
-        <div class="col"><?php include __DIR__ . '/parts/destruction.php'; ?></div>
-      </form>
+      <hr class="col">
+    </div>
+    <form action="" method="get" id="configurator">
+        <?php include __DIR__ . '/parts/destruction.php'; ?>
+    </form>
+    <div class="row">
+      <hr class="col">
     </div>
     <div class="row">
-      <div class="col">
-        <hr>
-        <a target="_blank" href="https://pph.drdplus.info/#niceni">Pravidla pro ničení v PPH</a>
-      </div>
+      <a class="col" target="_blank" href="https://pph.drdplus.info/#niceni">Pravidla pro ničení v PPH</a>
     </div>
       <?php
       /** @noinspection PhpUnusedLocalVariableInspection */
