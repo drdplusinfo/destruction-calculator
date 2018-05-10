@@ -22,7 +22,7 @@ $controller = new DestructionController(Tables::getIt());
     <link href="css/generic/graphics.css" rel="stylesheet" type="text/css">
     <link href="css/generic/skeleton.css" rel="stylesheet" type="text/css">
     <link href="css/generic/issues.css" rel="stylesheet" type="text/css">
-    <link href="css/attack-skeleton/attack-skeleton.css" rel="stylesheet" type="text/css">
+    <link href="css/attack/skeleton.css" rel="stylesheet" type="text/css">
     <link href="css/destruction.css" rel="stylesheet" type="text/css">
     <noscript>
       <link rel="stylesheet" type="text/css" href="css/generic/no_script.css">
@@ -35,7 +35,13 @@ $controller = new DestructionController(Tables::getIt());
       <hr class="col">
     </div>
     <form action="" method="get" id="configurator">
-        <?php include __DIR__ . '/parts/destruction.php'; ?>
+        <?php
+        include __DIR__ . '/parts/material.php';
+        include __DIR__ . '/parts/damage.php';
+        include __DIR__ . '/parts/basic_item.php';
+        include __DIR__ . '/parts/body_like.php';
+        include __DIR__ . '/parts/voluminous_item.php';
+        ?>
     </form>
     <div class="row">
       <hr class="col">

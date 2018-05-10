@@ -35,17 +35,17 @@ use DrdPlus\Codes\Units\TimeUnitCode;
       <?php } else { ?>
         <div>Únava <strong><?= $fatigueFromVoluminousItemDestruction->getValue() ?></strong></div>
       <?php } ?>
-    <div class="panel">
-      Doba ničení
-        <?php $realTimeOfVoluminousItemDestruction = $controller->getTimeOfVoluminousItemDestruction();
-        if (!$realTimeOfVoluminousItemDestruction) { ?>
-          <div class="error">Doba ničení <strong>mimo rozsah</strong></div>
-        <?php } else { ?>
-          <strong>
-              <?= $realTimeOfVoluminousItemDestruction->getValue()
-              . ' ' . TimeUnitCode::getIt($realTimeOfVoluminousItemDestruction->getUnit())->translateTo('cs', $realTimeOfVoluminousItemDestruction->getValue()) ?>
-          </strong>
-        <?php } ?>
-    </div>
+  </div>
+  <div class="col">
+    Doba ničení
+      <?php $realTimeOfVoluminousItemDestruction = $controller->getTimeOfVoluminousItemDestruction();
+      if (!$realTimeOfVoluminousItemDestruction) { ?>
+        <div class="error">Doba ničení <strong>mimo rozsah</strong></div>
+      <?php } else { ?>
+        <strong>
+            <?= $realTimeOfVoluminousItemDestruction->getValue()
+            . ' ' . TimeUnitCode::getIt($realTimeOfVoluminousItemDestruction->getUnit())->translateTo('cs', $realTimeOfVoluminousItemDestruction->getValue()) ?>
+        </strong>
+      <?php } ?>
   </div>
 </div>

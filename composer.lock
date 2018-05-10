@@ -1021,12 +1021,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jaroslavtyc/drd-plus-attack-skeleton.git",
-                "reference": "94a0a52202d842bc501ef51c977d42d603c89c0b"
+                "reference": "41e0481db876c5e4abe03ad41ec1c8e3e4d9a20a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-attack-skeleton/zipball/94a0a52202d842bc501ef51c977d42d603c89c0b",
-                "reference": "94a0a52202d842bc501ef51c977d42d603c89c0b",
+                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-attack-skeleton/zipball/41e0481db876c5e4abe03ad41ec1c8e3e4d9a20a",
+                "reference": "41e0481db876c5e4abe03ad41ec1c8e3e4d9a20a",
                 "shasum": ""
             },
             "require": {
@@ -1062,7 +1062,7 @@
                 "drd plus",
                 "weapons"
             ],
-            "time": "2018-05-08 14:15:12"
+            "time": "2018-05-10 09:45:30"
         },
         {
             "name": "drd-plus/background",
@@ -1153,12 +1153,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jaroslavtyc/drd-plus-calculator-skeleton.git",
-                "reference": "9e807835eedfc1450e0cdc2e34acf98b599796ae"
+                "reference": "0f4100af4989626c013776cd1d61236cfbc716ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-calculator-skeleton/zipball/9e807835eedfc1450e0cdc2e34acf98b599796ae",
-                "reference": "9e807835eedfc1450e0cdc2e34acf98b599796ae",
+                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-calculator-skeleton/zipball/0f4100af4989626c013776cd1d61236cfbc716ef",
+                "reference": "0f4100af4989626c013776cd1d61236cfbc716ef",
                 "shasum": ""
             },
             "require": {
@@ -1182,7 +1182,7 @@
                 "MIT"
             ],
             "description": "Style and functionality helper of a DrD+ calculator",
-            "time": "2018-05-09 08:58:09"
+            "time": "2018-05-10 07:43:44"
         },
         {
             "name": "drd-plus/codes",

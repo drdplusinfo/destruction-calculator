@@ -23,19 +23,19 @@ use DrdPlus\Codes\Units\TimeUnitCode;
           Únava <strong><?= $fatigueFromBasicItemDestruction->getValue() ?></strong>
         </div>
       <?php } ?>
-    <div class="panel">
-      Doba ničení
-        <?php $realTimeOfBasicItemDestruction = $controller->getTimeOfBasicItemDestruction();
-        if (!$realTimeOfBasicItemDestruction) { ?>
-          <div class="error">
-            Doba <strong>mimo rozsah</strong>
-          </div>
-        <?php } else { ?>
-          <strong>
-              <?= $realTimeOfBasicItemDestruction->getValue()
-              . ' ' . TimeUnitCode::getIt($realTimeOfBasicItemDestruction->getUnit())->translateTo('cs', $realTimeOfBasicItemDestruction->getValue()) ?>
-          </strong>
-        <?php } ?>
-    </div>
+  </div>
+  <div class="col">
+    Doba ničení
+      <?php $realTimeOfBasicItemDestruction = $controller->getTimeOfBasicItemDestruction();
+      if (!$realTimeOfBasicItemDestruction) { ?>
+        <div class="error">
+          Doba <strong>mimo rozsah</strong>
+        </div>
+      <?php } else { ?>
+        <strong>
+            <?= $realTimeOfBasicItemDestruction->getValue()
+            . ' ' . TimeUnitCode::getIt($realTimeOfBasicItemDestruction->getUnit())->translateTo('cs', $realTimeOfBasicItemDestruction->getValue()) ?>
+        </strong>
+      <?php } ?>
   </div>
 </div>

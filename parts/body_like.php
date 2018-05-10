@@ -26,17 +26,17 @@ use DrdPlus\Codes\Units\TimeUnitCode;
       <?php } else { ?>
         <div>Únava z celkového ničení <strong><?= $fatigueFromStatueLikeDestruction->getValue() ?></strong></div>
       <?php } ?>
-    <div class="panel">
-      Doba celkového ničení
-        <?php $timeOfStatueLikeDestruction = $controller->getTimeOfStatueLikeDestruction();
-        if (!$timeOfStatueLikeDestruction) { ?>
-          <div class="error">Doba ničení <strong>mimo rozsah</strong></div>
-        <?php } else { ?>
-          <strong>
-              <?= $timeOfStatueLikeDestruction->getValue()
-              . ' ' . TimeUnitCode::getIt($timeOfStatueLikeDestruction->getUnit())->translateTo('cs', $timeOfStatueLikeDestruction->getValue()) ?>
-          </strong>
-        <?php } ?>
-    </div>
+  </div>
+  <div class="col">
+    Doba celkového ničení
+      <?php $timeOfStatueLikeDestruction = $controller->getTimeOfStatueLikeDestruction();
+      if (!$timeOfStatueLikeDestruction) { ?>
+        <div class="error">Doba ničení <strong>mimo rozsah</strong></div>
+      <?php } else { ?>
+        <strong>
+            <?= $timeOfStatueLikeDestruction->getValue()
+            . ' ' . TimeUnitCode::getIt($timeOfStatueLikeDestruction->getUnit())->translateTo('cs', $timeOfStatueLikeDestruction->getValue()) ?>
+        </strong>
+      <?php } ?>
   </div>
 </div>
