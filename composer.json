@@ -34,12 +34,6 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "scripts": {
-    "pre-update-cmd": [
-      "if [ -d ./vendor/drd-plus/attack-skeleton ]; then cd ./vendor/drd-plus/attack-skeleton && git checkout --; fi"
-    ],
-    "pre-install-cmd": [
-      "if [ -d ./vendor/drd-plus/attack-skeleton ]; then cd ./vendor/drd-plus/attack-skeleton && git checkout --; fi"
-    ],
     "pre-autoload-dump": [
       "rm -f ./css/generic && ln -s ../vendor/drd-plus/attack-skeleton/css/generic ./css/",
       "rm -f ./js/generic && ln -s ../vendor/drd-plus/attack-skeleton/js/generic ./js/",
