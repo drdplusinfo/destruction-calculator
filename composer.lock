@@ -1021,12 +1021,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jaroslavtyc/drd-plus-attack-skeleton.git",
-                "reference": "4f5ba577a0fe8088ae27d3e15453785a3e3920fe"
+                "reference": "c14cbafd0033236cb4c024ceab1dafce3e38c642"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-attack-skeleton/zipball/4f5ba577a0fe8088ae27d3e15453785a3e3920fe",
-                "reference": "4f5ba577a0fe8088ae27d3e15453785a3e3920fe",
+                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-attack-skeleton/zipball/c14cbafd0033236cb4c024ceab1dafce3e38c642",
+                "reference": "c14cbafd0033236cb4c024ceab1dafce3e38c642",
                 "shasum": ""
             },
             "require": {
@@ -1062,7 +1062,7 @@
                 "drd plus",
                 "weapons"
             ],
-            "time": "2018-06-03 16:07:02"
+            "time": "2018-06-04 14:56:43"
         },
         {
             "name": "drd-plus/background",
@@ -1153,12 +1153,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jaroslavtyc/drd-plus-calculator-skeleton.git",
-                "reference": "19c95990f7c934a1acd7d6150374a3e59272812d"
+                "reference": "2ef98369a3387c06bcc10f6a04c362b98837b77d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-calculator-skeleton/zipball/19c95990f7c934a1acd7d6150374a3e59272812d",
-                "reference": "19c95990f7c934a1acd7d6150374a3e59272812d",
+                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-calculator-skeleton/zipball/2ef98369a3387c06bcc10f6a04c362b98837b77d",
+                "reference": "2ef98369a3387c06bcc10f6a04c362b98837b77d",
                 "shasum": ""
             },
             "require": {
@@ -1186,7 +1186,7 @@
                 "MIT"
             ],
             "description": "Style and functionality helper of a DrD+ calculator",
-            "time": "2018-06-03 14:35:30"
+            "time": "2018-06-04 11:59:43"
         },
         {
             "name": "drd-plus/codes",
@@ -1409,12 +1409,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jaroslavtyc/drd-plus-frontend-skeleton.git",
-                "reference": "051adb73df585ef115025a2e727c9fa4670c3d47"
+                "reference": "fa2b9b56e6064c3ba64be22c69d2a00d45fffaeb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-frontend-skeleton/zipball/051adb73df585ef115025a2e727c9fa4670c3d47",
-                "reference": "051adb73df585ef115025a2e727c9fa4670c3d47",
+                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-frontend-skeleton/zipball/fa2b9b56e6064c3ba64be22c69d2a00d45fffaeb",
+                "reference": "fa2b9b56e6064c3ba64be22c69d2a00d45fffaeb",
                 "shasum": ""
             },
             "require": {
@@ -1454,7 +1454,7 @@
                 "pages",
                 "view"
             ],
-            "time": "2018-06-03 05:51:07"
+            "time": "2018-06-04 11:47:31"
         },
         {
             "name": "drd-plus/health",

@@ -1,5 +1,5 @@
 <?php
-namespace DrdPlus\Calculators\Destruction;
+namespace DrdPlus\DestructionCalculator;
 
 use DrdPlus\Codes\Armaments\MeleeWeaponCode;
 use DrdPlus\Codes\Environment\MaterialCode;
@@ -50,14 +50,38 @@ class DestructionController extends \DrdPlus\AttackSkeleton\Controller
     private $newRollOnDestructing;
 
     /**
-     * @param string $documentRoot
-     * @param string $sourceCodeUrl
      * @param Tables $tables
+     * @param string $sourceCodeUrl
+     * @param string $cookiesPostfix
+     * @param string $documentRoot
+     * @param string $vendorRoot
+     * @param string $partsRoot = null
+     * @param string $genericPartsRoot = null
+     * @param int $cookiesTtl = null
+     * @param array $selectedValues = null
      * @throws \DrdPlus\AttackSkeleton\Exceptions\BrokenNewArmamentValues
      */
-    public function __construct(string $documentRoot, string $sourceCodeUrl, Tables $tables)
+    public function __construct(
+        Tables $tables,
+        string $sourceCodeUrl,
+        string $documentRoot,
+        string $vendorRoot,
+        string $partsRoot = null,
+        string $genericPartsRoot = null,
+        int $cookiesTtl = null,
+        array $selectedValues = null
+    )
     {
-        parent::__construct($documentRoot, $sourceCodeUrl, 'destruction' /* cookies postfix */);
+        parent::__construct(
+            $sourceCodeUrl,
+            'destruction' /* cookies postfix */,
+            $documentRoot,
+            $vendorRoot,
+            $partsRoot,
+            $genericPartsRoot,
+            $cookiesTtl,
+            $selectedValues
+        );
         $this->destruction = new Destruction($tables);
         $this->tables = $tables;
     }
@@ -123,7 +147,7 @@ class DestructionController extends \DrdPlus\AttackSkeleton\Controller
 
     /**
      * @return float
-     * @throws \DrdPlus\Calculators\Destruction\Exceptions\UnknownVolumeUnit
+     * @throws \DrdPlus\DestructionCalculator\Exceptions\UnknownVolumeUnit
      */
     public function getCurrentVolumeValue(): float
     {
@@ -160,7 +184,7 @@ class DestructionController extends \DrdPlus\AttackSkeleton\Controller
 
     /**
      * @return float
-     * @throws \DrdPlus\Calculators\Destruction\Exceptions\UnknownSquareUnit
+     * @throws \DrdPlus\DestructionCalculator\Exceptions\UnknownSquareUnit
      */
     public function getCurrentSquareValue(): float
     {
@@ -376,7 +400,7 @@ class DestructionController extends \DrdPlus\AttackSkeleton\Controller
 
     /**
      * @return Time|null
-     * @throws \DrdPlus\Calculators\Destruction\Exceptions\UnknownVolumeUnit
+     * @throws \DrdPlus\DestructionCalculator\Exceptions\UnknownVolumeUnit
      * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotUseMeleeWeaponlikeBecauseOfMissingStrength
      * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownArmament
      * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownWeaponlike
@@ -414,7 +438,7 @@ class DestructionController extends \DrdPlus\AttackSkeleton\Controller
 
     /**
      * @return RealTimeOfDestruction
-     * @throws \DrdPlus\Calculators\Destruction\Exceptions\UnknownVolumeUnit
+     * @throws \DrdPlus\DestructionCalculator\Exceptions\UnknownVolumeUnit
      * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotUseMeleeWeaponlikeBecauseOfMissingStrength
      * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownArmament
      * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownWeaponlike
@@ -505,7 +529,7 @@ class DestructionController extends \DrdPlus\AttackSkeleton\Controller
 
     /**
      * @return RealTimeOfDestruction
-     * @throws \DrdPlus\Calculators\Destruction\Exceptions\UnknownVolumeUnit
+     * @throws \DrdPlus\DestructionCalculator\Exceptions\UnknownVolumeUnit
      * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotUseMeleeWeaponlikeBecauseOfMissingStrength
      * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownArmament
      * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownWeaponlike
