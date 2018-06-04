@@ -7,7 +7,7 @@ namespace DrdPlus\Calculators\Destruction;
     <h4 class="col">Poškození</h4>
   </div>
   <div class="row">
-      <?php include __DIR__ . '/../vendor/drd-plus/attack-skeleton/parts/melee_weapon.php' ?>
+      <?php include __DIR__ . '/../vendor/drd-plus/attack-skeleton/parts/attack-skeleton/melee_weapon.php' ?>
   </div>
   <div class="row">
     <div class="col">

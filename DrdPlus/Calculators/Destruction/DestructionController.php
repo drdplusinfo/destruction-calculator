@@ -27,7 +27,7 @@ use Granam\Integer\IntegerInterface;
 use Granam\Integer\IntegerObject;
 use DrdPlus\Tables\Measurements\Partials\Exceptions\UnknownBonus;
 
-class DestructionController extends \DrdPlus\Calculator\AttackSkeleton\Controller
+class DestructionController extends \DrdPlus\AttackSkeleton\Controller
 {
 
     public const VOLUME_UNIT = 'volume_unit';
@@ -50,12 +50,14 @@ class DestructionController extends \DrdPlus\Calculator\AttackSkeleton\Controlle
     private $newRollOnDestructing;
 
     /**
+     * @param string $documentRoot
+     * @param string $sourceCodeUrl
      * @param Tables $tables
-     * @throws \DrdPlus\Calculator\AttackSkeleton\Exceptions\BrokenNewArmamentValues
+     * @throws \DrdPlus\AttackSkeleton\Exceptions\BrokenNewArmamentValues
      */
-    public function __construct(Tables $tables)
+    public function __construct(string $documentRoot, string $sourceCodeUrl, Tables $tables)
     {
-        parent::__construct('destruction' /* cookies postfix */);
+        parent::__construct($documentRoot, $sourceCodeUrl, 'destruction' /* cookies postfix */);
         $this->destruction = new Destruction($tables);
         $this->tables = $tables;
     }
