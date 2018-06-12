@@ -1,5 +1,5 @@
 <?php
-namespace DrdPlus\Calculators\Destruction;
+namespace DrdPlus\DestructionCalculator;
 
 /** @var DestructionController $controller */
 ?>
@@ -30,16 +30,19 @@ namespace DrdPlus\Calculators\Destruction;
       <strong><?= $controller->getPowerOfDestruction()->getValue() ?></strong>
     </div>
     <div class="col">
-      <label>Hod na ničení 2k6<span class="upper-index">+</span>
+      <label>
         <input name="<?= $controller::ROLL_ON_DESTRUCTING ?>" type="number"
                value="<?= $controller->getCurrentRollOnDestructing()->getValue() ?>">
+        <span class="note">(2k6<span class="upper-index">+</span>)</span>
       </label>
-      <button type="submit" name="<?= $controller::SHOULD_ROLL_ON_DESTRUCTING ?>" value="1" class="manual">Hodit
-        2k6<span class="upper-index">+</span>
-      </button>
       + <?= $controller->getPowerOfDestruction()->getValue() ?>
       - <?= $controller->getMaterialResistance($controller->getCurrentMaterial())->getValue() ?> =
       <strong><?= $controller->getRollOnDestruction()->getValue() ?></strong>
+      <div>
+        <button type="submit" name="<?= $controller::SHOULD_ROLL_ON_DESTRUCTING ?>" value="1" class="manual">
+          Hodit znovu na ničení 2k6<span class="upper-index">+</span>
+        </button>
+      </div>
     </div>
   </div>
     <?php if (!$controller->getRollOnDestruction()->isSuccess()) { ?>

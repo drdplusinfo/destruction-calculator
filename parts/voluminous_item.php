@@ -1,5 +1,5 @@
 <?php
-namespace DrdPlus\Calculators\Destruction;
+namespace DrdPlus\DestructionCalculator;
 
 use DrdPlus\Codes\Units\TimeUnitCode;
 
