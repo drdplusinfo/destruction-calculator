@@ -35,7 +35,7 @@
   "prefer-stable": true,
   "scripts": {
     "pre-autoload-dump": [
-      "rm -f ./css/generic && ln -s ../vendor/drd-plus/attack-skeleton/css/generic ./css/",
+      "rm -fr ./css/generic && cp -r ./vendor/drd-plus/attack-skeleton/css/generic ./css/",
       "rm -f ./js/generic && ln -s ../vendor/drd-plus/attack-skeleton/js/generic ./js/",
       "rm -f ./images/generic && ln -s ../vendor/drd-plus/attack-skeleton/images/generic ./images/",
       "find ./cache -mindepth 2 -type f -exec rm {} +"

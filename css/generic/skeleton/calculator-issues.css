@@ -1,0 +1,10 @@
+.github {
+    max-width: 2em;
+    max-height: 2em;
+    vertical-align: bottom;
+}
+
+.issues {
+    margin-top: 1em;
+    width: 100%;
+}

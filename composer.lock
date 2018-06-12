@@ -1021,12 +1021,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jaroslavtyc/drd-plus-attack-skeleton.git",
-                "reference": "011f25b375a43bcbc651797f6115fc76906b9f6c"
+                "reference": "e15f5699fe8ee5853020b55fdb14fb0ef78e2fe4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-attack-skeleton/zipball/011f25b375a43bcbc651797f6115fc76906b9f6c",
-                "reference": "011f25b375a43bcbc651797f6115fc76906b9f6c",
+                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-attack-skeleton/zipball/e15f5699fe8ee5853020b55fdb14fb0ef78e2fe4",
+                "reference": "e15f5699fe8ee5853020b55fdb14fb0ef78e2fe4",
                 "shasum": ""
             },
             "require": {
@@ -1062,7 +1062,7 @@
                 "drd plus",
                 "weapons"
             ],
-            "time": "2018-06-12 09:56:26"
+            "time": "2018-06-12 12:51:46"
         },
         {
             "name": "drd-plus/background",
