@@ -41,10 +41,10 @@
       "find ./cache -mindepth 2 -type f -exec rm {} +"
     ],
     "post-update-cmd": [
-      "php ./vendor/drd-plus/frontend-skeleton/bin/assets --dir=css"
+      "php ./vendor/bin/assets --dir=css"
     ],
     "post-install-cmd": [
-      "php ./vendor/drd-plus/frontend-skeleton/bin/assets --dir=css"
+      "php ./vendor/bin/assets --dir=css"
     ]
   }
 }
