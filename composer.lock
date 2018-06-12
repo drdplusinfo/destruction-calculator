@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "f7d8bc98ab203b044a7bdb1c2c7aa2ec",
+    "hash": "6ecccc5f808f2aabe5dd89e272a6a863",
     "content-hash": "fc6b6dd9906d1a0efc6a3b9620821806",
     "packages": [
         {
@@ -1021,12 +1021,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jaroslavtyc/drd-plus-attack-skeleton.git",
-                "reference": "e15f5699fe8ee5853020b55fdb14fb0ef78e2fe4"
+                "reference": "c016f37b51a342538d048590a459b6414db1f7e3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-attack-skeleton/zipball/e15f5699fe8ee5853020b55fdb14fb0ef78e2fe4",
-                "reference": "e15f5699fe8ee5853020b55fdb14fb0ef78e2fe4",
+                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-attack-skeleton/zipball/c016f37b51a342538d048590a459b6414db1f7e3",
+                "reference": "c016f37b51a342538d048590a459b6414db1f7e3",
                 "shasum": ""
             },
             "require": {
@@ -1062,7 +1062,7 @@
                 "drd plus",
                 "weapons"
             ],
-            "time": "2018-06-12 12:51:46"
+            "time": "2018-06-12 13:28:47"
         },
         {
             "name": "drd-plus/background",
