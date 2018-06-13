@@ -10,7 +10,7 @@ namespace DrdPlus\DestructionCalculator;
   <div class="row">
     <div class="col">
       <label>
-        Síla
+        Síla <span class="note">(Sil)</span>
         <input type="number" value="<?= $controller->getCurrentStrength() ?>" step="1"
                name="<?= $controller::STRENGTH ?>">
       </label>
@@ -28,7 +28,7 @@ namespace DrdPlus\DestructionCalculator;
       <strong><?= $controller->getPowerOfDestruction()->getValue() ?></strong>
     </div>
     <div class="col">
-      <label>
+      <label title="<?= $controller->getCurrent2d6RollTitle() ?>">
         <input name="<?= $controller::ROLL_ON_DESTRUCTING ?>" type="number"
                value="<?= $controller->getCurrentRollOnDestructing()->getValue() ?>">
         <span class="note">(2k6<span class="upper-index">+</span>)</span>

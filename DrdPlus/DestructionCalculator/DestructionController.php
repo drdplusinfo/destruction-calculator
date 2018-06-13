@@ -13,6 +13,7 @@ use DrdPlus\Destruction\PowerOfDestruction;
 use DrdPlus\Destruction\RealTimeOfDestruction;
 use DrdPlus\Destruction\RollOnDestruction;
 use DrdPlus\DiceRolls\Templates\Rollers\Roller2d6DrdPlus;
+use DrdPlus\DiceRolls\Templates\Rolls\Roll2d6DrdPlus;
 use DrdPlus\Properties\Base\Strength;
 use DrdPlus\Properties\Body\Size;
 use DrdPlus\RollsOn\QualityAndSuccess\RollOnQuality;
@@ -46,13 +47,12 @@ class DestructionController extends \DrdPlus\AttackSkeleton\AttackController
     private $destruction;
     /** @var Tables */
     private $tables;
-    /** @var int|null */
-    private $newRollOnDestructing;
+    /** @var Roll2d6DrdPlus|null */
+    private $robotRollOnDestructing;
 
     /**
      * @param Tables $tables
      * @param string $sourceCodeUrl
-     * @param string $cookiesPostfix
      * @param string $documentRoot
      * @param string $vendorRoot
      * @param string $partsRoot = null
@@ -226,13 +226,30 @@ class DestructionController extends \DrdPlus\AttackSkeleton\AttackController
      */
     public function getCurrentRollOnDestructing(): IntegerInterface
     {
-        if ($this->newRollOnDestructing === null && $this->shouldRollOnDestructing()) {
-            $this->newRollOnDestructing = Roller2d6DrdPlus::getIt()->roll()->getValue();
+        return $this->getRobotRollOnDestructing()
+            ?? new IntegerObject(
+                $this->getCurrentValues()->getCurrentValue(self::ROLL_ON_DESTRUCTING)
+                ?? 6
+            );
+    }
+
+    private function getRobotRollOnDestructing(): ?Roll2d6DrdPlus
+    {
+        if ($this->robotRollOnDestructing === null && $this->shouldRollOnDestructing()) {
+            $this->robotRollOnDestructing = Roller2d6DrdPlus::getIt()->roll();
         }
 
-        return new IntegerObject(
-            $this->newRollOnDestructing ?? $this->getCurrentValues()->getCurrentValue(self::ROLL_ON_DESTRUCTING) ?? 6
-        );
+        return $this->robotRollOnDestructing;
+    }
+
+    public function getCurrent2d6RollTitle(): string
+    {
+        $robotRollOnDestructing = $this->getRobotRollOnDestructing();
+        if ($robotRollOnDestructing) {
+            return \implode(',', $robotRollOnDestructing->getRolledNumbers()) . '=' . $robotRollOnDestructing->getValue();
+        }
+
+        return '(ruční hod) ' . $this->getCurrentRollOnDestructing()->getValue();
     }
 
     /**

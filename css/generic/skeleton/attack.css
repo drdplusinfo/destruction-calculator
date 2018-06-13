@@ -83,14 +83,20 @@ a.inner {
 
 .button {
     display: inline-block;
+    vertical-align: middle;
     text-align: center;
     color: black;
-    height: 1.3em;
-    min-width: 1.3em;
+    height: 1.8em;
+    min-width: 1.8em;
     text-decoration: none;
     border: 1px solid grey;
     border-radius: 2px;
     cursor: pointer;
+}
+
+a.button:hover {
+    text-decoration: none;
+    text-shadow: none;
 }
 
 .cancel {
