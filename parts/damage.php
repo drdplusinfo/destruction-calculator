@@ -1,6 +1,8 @@
 <?php
 namespace DrdPlus\DestructionCalculator;
 
+use DrdPlus\FrontendSkeleton\Cache;
+
 /** @var DestructionController $controller */
 ?>
   <div class="row">
@@ -37,9 +39,9 @@ namespace DrdPlus\DestructionCalculator;
       - <?= $controller->getMaterialResistance($controller->getCurrentMaterial())->getValue() ?> =
       <strong><?= $controller->getRollOnDestruction()->getValue() ?></strong>
       <div>
-        <button type="submit" name="<?= $controller::SHOULD_ROLL_ON_DESTRUCTING ?>" value="1" class="manual">
+        <a class="button" href="<?= $controller->getLocalUrlWithQuery([Cache::CACHE => Cache::DISABLE, DestructionController::SHOULD_ROLL_ON_DESTRUCTING => 1]) ?>">
           Hodit znovu na ničení 2k6<span class="upper-index">+</span>
-        </button>
+        </a>
       </div>
     </div>
   </div>

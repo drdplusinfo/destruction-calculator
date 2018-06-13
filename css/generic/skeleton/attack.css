@@ -42,8 +42,8 @@ a.inner {
     text-decoration: none;
 }
 
-.body-properties > .panel {
-    min-width: 5em;
+.body-properties label {
+    display: block;
 }
 
 .decreased {
@@ -81,22 +81,25 @@ a.inner {
     border-radius: 2px;
 }
 
-.button {
+.button, .btn {
     display: inline-block;
     vertical-align: middle;
     text-align: center;
     color: black;
-    height: 1.8em;
     min-width: 1.8em;
     text-decoration: none;
     border: 1px solid grey;
-    border-radius: 2px;
+    border-radius: 0.25rem;
     cursor: pointer;
+    padding: .2rem .5rem;
+    line-height: 1.25;
+    background-color: #eeeeee;
 }
 
-a.button:hover {
+a.button:hover, a.btn:hover {
     text-decoration: none;
     text-shadow: none;
+    background-color: #e2e2e2;
 }
 
 .cancel {
