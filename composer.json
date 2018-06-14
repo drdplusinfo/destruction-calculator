@@ -35,6 +35,7 @@
   "prefer-stable": true,
   "scripts": {
     "pre-autoload-dump": [
+      "rm -f ./DrdPlus/Tests/CalculatorSkeleton && ln -s ../../vendor/drd-plus/calculator-skeleton/DrdPlus/Tests/CalculatorSkeleton ./DrdPlus/Tests",
       "rm -fr ./css/generic && cp -r ./vendor/drd-plus/attack-skeleton/css/generic ./css/",
       "rm -f ./js/generic && ln -s ../vendor/drd-plus/attack-skeleton/js/generic ./js/",
       "rm -f ./images/generic && ln -s ../vendor/drd-plus/attack-skeleton/images/generic ./images/",
