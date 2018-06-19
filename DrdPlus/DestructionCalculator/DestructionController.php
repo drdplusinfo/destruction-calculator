@@ -14,6 +14,7 @@ use DrdPlus\Destruction\RealTimeOfDestruction;
 use DrdPlus\Destruction\RollOnDestruction;
 use DrdPlus\DiceRolls\Templates\Rollers\Roller2d6DrdPlus;
 use DrdPlus\DiceRolls\Templates\Rolls\Roll2d6DrdPlus;
+use DrdPlus\FrontendSkeleton\HtmlHelper;
 use DrdPlus\Properties\Base\Strength;
 use DrdPlus\Properties\Body\Size;
 use DrdPlus\RollsOn\QualityAndSuccess\RollOnQuality;
@@ -73,6 +74,7 @@ class DestructionController extends \DrdPlus\AttackSkeleton\AttackController
     )
     {
         parent::__construct(
+            HtmlHelper::createFromGlobals($documentRoot),
             $sourceCodeUrl,
             'destruction' /* cookies postfix */,
             $documentRoot,
