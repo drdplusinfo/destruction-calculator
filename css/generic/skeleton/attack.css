@@ -42,6 +42,10 @@ a.inner {
     text-decoration: none;
 }
 
+.body-properties {
+    white-space: nowrap;
+}
+
 .body-properties label {
     display: block;
 }

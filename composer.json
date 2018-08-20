@@ -1,5 +1,5 @@
 {
-  "name": "drd-plus/destruction-calculator",
+  "name": "drdplus/destruction-calculator",
   "license": "MIT",
   "type": "project",
   "description": "Have you broke in or broke a sword?",
@@ -19,11 +19,11 @@
   "require": {
     "php": ">=7.1",
     "granam/strict-object": "dev-master",
-    "drd-plus/tables": "dev-master",
-    "drd-plus/skills": "dev-master",
-    "drd-plus/destruction": "dev-master",
-    "drd-plus/attack-skeleton": "dev-master",
-    "drd-plus/codes": "dev-master"
+    "drdplus/tables": "dev-master",
+    "drdplus/skills": "dev-master",
+    "drdplus/destruction": "dev-master",
+    "drdplus/attack-skeleton": "dev-master",
+    "drdplus/codes": "dev-master"
   },
   "require-dev": {
     "roave/security-advisories": "dev-master",
@@ -35,10 +35,10 @@
   "prefer-stable": true,
   "scripts": {
     "pre-autoload-dump": [
-      "rm -f ./DrdPlus/Tests/CalculatorSkeleton && ln -s ../../vendor/drd-plus/calculator-skeleton/DrdPlus/Tests/CalculatorSkeleton ./DrdPlus/Tests",
-      "rm -fr ./css/generic && cp -r ./vendor/drd-plus/attack-skeleton/css/generic ./css/",
-      "rm -f ./js/generic && ln -s ../vendor/drd-plus/attack-skeleton/js/generic ./js/",
-      "rm -f ./images/generic && ln -s ../vendor/drd-plus/attack-skeleton/images/generic ./images/",
+      "rm -f ./DrdPlus/Tests/CalculatorSkeleton && ln -s ../../vendor/drdplus/calculator-skeleton/DrdPlus/Tests/CalculatorSkeleton ./DrdPlus/Tests",
+      "rm -fr ./css/generic && cp -r ./vendor/drdplus/attack-skeleton/css/generic ./css/",
+      "rm -f ./js/generic && ln -s ../vendor/drdplus/attack-skeleton/js/generic ./js/",
+      "rm -f ./images/generic && ln -s ../vendor/drdplus/attack-skeleton/images/generic ./images/",
       "find ./cache -mindepth 2 -type f -exec rm {} +"
     ],
     "post-update-cmd": [
