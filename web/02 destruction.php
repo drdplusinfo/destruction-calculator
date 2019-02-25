@@ -3,10 +3,10 @@
 </div>
 <form action="" method="get" id="calculator">
     <?php
-    include __DIR__ . '/../parts/material.php';
-    include __DIR__ . '/../parts/damage.php';
-    include __DIR__ . '/../parts/basic_item.php';
-    include __DIR__ . '/../parts/body_like.php';
-    include __DIR__ . '/../parts/voluminous_item.php';
+    include __DIR__ . '/parts/material.php';
+    include __DIR__ . '/parts/damage.php';
+    include __DIR__ . '/parts/basic_item.php';
+    include __DIR__ . '/parts/body_like.php';
+    include __DIR__ . '/parts/voluminous_item.php';
     ?>
 </form>

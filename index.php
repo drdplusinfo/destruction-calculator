@@ -1,7 +1,10 @@
 <?php
 namespace DrdPlus\DestructionCalculator;
 
-use DrdPlus\Tables\Tables;
+use DrdPlus\AttackSkeleton\HtmlHelper;
+use DrdPlus\CalculatorSkeleton\CalculatorApplication;
+use DrdPlus\CalculatorSkeleton\CalculatorConfiguration;
+use DrdPlus\RulesSkeleton\Dirs;
 
 \error_reporting(-1);
 if ((!empty($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] === '127.0.0.1') || PHP_SAPI === 'cli') {
@@ -11,16 +14,17 @@ if ((!empty($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] === '127.0.0.1')
 }
 
 $documentRoot = $documentRoot ?? (PHP_SAPI !== 'cli' ? \rtrim(\dirname($_SERVER['SCRIPT_FILENAME']), '\/') : \getcwd());
-$vendorRoot = $vendorRoot ?? $documentRoot . '/vendor';
 
-require_once $vendorRoot . '/autoload.php';
+/** @noinspection PhpIncludeInspection */
+require_once $documentRoot . '/vendor/autoload.php';
 
-/** @noinspection PhpUnusedLocalVariableInspection */
-$controller = new DestructionController(
-    Tables::getIt(),
-    'https://github.com/jaroslavtyc/drd-plus-calculators-destruction',
-    __DIR__ /* document root */,
-    $vendorRoot
-);
+$dirs = Dirs::createFromGlobals();
+$htmlHelper = HtmlHelper::createFromGlobals($dirs);
+if (PHP_SAPI !== 'cli') {
+    \DrdPlus\RulesSkeleton\TracyDebugger::enable($htmlHelper->isInProduction());
+}
 
-require $vendorRoot . '/drd-plus/attack-skeleton/index.php';
+$calculatorConfiguration = CalculatorConfiguration::createFromYml($dirs);
+$servicesContainer = new DestructionServiceContainer($calculatorConfiguration, $htmlHelper);
+$calculatorApplication = new CalculatorApplication($servicesContainer);
+$calculatorApplication->run();

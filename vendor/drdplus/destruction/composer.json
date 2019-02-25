@@ -1,0 +1,25 @@
+{
+  "name": "drdplus/destruction",
+  "license": "MIT",
+  "type": "library",
+  "description": "Drd+ destruction according to material, time and other aspects",
+  "autoload": {
+    "psr-4": {
+      "DrdPlus\\": "DrdPlus/"
+    }
+  },
+  "require": {
+    "php": ">=7.1",
+    "drdplus/tables": "~2.0",
+    "drdplus/rolls-on": "~2.0",
+    "drdplus/properties": "~2.0",
+    "drdplus/armourer": "~2.0",
+    "granam/dice-rolls": "^5.0"
+  },
+  "require-dev": {
+    "roave/security-advisories": "dev-master",
+    "phpunit/phpunit": "~7.0",
+    "mockery/mockery": "~1.0",
+    "granam/exceptions-hierarchy": "~4.0"
+  }
+}
