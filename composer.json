@@ -16,20 +16,6 @@
       "DrdPlus\\": "DrdPlus/"
     }
   },
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "/var/www/kalkulator.skeleton/"
-    },
-    {
-      "type": "vcs",
-      "url": "/var/www/utok.skeleton/"
-    },
-    {
-      "type": "vcs",
-      "url": "/var/www/rules.skeleton/"
-    }
-  ],
   "require": {
     "php": ">=7.1",
     "drdplus/tables": "~2.0",
