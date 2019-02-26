@@ -47,6 +47,7 @@ class DamageBody extends AbstractDestructionBody
       <label>
         <input type="checkbox" name="{$inappropriateToolInputName}" {$this->getCheckedOfInappropriateTool()} value="1">
         Nevhodný nástroj <span class="note">(-6 k <span class="keyword">Síle ničení</span>)</span>
+        {$this->getReasonWhyToolIsInapropriate()}
       </label>
     </div>
     <div class="col">
@@ -71,6 +72,17 @@ class DamageBody extends AbstractDestructionBody
 </div>
 HTML;
     }
+
+    private function getReasonWhyToolIsInapropriate(): string
+    {
+        if ($this->currentDestruction->isCurrentWeaponInapropriateTool()) {
+            return <<<HTML
+<div class="note">Současná zbraň není dobrý nástroj na ničení</div>
+HTML;
+        }
+        return '';
+    }
+
     private function getFailureInfo(): string
     {
         if ($this->currentDestruction->getCurrentRollOnDestruction()->isSuccess()) {
@@ -90,6 +102,6 @@ HTML;
 
     private function getCheckedOfInappropriateTool(): string
     {
-        return $this->htmlHelper->getChecked($this->currentDestruction->getCurrentInappropriateTool(), true);
+        return $this->htmlHelper->getChecked($this->currentDestruction->isCurrentToolInappropriate(), true);
     }
 }

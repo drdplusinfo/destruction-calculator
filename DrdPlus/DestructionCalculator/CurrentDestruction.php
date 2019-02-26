@@ -183,17 +183,22 @@ class CurrentDestruction extends StrictObject
             $this->currentArmaments->getCurrentMeleeWeapon(),
             $this->currentProperties->getCurrentStrength(),
             $this->currentArmaments->getCurrentMeleeWeaponHolding(),
-            $this->getCurrentInappropriateTool()
+            $this->isCurrentToolInappropriate()
         );
     }
 
-    public function getCurrentInappropriateTool(): bool
+    public function isCurrentToolInappropriate(): bool
     {
-        if ($this->currentArmaments->getCurrentMeleeWeapon()->isUnarmed()) {
+        if ($this->isCurrentWeaponInapropriateTool()) {
             return true;
         }
         // false by default
         return (bool)$this->currentValues->getCurrentValue(DestructionRequest::INAPPROPRIATE_TOOL);
+    }
+
+    public function isCurrentWeaponInapropriateTool(): bool
+    {
+        return $this->currentArmaments->getCurrentMeleeWeapon()->isUnarmed();
     }
 
     public function getCurrentTimeOfBasicItemDestruction(): ?Time
