@@ -40,9 +40,6 @@ class MaterialBody extends AbstractDestructionBody
       <select name="material">{$this->getMaterialOptions()}</select>          
     </label>
   </div>
-  <div class="col">
-    {$this->getFailureInfo()}
-  </div>
 </div>
 HTML;
     }
@@ -60,15 +57,5 @@ HTML;
 HTML;
         }
         return \implode("\n", $materialOptions);
-    }
-
-    private function getFailureInfo(): string
-    {
-        if ($this->currentDestruction->getCurrentRollOnDestruction()->isSuccess()) {
-            return '';
-        }
-        return <<<HTML
-<div class="alert alert-danger">Předmět <strong>nebyl</strong> poškozen</div>
-HTML;
     }
 }

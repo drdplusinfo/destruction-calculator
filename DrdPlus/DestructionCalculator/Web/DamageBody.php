@@ -67,7 +67,19 @@ class DamageBody extends AbstractDestructionBody
         </a>
       </div>
     </div>
-  </div>
+  {$this->getFailureInfo()}
+</div>
+HTML;
+    }
+    private function getFailureInfo(): string
+    {
+        if ($this->currentDestruction->getCurrentRollOnDestruction()->isSuccess()) {
+            return '';
+        }
+        return <<<HTML
+<div class="col">
+  <div class="alert alert-danger">Předmět <strong>nebyl</strong> poškozen</div>
+</div>
 HTML;
     }
 
