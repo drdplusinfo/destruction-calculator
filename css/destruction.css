@@ -51,3 +51,7 @@ h5 {
 .background {
     background-size: cover;
 }
+
+input[type="number"] {
+    width: 5em;
+}

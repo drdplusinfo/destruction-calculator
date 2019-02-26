@@ -7,10 +7,8 @@ use DrdPlus\AttackSkeleton\HtmlHelper;
 use DrdPlus\Codes\Environment\MaterialCode;
 use DrdPlus\DestructionCalculator\CurrentDestruction;
 use DrdPlus\DestructionCalculator\DestructionWebPartsContainer;
-use Granam\Strict\Object\StrictObject;
-use Granam\WebContentBuilder\Web\BodyInterface;
 
-class MaterialBody extends StrictObject implements BodyInterface
+class MaterialBody extends AbstractDestructionBody
 {
     /**
      * @var CurrentDestruction
@@ -33,11 +31,6 @@ class MaterialBody extends StrictObject implements BodyInterface
         $this->htmlHelper = $htmlHelper;
     }
 
-    public function __toString()
-    {
-        return $this->getValue();
-    }
-
     public function getValue(): string
     {
         return <<<HTML
@@ -46,6 +39,9 @@ class MaterialBody extends StrictObject implements BodyInterface
     <label>Materiál
       <select name="material">{$this->getMaterialOptions()}</select>          
     </label>
+  </div>
+  <div class="col">
+    {$this->getFailureInfo()}
   </div>
 </div>
 HTML;
@@ -63,6 +59,16 @@ HTML;
 </option>
 HTML;
         }
-        return \implode('\n', $materialOptions);
+        return \implode("\n", $materialOptions);
+    }
+
+    private function getFailureInfo(): string
+    {
+        if ($this->currentDestruction->getCurrentRollOnDestruction()->isSuccess()) {
+            return '';
+        }
+        return <<<HTML
+<div class="alert alert-danger">Předmět <strong>nebyl</strong> poškozen</div>
+HTML;
     }
 }

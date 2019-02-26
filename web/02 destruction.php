@@ -9,4 +9,5 @@
     include __DIR__ . '/parts/body_like.php';
     include __DIR__ . '/parts/voluminous_item.php';
     ?>
+  <input type="submit" value="Potvrdit">
 </form>

@@ -7,10 +7,8 @@ use DrdPlus\AttackSkeleton\HtmlHelper;
 use DrdPlus\DestructionCalculator\CurrentDestruction;
 use DrdPlus\DestructionCalculator\DestructionRequest;
 use DrdPlus\DestructionCalculator\DestructionWebPartsContainer;
-use Granam\Strict\Object\StrictObject;
-use Granam\WebContentBuilder\Web\BodyInterface;
 
-class VoluminousItemBody extends StrictObject implements BodyInterface
+class VoluminousItemBody extends AbstractDestructionBody
 {
     /**
      * @var array|\DrdPlus\Codes\Units\VolumeUnitCode[]
@@ -32,11 +30,6 @@ class VoluminousItemBody extends StrictObject implements BodyInterface
         $this->htmlHelper = $htmlHelper;
     }
 
-    public function __toString()
-    {
-        return $this->getValue();
-    }
-
     public function getValue(): string
     {
         $currentVolumeValue = \number_format($this->currentDestruction->getCurrentVolumeValue(), 2);
@@ -44,26 +37,35 @@ class VoluminousItemBody extends StrictObject implements BodyInterface
         $volumeUnitInputName = DestructionRequest::VOLUME_UNIT;
         return <<<HTML
 <div class="row">
-  <div class="col">
-    <div class="example">zeď, dveře, led...</div>
-    <label>
-      Objem ničeného předmětu či jeho části
-      <input type="number" value="{$currentVolumeValue}" name="{$volumeValueInputName}">
-    </label>
-    <div class="example">
-      například díra 30 cm x 30 cm v ledu tlustém 25 cm = 30x30x25 = 22500 cm<span class="upper-index">3</span> = 22.5 litru
+    <div class="col">
+      <div class="row">
+        <div class="col example">zeď, dveře, led...</div>
+      </div>
     </div>
-    <label>
-      Jednotka objemu
-      <select name="{$volumeUnitInputName}">
-          {$this->getVolumeUnitOptions()}
-      </select>
-    </label>
-    {$this->getFatigue()}
-  </div>
+    <div class="col">
+        <label>
+          Objem ničeného předmětu či jeho části
+          <input type="number" value="{$currentVolumeValue}" name="{$volumeValueInputName}">
+        </label>
+        <div class="example">
+          například díra 30 cm x 30 cm v ledu tlustém 25 cm = 30x30x25 = 22500 cm<span class="upper-index">3</span> = 22.5 litru
+        </div>
+    </div>
+    <div class="col">
+        <label>
+          Jednotka objemu
+          <select name="{$volumeUnitInputName}">
+              {$this->getVolumeUnitOptions()}
+          </select>
+        </label>
+    </div>
+    <div class="col">
+       <div class="col alert alert-primary">Únava {$this->getFatigue()}</div>
+    </div>
   <div class="col">
-    Doba ničení
-    {$this->getTimeOfDestruction()}
+    <div class="row">
+    <div class="col"><div class="alert alert-primary">Doba ničení {$this->getTimeOfDestruction()}</div></div>
+    </div>
   </div>
 </div>
 HTML;
@@ -73,12 +75,10 @@ HTML;
     {
         $currentFatigueFromVoluminousItemDestruction = $this->currentDestruction->getCurrentFatigueFromVoluminousItemDestruction();
         if (!$currentFatigueFromVoluminousItemDestruction) {
-            return <<<HTML
-<div class="error">Únava <strong>mimo rozsah</strong></div>
-HTML;
+            return $this->getOutOfKnownRangeHtml();
         }
         return <<<HTML
-<div>Únava <strong>{$currentFatigueFromVoluminousItemDestruction->getValue()}</strong></div>
+<strong>{$currentFatigueFromVoluminousItemDestruction->getValue()}</strong>
 HTML;
     }
 
@@ -99,9 +99,7 @@ HTML;
     {
         $currentTimeOfVoluminousItemDestruction = $this->currentDestruction->getCurrentTimeOfVoluminousItemDestruction();
         if (!$currentTimeOfVoluminousItemDestruction) {
-            return <<<HTML
-<div class="error">Doba ničení <strong>mimo známý rozsah</strong></div>
-HTML;
+            return $this->getOutOfKnownRangeHtml();
         }
         return <<<HTML
 <strong>{$currentTimeOfVoluminousItemDestruction->getValue()} {$currentTimeOfVoluminousItemDestruction->getUnitCode()->translateTo('cs', $currentTimeOfVoluminousItemDestruction->getValue())}

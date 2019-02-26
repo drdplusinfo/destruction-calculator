@@ -147,7 +147,11 @@ class CurrentDestruction extends StrictObject
     {
         $time = $realTimeOfDestruction->findTime(TimeUnitCode::HOUR);
         if (!$time) {
-            $time = $realTimeOfDestruction->findTime();
+            try {
+                $time = $realTimeOfDestruction->findTime();
+            } catch (UnknownBonus $unknownBonus) {
+                return null;
+            }
         }
         if (!$time) {
             return null;
@@ -268,15 +272,15 @@ class CurrentDestruction extends StrictObject
             case VolumeUnitCode::LITER :
                 $minimal = \max(10.0/** minimal liters for @see VolumeTable */, $this->currentValues->getCurrentValue(DestructionRequest::VOLUME_VALUE) ?? 10.0);
 
-                return \min(1000/** maximal liters for @see VolumeTable */, $minimal);
+                return (float)\min(1000/** maximal liters for @see VolumeTable */, $minimal);
             case VolumeUnitCode::CUBIC_METER :
                 $minimal = \max(0.01/** minimal cubic meters for @see VolumeTable */, $this->currentValues->getCurrentValue(DestructionRequest::VOLUME_VALUE) ?? 1.0);
 
-                return \min(1000/** maximal cubic meters for @see VolumeTable */, $minimal);
+                return (float)\min(1000/** maximal cubic meters for @see VolumeTable */, $minimal);
             case VolumeUnitCode::CUBIC_KILOMETER :
                 $minimal = \max(0.001/** minimal cubic kilometers for @see VolumeTable */, $this->currentValues->getCurrentValue(DestructionRequest::VOLUME_VALUE) ?? 0.1);
 
-                return \min(0.9/** maximal cubic meters for @see VolumeTable */, $minimal);
+                return (float)\min(0.9/** maximal cubic meters for @see VolumeTable */, $minimal);
             default :
                 throw new Exceptions\UnknownVolumeUnit('Unknown volume unit ' . $selectedVolumeUnit);
         }
@@ -341,6 +345,10 @@ class CurrentDestruction extends StrictObject
             return $this->getTimeOfDestruction($this->getCurrentRealTimeOfVoluminousItemDestruction());
         } catch (UnknownBonus $unknownBonus) {
             return null;
+        } catch (CanNotConvertThatBonusToTime $canNotConvertThatBonusToTime) {
+            return null;
+        } catch (RequestedDataOutOfTableRange $canNotConvertThatBonusToTime) {
+            return null;
         }
     }
 
@@ -353,7 +361,7 @@ class CurrentDestruction extends StrictObject
     {
         $robotRollOnDestructing = $this->getCurrentRollOnDestructionQuality()->getRoll();
         if ($robotRollOnDestructing) {
-            return \implode(',', $robotRollOnDestructing->getRolledNumbers()) . '=' . $robotRollOnDestructing->getValue();
+            return \implode(', ', $robotRollOnDestructing->getRolledNumbers()) . ' = ' . $robotRollOnDestructing->getValue();
         }
         return '(ruční hod) ' . $this->getCurrentRollOnDestructionQuality()->getValue();
     }

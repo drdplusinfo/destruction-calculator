@@ -6,10 +6,8 @@ namespace DrdPlus\DestructionCalculator\Web;
 use DrdPlus\DestructionCalculator\CurrentDestruction;
 use DrdPlus\DestructionCalculator\DestructionRequest;
 use DrdPlus\DestructionCalculator\DestructionWebPartsContainer;
-use Granam\Strict\Object\StrictObject;
-use Granam\WebContentBuilder\Web\BodyInterface;
 
-class BasicItemDestructionBody extends StrictObject implements BodyInterface
+class BasicItemDestructionBody extends AbstractDestructionBody
 {
     /**
      * @var CurrentDestruction
@@ -26,23 +24,18 @@ class BasicItemDestructionBody extends StrictObject implements BodyInterface
         $this->currentProperties = $destructionWebPartsContainer->getCurrentProperties();
     }
 
-    public function __toString()
-    {
-        return $this->getValue();
-    }
-
     public function getValue(): string
     {
         return <<<HTML
-        <div class="row">
+<div class="row">
   <div class="col">
-    <div class="example">hlava sochy, dlaždice, meč, lopata...</div>
-      {$this->getFatigueFromItemSize()}
+    <div class="row">
+      <div class="col example">hlava sochy, dlaždice, meč, lopata...</div>
+    </div>
   </div>
-  <div class="col">
-    Doba ničení
-      {$this->getTimeOfDestruction()}
-  </div>
+  <div class="col">{$this->getItemSize()}</div>
+  <div class="col"><div class="col alert alert-primary">Únava {$this->getFatigueFromItemSize()}</div></div>
+  <div class="col"><div class="col alert alert-primary">Doba ničení {$this->getTimeOfDestruction()}</div></div>
 </div>
 HTML;
     }
@@ -51,31 +44,27 @@ HTML;
     {
         $fatigueFromBasicItemDestruction = $this->currentDestruction->getCurrentBasicItemDestructionFatigue();
         if (!$fatigueFromBasicItemDestruction) {
-            return <<<HTML
-<div class="error">
-  Únava <strong>mimo rozsah</strong>
-</div>
-HTML;
+            return $this->getOutOfKnownRangeHtml();
         }
+        return <<<HTML
+<strong>{$fatigueFromBasicItemDestruction->getValue()}</strong>
+HTML;
+    }
+
+    private function getItemSize(): string
+    {
         $itemSizeInputName = DestructionRequest::ITEM_SIZE;
         return <<<HTML
 <label>Velikost věci <input type="number" value="{$this->currentProperties->getCurrentItemSize()}"
     name="{$itemSizeInputName}"></label>
-<div>
-  Únava <strong>{$fatigueFromBasicItemDestruction->getValue()}</strong>
-</div>
 HTML;
     }
 
-    private function getTimeOfDestruction()
+    private function getTimeOfDestruction(): string
     {
         $currentTimeOfBasicItemDestruction = $this->currentDestruction->getCurrentTimeOfBasicItemDestruction();
         if (!$currentTimeOfBasicItemDestruction) {
-            return <<<HTML
-<div class="error">
-  Doba <strong>mimo rozsah</strong>
-</div>
-HTML;
+            return $this->getOutOfKnownRangeHtml();
         }
         $timeHumanName = $currentTimeOfBasicItemDestruction->getUnitCode()->translateTo('cs', $currentTimeOfBasicItemDestruction->getValue());
         return <<<HTML

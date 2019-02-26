@@ -7,10 +7,8 @@ use DrdPlus\AttackSkeleton\HtmlHelper;
 use DrdPlus\DestructionCalculator\CurrentDestruction;
 use DrdPlus\DestructionCalculator\DestructionRequest;
 use DrdPlus\DestructionCalculator\DestructionWebPartsContainer;
-use Granam\Strict\Object\StrictObject;
-use Granam\WebContentBuilder\Web\BodyInterface;
 
-class DamageBody extends StrictObject implements BodyInterface
+class DamageBody extends AbstractDestructionBody
 {
     /**
      * @var CurrentDestruction
@@ -32,11 +30,6 @@ class DamageBody extends StrictObject implements BodyInterface
         $this->htmlHelper = $htmlHelper;
     }
 
-    public function __toString()
-    {
-        return $this->getValue();
-    }
-
     public function getValue(): string
     {
         $strengthInputName = DestructionRequest::STRENGTH;
@@ -47,7 +40,7 @@ class DamageBody extends StrictObject implements BodyInterface
     <div class="col">
       <label>
         Síla <span class="note">(Sil)</span>
-        <input type="number" value="{$this->currentProperties->getCurrentStrength()}" step="1" name="{$strengthInputName}">
+        <input type="number" min="-40" max="40" value="{$this->currentProperties->getCurrentStrength()}" step="1" name="{$strengthInputName}">
       </label>
     </div>
     <div class="col">
@@ -61,21 +54,20 @@ class DamageBody extends StrictObject implements BodyInterface
       <strong>{$this->currentDestruction->getCurrentPowerOfDestruction()->getValue()}</strong>
     </div>
     <div class="col">
-      <label title="{$this->currentDestruction->getCurrent2d6RollTitle()}">
-        <input name="{$rollOnDestructingInputName}" type="number" value="{$this->currentDestruction->getCurrentRollOnDestructing()->getValue()}">
+      <label>
+        <input title="{$this->currentDestruction->getCurrent2d6RollTitle()}" name="{$rollOnDestructingInputName}" type="number" value="{$this->currentDestruction->getCurrentRollOnDestructing()->getValue()}">
         <span class="note">(2k6<span class="upper-index">+</span>)</span>
       </label>
       + {$this->currentDestruction->getCurrentPowerOfDestruction()->getValue()}
       - {$this->currentDestruction->getCurrentMaterialResistance()->getValue()} =
       <strong>{$this->currentDestruction->getCurrentRollOnDestruction()->getValue()}</strong>
       <div>
-        <a class="button" href="{$this->getUrlToRollAgain()}">
-          Hodit znovu na ničení 2k6<span class="upper-index">+</span>
+        <a class="btn btn-info" href="{$this->getUrlToRollAgain()}">
+          Hodit znovu na <span class="keyword">Ničení</span> 2k6<span class="upper-index">+</span>
         </a>
       </div>
     </div>
   </div>
-  {$this->getFailureInfo()}
 HTML;
     }
 
@@ -84,20 +76,8 @@ HTML;
         return $this->htmlHelper->getLocalUrlWithQuery([DestructionRequest::SHOULD_ROLL_ON_DESTRUCTING => 1]);
     }
 
-    private function getCheckedOfInappropriateTool()
+    private function getCheckedOfInappropriateTool(): string
     {
-        $this->htmlHelper->getChecked($this->currentDestruction->getCurrentInappropriateTool(), true);
-    }
-
-    private function getFailureInfo(): string
-    {
-        if ($this->currentDestruction->getCurrentRollOnDestruction()->isSuccess()) {
-            return '';
-        }
-        return <<<HTML
-<div class="row">
-  <div class="col info-message">Předmět <strong>nebyl</strong> poškozen</div>
-</div>
-HTML;
+        return $this->htmlHelper->getChecked($this->currentDestruction->getCurrentInappropriateTool(), true);
     }
 }
