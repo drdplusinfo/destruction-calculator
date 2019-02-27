@@ -9,6 +9,7 @@ use DrdPlus\Codes\Armaments\ShieldCode;
 use DrdPlus\Codes\Armaments\WeaponlikeCode;
 use DrdPlus\Codes\ItemHoldingCode;
 use DrdPlus\BaseProperties\Strength;
+use DrdPlus\Properties\Body\Size;
 
 trait UsingArmaments
 {
@@ -73,14 +74,11 @@ trait UsingArmaments
         if ($armourer->isTwoHandedOnly($weaponlikeCode)) {
             return ItemHoldingCode::getIt(ItemHoldingCode::TWO_HANDS);
         }
-        if ($armourer->isOneHandedOnly($weaponlikeCode)) {
+        $weaponHoldingCode = ItemHoldingCode::findIt($weaponHolding);
+        if ($weaponHoldingCode->holdsByTwoHands() && $armourer->isOneHandedOnly($weaponlikeCode)) {
             return ItemHoldingCode::getIt(ItemHoldingCode::MAIN_HAND);
         }
-        if (!$weaponHolding) {
-            return ItemHoldingCode::getIt(ItemHoldingCode::MAIN_HAND);
-        }
-
-        return ItemHoldingCode::getIt($weaponHolding);
+        return $weaponHoldingCode;
     }
 
     /**
@@ -128,7 +126,7 @@ trait UsingArmaments
                 $currentProperties->getCurrentStrength()
             ),
             $armourer,
-            $currentProperties
+            $currentProperties->getCurrentSize()
         );
     }
 
@@ -136,28 +134,29 @@ trait UsingArmaments
         ArmamentCode $armamentCode,
         Strength $strengthForArmament,
         Armourer $armourer,
-        CurrentProperties $currentProperties
+        Size $size
     ): bool
     {
-        return $armourer->canUseArmament($armamentCode, $strengthForArmament, $currentProperties->getCurrentSize());
+        return $armourer->canUseArmament($armamentCode, $strengthForArmament, $size);
     }
 
     protected function canUseShield(
         ShieldCode $shieldCode,
-        ItemHoldingCode $itemHoldingCode,
+        ItemHoldingCode $shieldHolding,
         Armourer $armourer,
-        CurrentProperties $currentProperties
+        Strength $strength,
+        Size $size
     ): bool
     {
         return $this->canUseArmament(
             $shieldCode,
             $armourer->getStrengthForWeaponOrShield(
                 $shieldCode,
-                $itemHoldingCode,
-                $currentProperties->getCurrentStrength()
+                $shieldHolding,
+                $strength
             ),
             $armourer,
-            $currentProperties
+            $size
         );
     }
 
