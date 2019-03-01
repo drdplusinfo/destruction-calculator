@@ -3,7 +3,7 @@
 </div>
 <div class="row">
   <div class="col">
-    <a target="_blank" href="https://pph.drdplus.info/#niceni">Pravidla pro ničení v Pravidlech pro hráče
+    <a target="_blank" href="https://pph.drdplus.info/?trial=1#niceni">Pravidla pro ničení v Pravidlech pro hráče
       (PPH)</a>
   </div>
 </div>

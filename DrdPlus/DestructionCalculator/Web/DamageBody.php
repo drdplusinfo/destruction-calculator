@@ -51,7 +51,7 @@ class DamageBody extends AbstractDestructionBody
       </label>
     </div>
     <div class="col">
-      <a target="_blank" href="https://pph.drdplus.info/#vypocet_sily_niceni">Síla ničení</a>
+      <a target="_blank" href="https://pph.drdplus.info/?trial=1#vypocet_sily_niceni">Síla ničení</a>
       <strong>{$this->currentDestruction->getCurrentPowerOfDestruction()->getValue()}</strong>
     </div>
     <div class="col">

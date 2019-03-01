@@ -37,10 +37,10 @@ class BodyLikeBody extends AbstractDestructionBody
   </div>
   <div class="col">
   <label>
-    <a target="_blank" href="https://pph.drdplus.info/#tabulka_velikosti_a_hmotnosti_ras">Velikost "těla"</a>
+    <a target="_blank" href="https://pph.drdplus.info/?trial=1#tabulka_velikosti_a_hmotnosti_ras">Velikost "těla"</a>
     <input type="number" value="{$this->currentProperties->getCurrentBodySize()}" name="{$bodySizeInputName}">
   </label>
-  <div class="note">přibližně <a href="https://pph.drdplus.info/#tabulka_vzdalenosti">(β(šířka) + β(výška))</a> / 2</div>
+  <div class="note">přibližně <a href="https://pph.drdplus.info/?trial=1#tabulka_vzdalenosti">(β(šířka) + β(výška))</a> / 2</div>
   </div>
   <div class="col">
     <div class="col alert alert-primary">Únava {$this->getFatigue()}</div>
