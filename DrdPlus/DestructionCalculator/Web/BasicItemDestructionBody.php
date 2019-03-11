@@ -30,7 +30,7 @@ class BasicItemDestructionBody extends AbstractDestructionBody
 <div class="row">
   <div class="col">
     <div class="row">
-      <div class="col example">hlava sochy, dlaždice, meč, lopata...</div>
+      <div class="col example">lano, dlaždice, meč, lopata, hlava sochy...</div>
     </div>
   </div>
   <div class="col">{$this->getItemSize()}</div>
