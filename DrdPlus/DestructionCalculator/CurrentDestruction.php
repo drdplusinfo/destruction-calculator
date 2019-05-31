@@ -275,17 +275,17 @@ class CurrentDestruction extends StrictObject
         $selectedVolumeUnit = $this->getCurrentVolumeUnit();
         switch ($selectedVolumeUnit->getValue()) {
             case VolumeUnitCode::LITER :
-                $minimal = \max(10.0/** minimal liters for @see VolumeTable */, $this->currentValues->getCurrentValue(DestructionRequest::VOLUME_VALUE) ?? 10.0);
+                $minimal = max(10.0/** minimal liters for @see VolumeTable */, $this->currentValues->getCurrentValue(DestructionRequest::VOLUME_VALUE) ?? 10.0);
 
-                return (float)\min(1000/** maximal liters for @see VolumeTable */, $minimal);
+                return (float)min(1000/** maximal liters for @see VolumeTable */, $minimal);
             case VolumeUnitCode::CUBIC_METER :
-                $minimal = \max(0.01/** minimal cubic meters for @see VolumeTable */, $this->currentValues->getCurrentValue(DestructionRequest::VOLUME_VALUE) ?? 1.0);
+                $minimal = max(0.01/** minimal cubic meters for @see VolumeTable */, $this->currentValues->getCurrentValue(DestructionRequest::VOLUME_VALUE) ?? 1.0);
 
-                return (float)\min(1000/** maximal cubic meters for @see VolumeTable */, $minimal);
+                return (float)min(1000/** maximal cubic meters for @see VolumeTable */, $minimal);
             case VolumeUnitCode::CUBIC_KILOMETER :
-                $minimal = \max(0.001/** minimal cubic kilometers for @see VolumeTable */, $this->currentValues->getCurrentValue(DestructionRequest::VOLUME_VALUE) ?? 0.1);
+                $minimal = max(0.001/** minimal cubic kilometers for @see VolumeTable */, $this->currentValues->getCurrentValue(DestructionRequest::VOLUME_VALUE) ?? 0.1);
 
-                return (float)\min(0.9/** maximal cubic meters for @see VolumeTable */, $minimal);
+                return (float)min(0.9/** maximal cubic meters for @see VolumeTable */, $minimal);
             default :
                 throw new Exceptions\UnknownVolumeUnit('Unknown volume unit ' . $selectedVolumeUnit);
         }
@@ -307,7 +307,7 @@ class CurrentDestruction extends StrictObject
             return SquareUnitCode::getIt($squareUnitValue);
         }
         $possibleValues = SquareUnitCode::getPossibleValues();
-        $defaultUnitValue = \reset($possibleValues);
+        $defaultUnitValue = reset($possibleValues);
 
         return SquareUnitCode::getIt($defaultUnitValue);
     }
@@ -317,17 +317,17 @@ class CurrentDestruction extends StrictObject
         $selectedSquareUnit = $this->getCurrentSquareUnit();
         switch ($selectedSquareUnit->getValue()) {
             case SquareUnitCode::SQUARE_DECIMETER :
-                $minimal = \max(10.0/** minimal liters for @see SquareTable */, $this->currentValues->getCurrentValue(DestructionRequest::SQUARE_VALUE) ?? 0.0);
+                $minimal = max(10.0/** minimal liters for @see SquareTable */, $this->currentValues->getCurrentValue(DestructionRequest::SQUARE_VALUE) ?? 0.0);
 
-                return \min(1000/** maximal liters for @see SquareTable */, $minimal);
+                return min(1000/** maximal liters for @see SquareTable */, $minimal);
             case SquareUnitCode::SQUARE_METER :
-                $minimal = \max(0.01/** minimal cubic meters for @see SquareTable */, $this->currentValues->getCurrentValue(DestructionRequest::SQUARE_VALUE) ?? 0.0);
+                $minimal = max(0.01/** minimal cubic meters for @see SquareTable */, $this->currentValues->getCurrentValue(DestructionRequest::SQUARE_VALUE) ?? 0.0);
 
-                return \min(1000/** maximal cubic meters for @see SquareTable */, $minimal);
+                return min(1000/** maximal cubic meters for @see SquareTable */, $minimal);
             case SquareUnitCode::SQUARE_KILOMETER :
-                $minimal = \max(0.001/** minimal cubic kilometers for @see SquareTable */, $this->currentValues->getCurrentValue(DestructionRequest::SQUARE_VALUE) ?? 0.0);
+                $minimal = max(0.001/** minimal cubic kilometers for @see SquareTable */, $this->currentValues->getCurrentValue(DestructionRequest::SQUARE_VALUE) ?? 0.0);
 
-                return \min(0.9/** maximal cubic meters for @see SquareTable */, $minimal);
+                return min(0.9/** maximal cubic meters for @see SquareTable */, $minimal);
             default :
                 throw new Exceptions\UnknownSquareUnit('Unknown volume unit ' . $selectedSquareUnit);
         }
@@ -366,7 +366,7 @@ class CurrentDestruction extends StrictObject
     {
         $robotRollOnDestructing = $this->getCurrentRollOnDestructionQuality()->getRoll();
         if ($robotRollOnDestructing) {
-            return \implode(', ', $robotRollOnDestructing->getRolledNumbers()) . ' = ' . $robotRollOnDestructing->getValue();
+            return implode(', ', $robotRollOnDestructing->getRolledNumbers()) . ' = ' . $robotRollOnDestructing->getValue();
         }
         return '(ruční hod) ' . $this->getCurrentRollOnDestructionQuality()->getValue();
     }

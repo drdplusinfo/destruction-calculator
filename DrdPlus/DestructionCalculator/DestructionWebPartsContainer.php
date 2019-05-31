@@ -99,7 +99,7 @@ class DestructionWebPartsContainer extends AttackWebPartsContainer
      */
     public function getMaterialCodes(): array
     {
-        return \array_map(
+        return array_map(
             function (string $materialValue) {
                 return MaterialCode::getIt($materialValue);
             },
@@ -112,7 +112,7 @@ class DestructionWebPartsContainer extends AttackWebPartsContainer
      */
     public function getVolumeUnits(): array
     {
-        return \array_map(
+        return array_map(
             function (string $volumeUnitValue) {
                 return VolumeUnitCode::getIt($volumeUnitValue);
             },
@@ -125,7 +125,7 @@ class DestructionWebPartsContainer extends AttackWebPartsContainer
      */
     public function getSquareUnits(): array
     {
-        return \array_map(
+        return array_map(
             function (string $squareUnitValue) {
                 return SquareUnitCode::getIt($squareUnitValue);
             },

@@ -56,6 +56,6 @@ HTML;
 </option>
 HTML;
         }
-        return \implode("\n", $materialOptions);
+        return implode("\n", $materialOptions);
     }
 }
