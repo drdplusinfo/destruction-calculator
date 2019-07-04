@@ -41,6 +41,8 @@ class ComposerStaticInita543806c9e021a7dfeba29e6994ee5ef
         'P' => 
         array (
             'Psr\\Log\\' => 8,
+            'Psr\\Container\\' => 14,
+            'Prophecy\\' => 9,
             'PHPMailer\\PHPMailer\\' => 20,
         ),
         'J' => 
@@ -127,6 +129,14 @@ class ComposerStaticInita543806c9e021a7dfeba29e6994ee5ef
         'Psr\\Log\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
+        ),
+        'Psr\\Container\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/container/src',
+        ),
+        'Prophecy\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpspec/prophecy/src/Prophecy',
         ),
         'PHPMailer\\PHPMailer\\' => 
         array (
@@ -220,10 +230,6 @@ class ComposerStaticInita543806c9e021a7dfeba29e6994ee5ef
     public static $prefixesPsr0 = array (
         'P' => 
         array (
-            'Prophecy\\' => 
-            array (
-                0 => __DIR__ . '/..' . '/phpspec/prophecy/src',
-            ),
             'Parsedown' => 
             array (
                 0 => __DIR__ . '/..' . '/erusev/parsedown',
