@@ -21,12 +21,12 @@ $documentRoot = $documentRoot ?? (PHP_SAPI !== 'cli' ? rtrim(dirname($_SERVER['S
 require_once $documentRoot . '/vendor/autoload.php';
 
 $dirs = Dirs::createFromGlobals();
-$htmlHelper = HtmlHelper::createFromGlobals($dirs, new Environment());
+$htmlHelper = HtmlHelper::createFromGlobals($dirs, Environment::createFromGlobals());
 if (PHP_SAPI !== 'cli') {
     TracyDebugger::enable($htmlHelper->isInProduction());
 }
 
-$calculatorConfiguration = CalculatorConfiguration::createFromYml($dirs);
-$servicesContainer = new DestructionServiceContainer($calculatorConfiguration, $htmlHelper);
-$calculatorApplication = new CalculatorApplication($servicesContainer);
+$calculatorConfiguration = $configuration ?? CalculatorConfiguration::createFromYml($dirs);
+$servicesContainer = $servicesContainer ?? new DestructionServiceContainer($calculatorConfiguration, $htmlHelper);
+$calculatorApplication = $rulesApplication ?? $controller ?? new CalculatorApplication($servicesContainer);
 $calculatorApplication->run();

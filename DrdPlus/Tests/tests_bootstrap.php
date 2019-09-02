@@ -1,4 +1,7 @@
-<?php
+<?php declare(strict_types=1);
+
+use DrdPlus\DestructionCalculator\DestructionServiceContainer;
+
 require_once __DIR__ . '/../../vendor/autoload.php';
 
 \error_reporting(-1);
@@ -8,3 +11,4 @@ require_once __DIR__ . '/../../vendor/autoload.php';
 const DRD_PLUS_INDEX_FILE_NAME_TO_TEST = __DIR__ . '/../../index.php';
 const DRD_PLUS_PROJECT_ROOT = __DIR__ . '/../..';
 const DRD_PLUS_TESTS_ROOT = __DIR__;
+const DRD_PLUS_SERVICES_CONTAINER_CLASS = DestructionServiceContainer::class;
