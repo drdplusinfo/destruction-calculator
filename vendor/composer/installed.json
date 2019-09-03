@@ -675,8 +675,14 @@
         "version_normalized": "2.0.1.0",
         "source": {
             "type": "git",
-            "url": "/home/jaroslav/projects/drdplus/destruction",
+            "url": "https://github.com/drdplusinfo/destruction.git",
             "reference": "00c44925bfa22dccfa658ef8f9004b438cc6e621"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/drdplusinfo/destruction/zipball/00c44925bfa22dccfa658ef8f9004b438cc6e621",
+            "reference": "00c44925bfa22dccfa658ef8f9004b438cc6e621",
+            "shasum": ""
         },
         "require": {
             "drdplus/armourer": "~2.0",
@@ -1055,17 +1061,17 @@
     },
     {
         "name": "drdplus/tables",
-        "version": "2.5.0",
-        "version_normalized": "2.5.0.0",
+        "version": "2.5.1",
+        "version_normalized": "2.5.1.0",
         "source": {
             "type": "git",
             "url": "https://github.com/drdplusinfo/tables.git",
-            "reference": "5cea455c2ce12f30e645e2976ef31496b00fef47"
+            "reference": "874048b690acafea7e90219952ee7872a637a148"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/drdplusinfo/tables/zipball/5cea455c2ce12f30e645e2976ef31496b00fef47",
-            "reference": "5cea455c2ce12f30e645e2976ef31496b00fef47",
+            "url": "https://api.github.com/repos/drdplusinfo/tables/zipball/874048b690acafea7e90219952ee7872a637a148",
+            "reference": "874048b690acafea7e90219952ee7872a637a148",
             "shasum": ""
         },
         "require": {
@@ -1082,7 +1088,7 @@
             "phpunit/phpunit": "^8.3",
             "roave/security-advisories": "dev-master"
         },
-        "time": "2019-08-23T11:11:34+00:00",
+        "time": "2019-09-03T07:45:38+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
