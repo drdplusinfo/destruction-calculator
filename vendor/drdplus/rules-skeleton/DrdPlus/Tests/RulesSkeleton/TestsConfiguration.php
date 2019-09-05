@@ -40,6 +40,7 @@ class TestsConfiguration extends StrictObject implements TestsConfigurationReade
     public const HAS_SHOWN_HOME_BUTTON = 'has_shown_home_button';
     public const HAS_SHOWN_HOME_BUTTON_ON_HOMEPAGE = 'has_shown_home_button_on_homepage';
     public const HAS_SHOWN_HOME_BUTTON_ON_ROUTES = 'has_shown_home_button_on_routes';
+    public const HAS_LOCAL_REPOSITORIES = 'has_local_repositories';
 
     public const SOME_EXPECTED_TABLE_IDS = 'some_expected_table_ids';
     public const EXPECTED_PUBLIC_URL = 'expected_public_url';
@@ -52,6 +53,8 @@ class TestsConfiguration extends StrictObject implements TestsConfigurationReade
     public const TOO_SHORT_FAILURE_NAMES = 'too_short_failure_names';
     public const TOO_SHORT_SUCCESS_NAMES = 'too_short_success_names';
     public const TOO_SHORT_RESULT_NAMES = 'too_short_result_names';
+    public const EXPECTED_HOME_BUTTON_TARGET_FROM_HOMEPAGE = 'expected_home_button_target_from_homepage';
+    public const EXPECTED_HOME_BUTTON_TARGET_FROM_ROUTES = 'expected_home_button_target_from_routes';
 
     public static function createFromYaml(string $yamlConfigFile)
     {
@@ -98,6 +101,8 @@ class TestsConfiguration extends StrictObject implements TestsConfigurationReade
     private $hasMarkedContent = true;
     /** @var bool */
     private $hasMarkedResult = true;
+    /** @var bool */
+    private $hasLocalRepositories = false;
     /** @var string */
     private $expectedWebName;
     /** @var string */
@@ -130,6 +135,10 @@ class TestsConfiguration extends StrictObject implements TestsConfigurationReade
     private $tooShortSuccessNames = ['všiml si'];
     /** @var array|string[] */
     private $tooShortResultNames = ['Bonus', 'Postih'];
+    /** @var string */
+    private $expectedHomeButtonTargetFromHomepage = 'https://www.drdplus.info';
+    /** @var string */
+    private $expectedHomeButtonTargetFromRoutes = 'https://www.drdplus.info';
 
     /**
      * @param array $values
@@ -174,6 +183,9 @@ class TestsConfiguration extends StrictObject implements TestsConfigurationReade
         $this->setHasButtons($values);
         $this->setHasMarkedContent($values);
         $this->setHasMarkedResult($values);
+        $this->setHasLocalRepositories($values);
+        $this->setExpectedHomeButtonTargetFromHomepage($values);
+        $this->setExpectedHomeButtonTargetFromRoutes($values);
     }
 
     /**
@@ -365,6 +377,11 @@ class TestsConfiguration extends StrictObject implements TestsConfigurationReade
         $this->hasMarkedResult = (bool)($values[self::HAS_MARKED_RESULT] ?? $this->hasMarkedResult);
     }
 
+    private function setHasLocalRepositories(array $values)
+    {
+        $this->hasLocalRepositories = (bool)($values[self::HAS_LOCAL_REPOSITORIES] ?? $this->hasLocalRepositories);
+    }
+
     private function setHasLocalLinks(array $values)
     {
         $this->hasLocalLinks = (bool)($values[self::HAS_LOCAL_LINKS] ?? $this->hasLocalLinks);
@@ -497,6 +514,18 @@ class TestsConfiguration extends StrictObject implements TestsConfigurationReade
         }
     }
 
+    private function setExpectedHomeButtonTargetFromHomepage(array $values)
+    {
+        $this->expectedHomeButtonTargetFromHomepage = $values[self::EXPECTED_HOME_BUTTON_TARGET_FROM_HOMEPAGE]
+            ?? $this->expectedHomeButtonTargetFromHomepage;
+    }
+
+    private function setExpectedHomeButtonTargetFromRoutes(array $values)
+    {
+        $this->expectedHomeButtonTargetFromRoutes = $values[self::EXPECTED_HOME_BUTTON_TARGET_FROM_ROUTES]
+            ?? $this->expectedHomeButtonTargetFromRoutes;
+    }
+
     public function getExpectedPublicUrl(): string
     {
         return $this->expectedPublicUrl;
@@ -545,6 +574,11 @@ class TestsConfiguration extends StrictObject implements TestsConfigurationReade
     public function hasMarkedResult(): bool
     {
         return $this->hasMarkedResult;
+    }
+
+    public function hasLocalRepositories(): bool
+    {
+        return $this->hasLocalRepositories;
     }
 
     public function hasShownHomeButton(): bool
@@ -655,5 +689,15 @@ class TestsConfiguration extends StrictObject implements TestsConfigurationReade
     public function getTooShortResultNames(): array
     {
         return $this->tooShortResultNames;
+    }
+
+    public function getExpectedHomeButtonTargetFromHomepage(): string
+    {
+        return $this->expectedHomeButtonTargetFromHomepage;
+    }
+
+    public function getExpectedHomeButtonTargetFromRoutes(): string
+    {
+        return $this->expectedHomeButtonTargetFromRoutes;
     }
 }

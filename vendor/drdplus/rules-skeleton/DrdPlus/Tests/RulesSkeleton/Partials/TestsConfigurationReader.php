@@ -32,6 +32,8 @@ interface TestsConfigurationReader
 
     public function hasMarkedResult(): bool;
 
+    public function hasLocalRepositories(): bool;
+
     public function hasLocalLinks(): bool;
 
     public function hasLinksToAltar();
@@ -73,4 +75,8 @@ interface TestsConfigurationReader
     public function getTooShortResultNames(): array;
 
     public function hasTableOfContents(): bool;
+
+    public function getExpectedHomeButtonTargetFromHomepage(): string;
+
+    public function getExpectedHomeButtonTargetFromRoutes(): string;
 }
