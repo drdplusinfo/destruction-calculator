@@ -24,12 +24,12 @@ class DestructionServiceContainer extends AttackServicesContainer
      */
     private $destructionWebPartsContainer;
 
-    public function getWebPartsContainer(): \DrdPlus\RulesSkeleton\Web\WebPartsContainer
+    public function getRoutedWebPartsContainer(): \DrdPlus\RulesSkeleton\Web\WebPartsContainer
     {
         if ($this->destructionWebPartsContainer === null) {
             $this->destructionWebPartsContainer = new DestructionWebPartsContainer(
                 $this->getPass(),
-                $this->getWebFiles(),
+                $this->getRoutedWebFiles(),
                 $this->getDirs(),
                 $this->getHtmlHelper(),
                 $this->getRequest(),

@@ -18,7 +18,7 @@
   },
   "require": {
     "php": ">=7.1",
-    "drdplus/attack-skeleton": "~2.0",
+    "drdplus/attack-skeleton": "^2.1",
     "drdplus/skills": "^2.0",
     "drdplus/destruction": "^2.0"
   },
