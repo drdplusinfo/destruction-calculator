@@ -4,6 +4,8 @@ namespace DrdPlus\DestructionCalculator;
 
 use DrdPlus\AttackSkeleton\AttackServicesContainer;
 use DrdPlus\Destruction\Destruction;
+use DrdPlus\RulesSkeleton\Web\WebFiles;
+use DrdPlus\RulesSkeleton\Web\WebPartsContainer;
 
 class DestructionServiceContainer extends AttackServicesContainer
 {
@@ -22,28 +24,45 @@ class DestructionServiceContainer extends AttackServicesContainer
     /**
      * @var DestructionWebPartsContainer
      */
-    private $destructionWebPartsContainer;
+    private $routedDestructionWebPartsContainer;
+    /**
+     * @var DestructionWebPartsContainer
+     */
+    private $rootDestructionWebPartsContainer;
 
-    public function getRoutedWebPartsContainer(): \DrdPlus\RulesSkeleton\Web\WebPartsContainer
+    public function getRoutedWebPartsContainer(): WebPartsContainer
     {
-        if ($this->destructionWebPartsContainer === null) {
-            $this->destructionWebPartsContainer = new DestructionWebPartsContainer(
-                $this->getPass(),
-                $this->getRoutedWebFiles(),
-                $this->getDirs(),
-                $this->getHtmlHelper(),
-                $this->getRequest(),
-                $this->getCurrentProperties(),
-                $this->getCustomArmamentsState(),
-                $this->getCurrentArmamentsValues(),
-                $this->getCurrentArmaments(),
-                $this->getPossibleArmaments(),
-                $this->getArmamentsUsabilityMessages(),
-                $this->getArmourer(),
-                $this->getCurrentDestruction()
-            );
+        if ($this->routedDestructionWebPartsContainer === null) {
+            $this->routedDestructionWebPartsContainer = $this->createDestructionWebPartsContainer($this->getRoutedWebFiles());
         }
-        return $this->destructionWebPartsContainer;
+        return $this->routedDestructionWebPartsContainer;
+    }
+
+    private function createDestructionWebPartsContainer(WebFiles $webFiles): DestructionWebPartsContainer
+    {
+        return new DestructionWebPartsContainer(
+            $this->getPass(),
+            $webFiles,
+            $this->getDirs(),
+            $this->getHtmlHelper(),
+            $this->getRequest(),
+            $this->getCurrentProperties(),
+            $this->getCustomArmamentsState(),
+            $this->getCurrentArmamentsValues(),
+            $this->getCurrentArmaments(),
+            $this->getPossibleArmaments(),
+            $this->getArmamentsUsabilityMessages(),
+            $this->getArmourer(),
+            $this->getCurrentDestruction()
+        );
+    }
+
+    public function getRootWebPartsContainer(): WebPartsContainer
+    {
+        if ($this->rootDestructionWebPartsContainer === null) {
+            $this->rootDestructionWebPartsContainer = $this->createDestructionWebPartsContainer($this->getRootWebFiles());
+        }
+        return $this->rootDestructionWebPartsContainer;
     }
 
     public function getDestruction(): Destruction
