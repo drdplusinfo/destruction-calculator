@@ -22,12 +22,12 @@ class CurrentProperties extends \DrdPlus\AttackSkeleton\CurrentProperties
 
     public function getCurrentItemSize(): IntegerInterface
     {
-        return new IntegerObject($this->currentValues->getCurrentValue(DestructionRequest::ITEM_SIZE) ?? 0);
+        return new IntegerObject($this->currentValues->getCurrentValue(DestructionRequest::ITEM_SIZE) ?: 0);
     }
 
     public function getCurrentBodySize(): Size
     {
-        return Size::getIt($this->currentValues->getCurrentValue(DestructionRequest::BODY_SIZE) ?? 0);
+        return Size::getIt($this->currentValues->getCurrentValue(DestructionRequest::BODY_SIZE) ?: 0);
     }
 
 }
