@@ -14,6 +14,7 @@ namespace Composer\Repository\Vcs;
 
 use Composer\Util\ProcessExecutor;
 use Composer\Util\Filesystem;
+use Composer\Util\Url;
 use Composer\Util\Git as GitUtil;
 use Composer\IO\IOInterface;
 use Composer\Cache;
@@ -24,12 +25,14 @@ use Composer\Config;
  */
 class GitDriver extends VcsDriver
 {
-    protected $cache;
+    /** @var array<string, string> Map of tag name to identifier */
     protected $tags;
+    /** @var array<string, string> Map of branch name to identifier */
     protected $branches;
+    /** @var string */
     protected $rootIdentifier;
+    /** @var string */
     protected $repoDir;
-    protected $infoCache = array();
 
     /**
      * {@inheritDoc}
@@ -38,6 +41,9 @@ class GitDriver extends VcsDriver
     {
         if (Filesystem::isLocalPath($this->url)) {
             $this->url = preg_replace('{[\\/]\.git/?$}', '', $this->url);
+            if (!is_dir($this->url)) {
+                throw new \RuntimeException('Failed to read package information from '.$this->url.' as the path does not exist');
+            }
             $this->repoDir = $this->url;
             $cacheUrl = realpath($this->url);
         } else {
@@ -62,6 +68,9 @@ class GitDriver extends VcsDriver
 
             $gitUtil = new GitUtil($this->io, $this->config, $this->process, $fs);
             if (!$gitUtil->syncMirror($this->url, $this->repoDir)) {
+                if (!is_dir($this->repoDir)) {
+                    throw new \RuntimeException('Failed to clone '.$this->url.' to read package information from it');
+                }
                 $this->io->writeError('<error>Failed to update '.$this->url.', package information from this repository may be outdated</error>');
             }
 
@@ -71,7 +80,8 @@ class GitDriver extends VcsDriver
         $this->getTags();
         $this->getBranches();
 
-        $this->cache = new Cache($this->io, $this->config->get('cache-repo-dir').'/'.preg_replace('{[^a-z0-9.]}i', '-', $cacheUrl));
+        $this->cache = new Cache($this->io, $this->config->get('cache-repo-dir').'/'.preg_replace('{[^a-z0-9.]}i', '-', Url::sanitize($cacheUrl)));
+        $this->cache->setReadOnly($this->config->get('cache-read-only'));
     }
 
     /**
@@ -219,8 +229,17 @@ class GitDriver extends VcsDriver
             return false;
         }
 
-        $process = new ProcessExecutor($io);
+        $gitUtil = new GitUtil($io, $config, new ProcessExecutor($io), new Filesystem());
+        GitUtil::cleanEnv();
 
-        return $process->execute('git ls-remote --heads ' . ProcessExecutor::escape($url), $output) === 0;
+        try {
+            $gitUtil->runCommand(function ($url) {
+                return 'git ls-remote --heads -- ' . ProcessExecutor::escape($url);
+            }, $url, sys_get_temp_dir());
+        } catch (\RuntimeException $e) {
+            return false;
+        }
+
+        return true;
     }
 }

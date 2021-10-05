@@ -17,7 +17,7 @@ use ErrorException;
  */
 class Debugger
 {
-	public const VERSION = '2.7.5';
+	public const VERSION = '2.8.7';
 
 	/** server modes for Debugger::enable() */
 	public const
@@ -62,13 +62,19 @@ class Debugger
 	/********************* Debugger::dump() ****************d*g**/
 
 	/** @var int  how many nested levels of array/object properties display by dump() */
-	public static $maxDepth = 3;
+	public static $maxDepth = 7;
 
 	/** @var int  how long strings display by dump() */
 	public static $maxLength = 150;
 
 	/** @var bool display location by dump()? */
-	public static $showLocation = false;
+	public static $showLocation;
+
+	/** @var string[] sensitive keys not displayed by dump() */
+	public static $keysToHide = [];
+
+	/** @var string theme for dump() */
+	public static $dumpTheme = 'light';
 
 	/** @deprecated */
 	public static $maxLen;
@@ -95,7 +101,7 @@ class Debugger
 
 	/********************* misc ****************d*g**/
 
-	/** @var int timestamp with microseconds of the start of the request */
+	/** @var float timestamp with microseconds of the start of the request */
 	public static $time;
 
 	/** @var string URI pattern mask to open editor */
@@ -152,7 +158,9 @@ class Debugger
 	public static function enable($mode = null, string $logDirectory = null, $email = null): void
 	{
 		if ($mode !== null || self::$productionMode === null) {
-			self::$productionMode = is_bool($mode) ? $mode : !self::detectDebugMode($mode);
+			self::$productionMode = is_bool($mode)
+				? $mode
+				: !self::detectDebugMode($mode);
 		}
 
 		self::$reserved = str_repeat('t', self::$reservedMemorySize);
@@ -196,14 +204,25 @@ class Debugger
 			return;
 		}
 
-		register_shutdown_function([__CLASS__, 'shutdownHandler']);
+		register_shutdown_function([self::class, 'shutdownHandler']);
 		set_exception_handler(function (\Throwable $e) {
 			self::exceptionHandler($e);
 			exit(255);
 		});
-		set_error_handler([__CLASS__, 'errorHandler']);
+		set_error_handler([self::class, 'errorHandler']);
 
-		foreach (['Bar/Bar', 'Bar/DefaultBarPanel', 'BlueScreen/BlueScreen', 'Dumper/Dumper', 'Logger/Logger', 'Helpers'] as $path) {
+		foreach ([
+			'Bar/Bar',
+			'Bar/DefaultBarPanel',
+			'BlueScreen/BlueScreen',
+			'Dumper/Describer',
+			'Dumper/Dumper',
+			'Dumper/Exposer',
+			'Dumper/Renderer',
+			'Dumper/Value',
+			'Logger/Logger',
+			'Helpers',
+		] as $path) {
 			require_once dirname(__DIR__) . "/$path.php";
 		}
 
@@ -314,8 +333,12 @@ class Debugger
 					require self::$errorTemplate ?: __DIR__ . '/assets/error.500.phtml';
 				})(empty($e));
 			} elseif (PHP_SAPI === 'cli') {
-				@fwrite(STDERR, 'ERROR: application encountered an error and can not continue. '
-					. (isset($e) ? "Unable to log error.\n" : "Error was logged.\n")); // @ triggers E_NOTICE when strerr is closed since PHP 7.4
+				// @ triggers E_NOTICE when strerr is closed since PHP 7.4
+				@fwrite(STDERR, "ERROR: {$exception->getMessage()}\n"
+					. (isset($e)
+						? 'Unable to log error. You may try enable debug mode to inspect the problem.'
+						: 'Check log to see more info.')
+					. "\n");
 			}
 
 		} elseif ($firstTime && Helpers::isHtmlMode() || Helpers::isAjax()) {
@@ -328,12 +351,15 @@ class Debugger
 				if ($file && !headers_sent()) {
 					header("X-Tracy-Error-Log: $file", false);
 				}
-				echo "$exception\n" . ($file ? "(stored in $file)\n" : '');
+				if (Helpers::detectColors()) {
+					echo "\n\n" . BlueScreen::highlightPhpCli($exception->getFile(), $exception->getLine()) . "\n";
+				}
+				echo "$exception\n" . ($file ? "\n(stored in $file)\n" : '');
 				if ($file && self::$browser) {
-					exec(self::$browser . ' ' . escapeshellarg($file));
+					exec(self::$browser . ' ' . escapeshellarg(strtr($file, self::$editorMapping)));
 				}
 			} catch (\Throwable $e) {
-				echo "$exception\nUnable to log error: {$e->getMessage()}\n";
+				echo "$exception\nTracy is unable to log error: {$e->getMessage()}\n";
 			}
 		}
 
@@ -356,8 +382,13 @@ class Debugger
 	 * @throws ErrorException
 	 * @internal
 	 */
-	public static function errorHandler(int $severity, string $message, string $file, int $line, array $context = null): ?bool
-	{
+	public static function errorHandler(
+		int $severity,
+		string $message,
+		string $file,
+		int $line,
+		array $context = null
+	): ?bool {
 		$error = error_get_last();
 		if (($error['type'] ?? null) === E_COMPILE_WARNING) {
 			error_clear_last();
@@ -368,9 +399,15 @@ class Debugger
 			error_reporting(E_ALL);
 		}
 
+		if ($context) {
+			$context = (array) (object) $context; // workaround for PHP bug #80234
+		}
+
 		if ($severity === E_RECOVERABLE_ERROR || $severity === E_USER_ERROR) {
 			if (Helpers::findTrace(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS), '*::__toString')) { // workaround for PHP < 7.4
-				$previous = isset($context['e']) && $context['e'] instanceof \Throwable ? $context['e'] : null;
+				$previous = isset($context['e']) && $context['e'] instanceof \Throwable
+					? $context['e']
+					: null;
 				$e = new ErrorException($message, 0, $severity, $file, $line, $previous);
 				$e->context = $context;
 				self::exceptionHandler($e);
@@ -431,7 +468,9 @@ class Debugger
 			if (in_array($status['name'], ['ob_gzhandler', 'zlib output compression'], true)) {
 				break;
 			}
-			$fnc = $status['chunk_size'] || !$errorOccurred ? 'ob_end_flush' : 'ob_end_clean';
+			$fnc = $status['chunk_size'] || !$errorOccurred
+				? 'ob_end_flush'
+				: 'ob_end_clean';
 			if (!@$fnc()) { // @ may be not removable
 				break;
 			}
@@ -507,18 +546,23 @@ class Debugger
 	public static function dump($var, bool $return = false)
 	{
 		if ($return) {
-			return Helpers::capture(function () use ($var) {
-				Dumper::dump($var, [
-					Dumper::DEPTH => self::$maxDepth,
-					Dumper::TRUNCATE => self::$maxLength,
-				]);
-			});
+			$options = [
+				Dumper::DEPTH => self::$maxDepth,
+				Dumper::TRUNCATE => self::$maxLength,
+			];
+			return PHP_SAPI === 'cli' || PHP_SAPI === 'phpdbg'
+				? Dumper::toText($var)
+				: Helpers::capture(function () use ($var, $options) {
+					Dumper::dump($var, $options);
+				});
 
 		} elseif (!self::$productionMode) {
 			Dumper::dump($var, [
 				Dumper::DEPTH => self::$maxDepth,
 				Dumper::TRUNCATE => self::$maxLength,
 				Dumper::LOCATION => self::$showLocation,
+				Dumper::THEME => self::$dumpTheme,
+				Dumper::KEYS_TO_HIDE => self::$keysToHide,
 			]);
 		}
 

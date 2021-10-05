@@ -4,4 +4,4 @@
 [![Test Coverage](https://codeclimate.com/github/jaroslavtyc/drd-plus-destruction/badges/coverage.svg)](https://codeclimate.com/github/jaroslavtyc/drd-plus-destruction/coverage)
 [![License](https://poser.pugx.org/drd-plus/destruction/license)](https://packagist.org/packages/drd-plus/destruction)
 
-Have you break in? Broke a sword?
+Have you broken in? Broke a sword?

@@ -14,7 +14,7 @@ namespace Composer\Command;
 
 use Composer\Package\CompletePackageInterface;
 use Composer\Repository\RepositoryInterface;
-use Composer\Repository\ArrayRepository;
+use Composer\Repository\RootPackageRepository;
 use Composer\Repository\RepositoryFactory;
 use Composer\Util\Platform;
 use Composer\Util\ProcessExecutor;
@@ -129,7 +129,7 @@ EOT
 
         $process = new ProcessExecutor($this->getIO());
         if (Platform::isWindows()) {
-            return $process->execute('start "web" explorer "' . $url . '"', $output);
+            return $process->execute('start "web" explorer ' . $url, $output);
         }
 
         $linux = $process->execute('which xdg-open', $output);
@@ -157,7 +157,7 @@ EOT
 
         if ($composer) {
             return array_merge(
-                array(new ArrayRepository(array($composer->getPackage()))), // root package
+                array(new RootPackageRepository($composer->getPackage())), // root package
                 array($composer->getRepositoryManager()->getLocalRepository()), // installed packages
                 $composer->getRepositoryManager()->getRepositories() // remotes
             );

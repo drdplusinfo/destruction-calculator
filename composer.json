@@ -13,25 +13,42 @@
   ],
   "autoload": {
     "psr-4": {
-      "DrdPlus\\": "DrdPlus/"
+      "DrdPlus\\DestructionCalculator\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\DrdPlus\\DestructionCalculator\\": "tests/DestructionCalculator",
+      "Tests\\DrdPlus\\AttackSkeleton\\": "tests/AttackSkeleton",
+      "Tests\\DrdPlus\\CalculatorSkeleton\\": "vendor/drdplus/calculator-skeleton/tests/CalculatorSkeleton",
+      "Tests\\DrdPlus\\RulesSkeleton\\": "vendor/drdplus/rules-skeleton/tests/RulesSkeleton",
+      "Granam\\Tests\\ExceptionsHierarchy\\": "vendor/granam/exceptions-hierarchy/tests/ExceptionsHierarchy"
     }
   },
   "require": {
-    "php": ">=7.1",
-    "drdplus/attack-skeleton": "^2.1",
-    "drdplus/skills": "^2.0",
-    "drdplus/destruction": "^2.0"
+    "php": ">=7.4",
+    "drdplus/armourer": "^3.0",
+    "drdplus/attack-skeleton": "^3.0",
+    "drdplus/calculator-skeleton": "^2.0",
+    "drdplus/codes": "^2.3",
+    "drdplus/destruction": "^3.0",
+    "drdplus/rules-skeleton": "^3.2",
+    "drdplus/skills": "^3.0"
   },
   "require-dev": {
-    "phpunit/phpunit": "^8.3",
+    "composer/composer": "^1.8|^2.0",
+    "granam/exceptions-hierarchy": "^5.0",
+    "granam/test-with-mockery": "^2.0",
     "mockery/mockery": "~1.0",
-    "roave/security-advisories": "dev-master",
-    "composer/composer": "^1.8",
-    "granam/exceptions-hierarchy": "^5.0"
+    "phpunit/phpunit": "^9.0",
+    "roave/security-advisories": "dev-latest"
   },
   "scripts": {
     "pre-autoload-dump": [
-      "rm -f ./DrdPlus/Tests/AttackSkeleton && ln -s ../../vendor/drdplus/attack-skeleton/DrdPlus/Tests/AttackSkeleton ./DrdPlus/Tests"
+      "rm -f ./tests/AttackSkeleton && ln -s ../vendor/drdplus/attack-skeleton/tests/AttackSkeleton ./tests"
     ]
+  },
+  "config": {
+    "sort-packages": true
   }
 }
