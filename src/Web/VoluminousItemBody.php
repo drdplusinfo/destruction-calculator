@@ -67,7 +67,7 @@ HTML;
     private function getFatigue(): string
     {
         $currentFatigueFromVoluminousItemDestruction = $this->currentDestruction->getCurrentFatigueFromVoluminousItemDestruction();
-        if ($currentFatigueFromVoluminousItemDestruction === null) {
+        if (!$currentFatigueFromVoluminousItemDestruction instanceof \DrdPlus\Tables\Measurements\Fatigue\Fatigue) {
             return $this->getOutOfKnownRangeHtml();
         }
         return <<<HTML
@@ -91,7 +91,7 @@ HTML;
     private function getTimeOfDestruction(): string
     {
         $currentTimeOfVoluminousItemDestruction = $this->currentDestruction->getCurrentTimeOfVoluminousItemDestruction();
-        if ($currentTimeOfVoluminousItemDestruction === null) {
+        if (!$currentTimeOfVoluminousItemDestruction instanceof \DrdPlus\Tables\Measurements\Time\Time) {
             return $this->getOutOfKnownRangeHtml();
         }
         return <<<HTML

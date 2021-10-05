@@ -48,7 +48,7 @@ HTML;
     private function getFatigue(): string
     {
         $currentFatigueFromStatueLikeDestruction = $this->currentDestruction->getCurrentFatigueFromStatueLikeDestruction();
-        if ($currentFatigueFromStatueLikeDestruction === null) {
+        if (!$currentFatigueFromStatueLikeDestruction instanceof \DrdPlus\Tables\Measurements\Fatigue\Fatigue) {
             return $this->getOutOfKnownRangeHtml();
         }
         return <<<HTML
@@ -59,7 +59,7 @@ HTML;
     private function getTime(): string
     {
         $timeOfStatueLikeDestruction = $this->currentDestruction->getCurrentTimeOfStatueLikeDestruction();
-        if ($timeOfStatueLikeDestruction === null) {
+        if (!$timeOfStatueLikeDestruction instanceof \DrdPlus\Tables\Measurements\Time\Time) {
             return $this->getOutOfKnownRangeHtml();
         }
         return <<<HTML

@@ -26,8 +26,8 @@ if (PHP_SAPI !== 'cli') {
     TracyDebugger::enable($environment->isInProduction());
 }
 
-$dirs = Dirs::createFromGlobals();
-$htmlHelper = HtmlHelper::createFromGlobals($dirs, $environment);
+$dirs = $dirs ?? Dirs::createFromGlobals();
+$htmlHelper = $htmlHelper ?? HtmlHelper::createFromGlobals($dirs, $environment);
 $calculatorConfiguration = $configuration ?? CalculatorConfiguration::createFromYml($dirs);
 $servicesContainer = $servicesContainer ?? new DestructionServiceContainer($calculatorConfiguration, $environment, $htmlHelper);
 $calculatorApplication = $rulesApplication ?? $controller ?? new CalculatorApplication($servicesContainer);

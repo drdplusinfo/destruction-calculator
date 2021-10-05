@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '0d2a3fe9af291e70b5c8ad57680fd7e3421e2443',
+        'reference' => 'e3dec180c03b6a20ebd6474ce63c7f09f2179aa3',
         'name' => 'drdplus/destruction-calculator',
         'dev' => true,
     ),
@@ -163,7 +163,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '0d2a3fe9af291e70b5c8ad57680fd7e3421e2443',
+            'reference' => 'e3dec180c03b6a20ebd6474ce63c7f09f2179aa3',
             'dev_requirement' => false,
         ),
         'drdplus/hunting-and-fishing' => array(

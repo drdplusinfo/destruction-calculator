@@ -36,7 +36,7 @@ HTML;
     private function getFatigueFromItemSize(): string
     {
         $fatigueFromBasicItemDestruction = $this->currentDestruction->getCurrentBasicItemDestructionFatigue();
-        if ($fatigueFromBasicItemDestruction === null) {
+        if (!$fatigueFromBasicItemDestruction instanceof \DrdPlus\Tables\Measurements\Fatigue\Fatigue) {
             return $this->getOutOfKnownRangeHtml();
         }
         return <<<HTML
@@ -56,7 +56,7 @@ HTML;
     private function getTimeOfDestruction(): string
     {
         $currentTimeOfBasicItemDestruction = $this->currentDestruction->getCurrentTimeOfBasicItemDestruction();
-        if ($currentTimeOfBasicItemDestruction === null) {
+        if (!$currentTimeOfBasicItemDestruction instanceof \DrdPlus\Tables\Measurements\Time\Time) {
             return $this->getOutOfKnownRangeHtml();
         }
         $timeHumanName = $currentTimeOfBasicItemDestruction->getUnitCode()->translateTo('cs', $currentTimeOfBasicItemDestruction->getValue());

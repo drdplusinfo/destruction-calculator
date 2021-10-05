@@ -124,14 +124,14 @@ class CurrentDestruction extends StrictObject
     private function getTimeOfDestruction(RealTimeOfDestruction $realTimeOfDestruction): ?Time
     {
         $time = $realTimeOfDestruction->findTime(TimeUnitCode::HOUR);
-        if ($time === null) {
+        if (!$time instanceof \DrdPlus\Tables\Measurements\Time\Time) {
             try {
                 $time = $realTimeOfDestruction->findTime();
             } catch (UnknownBonus $unknownBonus) {
                 return null;
             }
         }
-        if ($time === null) {
+        if (!$time instanceof \DrdPlus\Tables\Measurements\Time\Time) {
             return null;
         }
         if ($time->getValue() > 1) {
